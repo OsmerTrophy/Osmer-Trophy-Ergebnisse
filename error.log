@@ -1,0 +1,6 @@
+java.lang.Exception: Kriterium Teamnumme nicht verfügbar
+	at main.N.C(Unknown Source)
+	at main.N.A(Unknown Source)
+	at main.MXStats.u(Unknown Source)
+	at F.Y.A(Unknown Source)
+	at F.B.run(Unknown Source)

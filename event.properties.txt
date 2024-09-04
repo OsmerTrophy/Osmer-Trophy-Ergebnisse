@@ -1,0 +1,3 @@
+event=X-Leo Teamrennen 2016
+location=Heimstrecke
+date=09.04.2016

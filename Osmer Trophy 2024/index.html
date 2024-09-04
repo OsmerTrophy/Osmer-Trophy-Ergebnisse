@@ -1,0 +1,243 @@
+<html>
+<head>
+<title>MXStats V4.5 - http://mxstats.tk</title>
+<style type=text/css>
+body
+{
+	background-attachment: fixed;
+}
+table
+{
+	border-collapse: collapse;
+	border: 0px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+th
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+	vertical-align: top;
+	text-align: center;
+}
+td
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+.even
+{
+
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWM4ceLEQQAHzgMaUUKpfgAAAABJRU5ErkJggg==);
+}
+.odd
+{
+	background-color: transparent;
+}
+.plus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIXhI8Wy6ze3gKRQkeTksFO31WR2FQaUgAAOw==);
+}
+.minus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.minus_nopointer
+{
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.noborder
+{
+	border: 0px solid #000000;
+}
+.event
+{
+	color: #404040;
+	text-align: left;
+	font-family: arial;
+	font-size: 25;
+	font-weight: bold;
+	padding: 3px;
+}
+.location
+{
+	color: #606060;
+	text-align: left;
+	font-family: arial;
+	font-size: 20;
+	font-weight: bold;
+	padding: 3px;
+}
+.date
+{
+	color: #808080;
+	text-align: left;
+	font-family: arial;
+	font-size: 15;
+	font-weight: bold;
+	padding: 3px;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+function ftoggle(object1_id, object2_id, image_id)
+{
+	image = document.getElementById(image_id);
+	if(image.className == "plus")
+	{
+		image.className = "minus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "block";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "block";
+		}
+	}
+	else if(image.className == "minus")
+	{
+		image.className = "plus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "none";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "none";
+		}
+	}
+}
+
+function ftoggle_all()
+{
+	image = document.getElementById('img_0');
+	if(image.className == "minus")
+	{
+		image.className = "plus";
+		replace_minus();
+		replace_block();
+	}
+	else if(image.className == "plus")
+	{
+		image.className = "minus";
+		replace_plus();
+		replace_none();
+	}
+}
+
+function replace_minus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].id != "" && l[i].className == "minus")
+		{
+			l[i].className = "plus";
+		}
+	}
+}
+
+function replace_plus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].className == "plus")
+		{
+			l[i].className = "minus";
+		}
+	}
+}
+
+function replace_block()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "block")
+		{
+			l[i].style.display = "none";
+		}
+	}
+}
+
+function replace_none()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "none")
+		{
+			l[i].style.display = "block";
+		}
+	}
+}
+</script>
+</head>
+<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" oncontextmenu="return false" ondragstart="return false" onselectstart="return false" text="black" link="black" alink="black" vlink="black">
+<table width="100%" height="100%">
+<tr><td align="center" class="noborder">
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+<br>
+* Runden/Zeitstrafe beachtet
+<p>
+<table>
+<tr class="even">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+<th>Durchschnitt</th>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td align=center valign=top><nobr>2</nobr></td>
+<td align=center valign=top><nobr>0</nobr></td>
+<td align=center valign=top><nobr>-</nobr></td>
+<td align=center valign=top><nobr>-</nobr></td>
+<td align=center valign=top><nobr>-</nobr></td>
+<td align=center valign=top><nobr>-</nobr></td>
+<td align=center valign=top><nobr>-</nobr></td>
+</tr>
+<tr class="even">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+<th>Durchschnitt</th>
+</tr>
+</table>
+<p>
+* Runden/Zeitstrafe beachtet
+<br>
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+</td></tr>
+</table>
+</body>
+</html>

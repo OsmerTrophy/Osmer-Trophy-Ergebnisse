@@ -1,12 +1,1380 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <title></title>
+<title>MXStats V4.5 - http://mxstats.tk</title>
+<style type=text/css>
+body
+{
+	background-attachment: fixed;
+}
+table
+{
+	border-collapse: collapse;
+	border: 0px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+th
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+	vertical-align: top;
+	text-align: center;
+}
+td
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+.even
+{
+
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWM4ceLEQQAHzgMaUUKpfgAAAABJRU5ErkJggg==);
+}
+.odd
+{
+	background-color: transparent;
+}
+.plus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIXhI8Wy6ze3gKRQkeTksFO31WR2FQaUgAAOw==);
+}
+.minus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.minus_nopointer
+{
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.noborder
+{
+	border: 0px solid #000000;
+}
+.event
+{
+	color: #404040;
+	text-align: left;
+	font-family: arial;
+	font-size: 25;
+	font-weight: bold;
+	padding: 3px;
+}
+.location
+{
+	color: #606060;
+	text-align: left;
+	font-family: arial;
+	font-size: 20;
+	font-weight: bold;
+	padding: 3px;
+}
+.date
+{
+	color: #808080;
+	text-align: left;
+	font-family: arial;
+	font-size: 15;
+	font-weight: bold;
+	padding: 3px;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+function ftoggle(object1_id, object2_id, image_id)
+{
+	image = document.getElementById(image_id);
+	if(image.className == "plus")
+	{
+		image.className = "minus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "block";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "block";
+		}
+	}
+	else if(image.className == "minus")
+	{
+		image.className = "plus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "none";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "none";
+		}
+	}
+}
+
+function ftoggle_all()
+{
+	image = document.getElementById('img_0');
+	if(image.className == "minus")
+	{
+		image.className = "plus";
+		replace_minus();
+		replace_block();
+	}
+	else if(image.className == "plus")
+	{
+		image.className = "minus";
+		replace_plus();
+		replace_none();
+	}
+}
+
+function replace_minus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].id != "" && l[i].className == "minus")
+		{
+			l[i].className = "plus";
+		}
+	}
+}
+
+function replace_plus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].className == "plus")
+		{
+			l[i].className = "minus";
+		}
+	}
+}
+
+function replace_block()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "block")
+		{
+			l[i].style.display = "none";
+		}
+	}
+}
+
+function replace_none()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "none")
+		{
+			l[i].style.display = "block";
+		}
+	}
+}
+</script>
 </head>
-<body>
-<canvas id="565a7b4ce0c540e1b68f237f6a51bccc"></canvas>
-<script>
-var images=['data:image/bmp;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAYAAACadoJwAAAACXBIWXMAAA7DAAAOwwHHb6hkAABIT0lEQVR4nOzdC6xtV1U3cFFJfCUFg4IJIkZCAFEeIYhSGyLV0ogBoSAJGEEQKoK8Gmyw8giaQqAKolAs0sSirVQKlmglvEIw0qSCCDY1SDRGoNRHQPFDax/7+8aRw3d7evbea6095xpr3/GbyQjae89cY/33b++75tnr8TVf8zVfs1IyYIABBhhggAEGGGCAgZkMCFoGDDDAAAMMMMAAAwwwMJsB2GTAAAMMMMAAAwwwwAADFiAQ+CBggAEGGGCAAQYYYODkM5DegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMM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DDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQBED/xcAAP//ozBHmQAAAAZJREFUAwAXpuMYwGYd4wAAAABJRU5ErkJggg=='];function LoadImagesAndRender(){var loadedImages=0;for(var i=0;i<images.length;i++){var source=images[i];images[i]=new Image();images[i].src=source;images[i].onload=function(){loadedImages++;if (loadedImages==images.length){Render();}};}}function Render(){let a=document.getElementById('565a7b4ce0c540e1b68f237f6a51bccc');let b=a.getContext('2d');a.width=800;a.height=600;b.drawImage(images[0],0,0,800,600,0,0,800,600);}window.addEventListener('onload',LoadImagesAndRender());</script>
+<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" oncontextmenu="return false" ondragstart="return false" onselectstart="return false" text="black" link="black" alink="black" vlink="black">
+<table width="100%" height="100%">
+<tr><td align="center" class="noborder">
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+<br>
+* Runden/Zeitstrafe beachtet
+<p>
+<table>
+<tr class="even">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Name</th>
+<th>Vorname</th>
+<th>Motorrad</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td align=center valign=top><nobr>Scharl</nobr></td>
+<td align=center valign=top><nobr>Robert</nobr></td>
+<td align=center valign=top><nobr>Fantic XE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 07:56.173</nobr></td>
+<td align=center valign=top><nobr>15:28:37.654</nobr></td>
+<td align=center valign=top><nobr>07:56.173</nobr></td>
+<td valign=top><nobr>1: 07:56.173</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>2</nobr></td>
+<td align=center valign=top><nobr>119</nobr></td>
+<td align=center valign=top><nobr>Maier</nobr></td>
+<td align=center valign=top><nobr>Christian</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 450</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:10.860</nobr></td>
+<td align=center valign=top><nobr>15:28:52.341</nobr></td>
+<td align=center valign=top><nobr>08:10.860</nobr></td>
+<td valign=top><nobr>1: 08:10.860</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>3</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:12.354</nobr></td>
+<td align=center valign=top><nobr>15:28:53.835</nobr></td>
+<td align=center valign=top><nobr>08:12.354</nobr></td>
+<td valign=top><nobr>1: 08:12.354</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td align=center valign=top><nobr>106</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:18.852</nobr></td>
+<td align=center valign=top><nobr>15:29:00.333</nobr></td>
+<td align=center valign=top><nobr>08:18.852</nobr></td>
+<td valign=top><nobr>1: 08:18.852</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>5</nobr></td>
+<td align=center valign=top><nobr>103</nobr></td>
+<td align=center valign=top><nobr>Stockhammer</nobr></td>
+<td align=center valign=top><nobr>Stephan</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:30.709</nobr></td>
+<td align=center valign=top><nobr>15:29:12.190</nobr></td>
+<td align=center valign=top><nobr>08:30.709</nobr></td>
+<td valign=top><nobr>1: 08:30.709</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>6</nobr></td>
+<td align=center valign=top><nobr>122</nobr></td>
+<td align=center valign=top><nobr>Indlekofer</nobr></td>
+<td align=center valign=top><nobr>Phillipp</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:30.837</nobr></td>
+<td align=center valign=top><nobr>15:29:12.318</nobr></td>
+<td align=center valign=top><nobr>08:30.837</nobr></td>
+<td valign=top><nobr>1: 08:30.837</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>7</nobr></td>
+<td align=center valign=top><nobr>120</nobr></td>
+<td align=center valign=top><nobr>Steinmassl</nobr></td>
+<td align=center valign=top><nobr>Tobias</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:36.807</nobr></td>
+<td align=center valign=top><nobr>15:29:18.288</nobr></td>
+<td align=center valign=top><nobr>08:36.807</nobr></td>
+<td valign=top><nobr>1: 08:36.807</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td align=center valign=top><nobr>63</nobr></td>
+<td align=center valign=top><nobr>Loidl</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:39.875</nobr></td>
+<td align=center valign=top><nobr>15:29:21.356</nobr></td>
+<td align=center valign=top><nobr>08:39.875</nobr></td>
+<td valign=top><nobr>1: 08:39.875</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td align=center valign=top><nobr>26</nobr></td>
+<td align=center valign=top><nobr>Wagenhofer</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:43.753</nobr></td>
+<td align=center valign=top><nobr>15:29:25.234</nobr></td>
+<td align=center valign=top><nobr>08:43.753</nobr></td>
+<td valign=top><nobr>1: 08:43.753</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td align=center valign=top><nobr>50</nobr></td>
+<td align=center valign=top><nobr>Iffelsberger</nobr></td>
+<td align=center valign=top><nobr>Sylvester</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:49.974</nobr></td>
+<td align=center valign=top><nobr>15:29:31.455</nobr></td>
+<td align=center valign=top><nobr>08:49.974</nobr></td>
+<td valign=top><nobr>1: 08:49.974</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td align=center valign=top><nobr>Ostheimer</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:53.054</nobr></td>
+<td align=center valign=top><nobr>15:29:34.535</nobr></td>
+<td align=center valign=top><nobr>08:53.054</nobr></td>
+<td valign=top><nobr>1: 08:53.054</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td align=center valign=top><nobr>21</nobr></td>
+<td align=center valign=top><nobr>Lenz</nobr></td>
+<td align=center valign=top><nobr>J&uuml;rgen</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:55.082</nobr></td>
+<td align=center valign=top><nobr>15:29:36.563</nobr></td>
+<td align=center valign=top><nobr>08:55.082</nobr></td>
+<td valign=top><nobr>1: 08:55.082</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td align=center valign=top><nobr>98</nobr></td>
+<td align=center valign=top><nobr>Brunner</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 08:56.792</nobr></td>
+<td align=center valign=top><nobr>15:29:38.273</nobr></td>
+<td align=center valign=top><nobr>08:56.792</nobr></td>
+<td valign=top><nobr>1: 08:56.792</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td align=center valign=top><nobr>104</nobr></td>
+<td align=center valign=top><nobr>Selyem</nobr></td>
+<td align=center valign=top><nobr>Gabor</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:02.232</nobr></td>
+<td align=center valign=top><nobr>15:29:43.713</nobr></td>
+<td align=center valign=top><nobr>09:02.232</nobr></td>
+<td valign=top><nobr>1: 09:02.232</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td align=center valign=top><nobr>82</nobr></td>
+<td align=center valign=top><nobr>N&uuml;tzl</nobr></td>
+<td align=center valign=top><nobr>Philip</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:07.086</nobr></td>
+<td align=center valign=top><nobr>15:29:48.567</nobr></td>
+<td align=center valign=top><nobr>09:07.086</nobr></td>
+<td valign=top><nobr>1: 09:07.086</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td align=center valign=top><nobr>58</nobr></td>
+<td align=center valign=top><nobr>Reiterer</nobr></td>
+<td align=center valign=top><nobr>Simon</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:10.740</nobr></td>
+<td align=center valign=top><nobr>15:29:52.221</nobr></td>
+<td align=center valign=top><nobr>09:10.740</nobr></td>
+<td valign=top><nobr>1: 09:10.740</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>17</nobr></td>
+<td align=center valign=top><nobr>90</nobr></td>
+<td align=center valign=top><nobr>Schlepp</nobr></td>
+<td align=center valign=top><nobr>Leonhard</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:12.909</nobr></td>
+<td align=center valign=top><nobr>15:29:54.390</nobr></td>
+<td align=center valign=top><nobr>09:12.909</nobr></td>
+<td valign=top><nobr>1: 09:12.909</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>18</nobr></td>
+<td align=center valign=top><nobr>126</nobr></td>
+<td align=center valign=top><nobr>Baumann</nobr></td>
+<td align=center valign=top><nobr>Alexander</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:14.347</nobr></td>
+<td align=center valign=top><nobr>15:29:55.828</nobr></td>
+<td align=center valign=top><nobr>09:14.347</nobr></td>
+<td valign=top><nobr>1: 09:14.347</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>19</nobr></td>
+<td align=center valign=top><nobr>81</nobr></td>
+<td align=center valign=top><nobr>Niedermeier</nobr></td>
+<td align=center valign=top><nobr>Vitus</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:19.598</nobr></td>
+<td align=center valign=top><nobr>15:30:01.079</nobr></td>
+<td align=center valign=top><nobr>09:19.598</nobr></td>
+<td valign=top><nobr>1: 09:19.598</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>20</nobr></td>
+<td align=center valign=top><nobr>32</nobr></td>
+<td align=center valign=top><nobr>Eberl</nobr></td>
+<td align=center valign=top><nobr>Sam</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:22.534</nobr></td>
+<td align=center valign=top><nobr>15:30:04.015</nobr></td>
+<td align=center valign=top><nobr>09:22.534</nobr></td>
+<td valign=top><nobr>1: 09:22.534</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>21</nobr></td>
+<td align=center valign=top><nobr>27</nobr></td>
+<td align=center valign=top><nobr>Ga&szlig;ner</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:27.785</nobr></td>
+<td align=center valign=top><nobr>15:30:09.266</nobr></td>
+<td align=center valign=top><nobr>09:27.785</nobr></td>
+<td valign=top><nobr>1: 09:27.785</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>22</nobr></td>
+<td align=center valign=top><nobr>69</nobr></td>
+<td align=center valign=top><nobr>Niedermeier</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:35.192</nobr></td>
+<td align=center valign=top><nobr>15:30:16.673</nobr></td>
+<td align=center valign=top><nobr>09:35.192</nobr></td>
+<td valign=top><nobr>1: 09:35.192</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>23</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td align=center valign=top><nobr>Eckl</nobr></td>
+<td align=center valign=top><nobr>Tobias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:35.718</nobr></td>
+<td align=center valign=top><nobr>15:30:17.199</nobr></td>
+<td align=center valign=top><nobr>09:35.718</nobr></td>
+<td valign=top><nobr>1: 09:35.718</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>24</nobr></td>
+<td align=center valign=top><nobr>75</nobr></td>
+<td align=center valign=top><nobr>Weichselgartner</nobr></td>
+<td align=center valign=top><nobr>Dominik</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:36.963</nobr></td>
+<td align=center valign=top><nobr>15:30:18.444</nobr></td>
+<td align=center valign=top><nobr>09:36.963</nobr></td>
+<td valign=top><nobr>1: 09:36.963</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>25</nobr></td>
+<td align=center valign=top><nobr>129</nobr></td>
+<td align=center valign=top><nobr>Deinb&ouml;ck</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Triumph TF 250 X</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:40.825</nobr></td>
+<td align=center valign=top><nobr>15:30:22.306</nobr></td>
+<td align=center valign=top><nobr>09:40.825</nobr></td>
+<td valign=top><nobr>1: 09:40.825</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>26</nobr></td>
+<td align=center valign=top><nobr>2</nobr></td>
+<td align=center valign=top><nobr>Aigner</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:40.953</nobr></td>
+<td align=center valign=top><nobr>15:30:22.434</nobr></td>
+<td align=center valign=top><nobr>09:40.953</nobr></td>
+<td valign=top><nobr>1: 09:40.953</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>27</nobr></td>
+<td align=center valign=top><nobr>64</nobr></td>
+<td align=center valign=top><nobr>Maier</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:43.379</nobr></td>
+<td align=center valign=top><nobr>15:30:24.860</nobr></td>
+<td align=center valign=top><nobr>09:43.379</nobr></td>
+<td valign=top><nobr>1: 09:43.379</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>28</nobr></td>
+<td align=center valign=top><nobr>124</nobr></td>
+<td align=center valign=top><nobr>Paukner</nobr></td>
+<td align=center valign=top><nobr>Leo</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:50.067</nobr></td>
+<td align=center valign=top><nobr>15:30:31.548</nobr></td>
+<td align=center valign=top><nobr>09:50.067</nobr></td>
+<td valign=top><nobr>1: 09:50.067</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>29</nobr></td>
+<td align=center valign=top><nobr>115</nobr></td>
+<td align=center valign=top><nobr>Haider</nobr></td>
+<td align=center valign=top><nobr>Felix</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 09:58.788</nobr></td>
+<td align=center valign=top><nobr>15:30:40.269</nobr></td>
+<td align=center valign=top><nobr>09:58.788</nobr></td>
+<td valign=top><nobr>1: 09:58.788</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>30</nobr></td>
+<td align=center valign=top><nobr>28</nobr></td>
+<td align=center valign=top><nobr>Simmel</nobr></td>
+<td align=center valign=top><nobr>Martin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:00.745</nobr></td>
+<td align=center valign=top><nobr>15:30:42.226</nobr></td>
+<td align=center valign=top><nobr>10:00.745</nobr></td>
+<td valign=top><nobr>1: 10:00.745</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>31</nobr></td>
+<td align=center valign=top><nobr>76</nobr></td>
+<td align=center valign=top><nobr>Miller</nobr></td>
+<td align=center valign=top><nobr>Alois</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:09.142</nobr></td>
+<td align=center valign=top><nobr>15:30:50.623</nobr></td>
+<td align=center valign=top><nobr>10:09.142</nobr></td>
+<td valign=top><nobr>1: 10:09.142</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>32</nobr></td>
+<td align=center valign=top><nobr>29</nobr></td>
+<td align=center valign=top><nobr>Hotz</nobr></td>
+<td align=center valign=top><nobr>Lukas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:16.021</nobr></td>
+<td align=center valign=top><nobr>15:30:57.502</nobr></td>
+<td align=center valign=top><nobr>10:16.021</nobr></td>
+<td valign=top><nobr>1: 10:16.021</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>33</nobr></td>
+<td align=center valign=top><nobr>35</nobr></td>
+<td align=center valign=top><nobr>Knogler</nobr></td>
+<td align=center valign=top><nobr>Louis</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:23.555</nobr></td>
+<td align=center valign=top><nobr>15:31:05.036</nobr></td>
+<td align=center valign=top><nobr>10:23.555</nobr></td>
+<td valign=top><nobr>1: 10:23.555</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>34</nobr></td>
+<td align=center valign=top><nobr>3</nobr></td>
+<td align=center valign=top><nobr>Baier</nobr></td>
+<td align=center valign=top><nobr>Johannes</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:25.735</nobr></td>
+<td align=center valign=top><nobr>15:31:07.216</nobr></td>
+<td align=center valign=top><nobr>10:25.735</nobr></td>
+<td valign=top><nobr>1: 10:25.735</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>35</nobr></td>
+<td align=center valign=top><nobr>96</nobr></td>
+<td align=center valign=top><nobr>Haderer</nobr></td>
+<td align=center valign=top><nobr>Maxi</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:27.225</nobr></td>
+<td align=center valign=top><nobr>15:31:08.706</nobr></td>
+<td align=center valign=top><nobr>10:27.225</nobr></td>
+<td valign=top><nobr>1: 10:27.225</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>36</nobr></td>
+<td align=center valign=top><nobr>30</nobr></td>
+<td align=center valign=top><nobr>Geidobler</nobr></td>
+<td align=center valign=top><nobr>Andreas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:28.263</nobr></td>
+<td align=center valign=top><nobr>15:31:09.744</nobr></td>
+<td align=center valign=top><nobr>10:28.263</nobr></td>
+<td valign=top><nobr>1: 10:28.263</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>37</nobr></td>
+<td align=center valign=top><nobr>110</nobr></td>
+<td align=center valign=top><nobr>Zettl</nobr></td>
+<td align=center valign=top><nobr>Toni</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:28.726</nobr></td>
+<td align=center valign=top><nobr>15:31:10.207</nobr></td>
+<td align=center valign=top><nobr>10:28.726</nobr></td>
+<td valign=top><nobr>1: 10:28.726</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>38</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td align=center valign=top><nobr>Weindl</nobr></td>
+<td align=center valign=top><nobr>Jakob</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:38.431</nobr></td>
+<td align=center valign=top><nobr>15:31:19.912</nobr></td>
+<td align=center valign=top><nobr>10:38.431</nobr></td>
+<td valign=top><nobr>1: 10:38.431</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>39</nobr></td>
+<td align=center valign=top><nobr>97</nobr></td>
+<td align=center valign=top><nobr>Sporrer</nobr></td>
+<td align=center valign=top><nobr>Johannes</nobr></td>
+<td align=center valign=top><nobr>Triumph TF 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:40.586</nobr></td>
+<td align=center valign=top><nobr>15:31:22.067</nobr></td>
+<td align=center valign=top><nobr>10:40.586</nobr></td>
+<td valign=top><nobr>1: 10:40.586</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>40</nobr></td>
+<td align=center valign=top><nobr>79</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Gerhard</nobr></td>
+<td align=center valign=top><nobr>Hurqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:47.145</nobr></td>
+<td align=center valign=top><nobr>15:31:28.626</nobr></td>
+<td align=center valign=top><nobr>10:47.145</nobr></td>
+<td valign=top><nobr>1: 10:47.145</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>41</nobr></td>
+<td align=center valign=top><nobr>78</nobr></td>
+<td align=center valign=top><nobr>Paukner</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:50.034</nobr></td>
+<td align=center valign=top><nobr>15:31:31.515</nobr></td>
+<td align=center valign=top><nobr>10:50.034</nobr></td>
+<td valign=top><nobr>1: 10:50.034</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>42</nobr></td>
+<td align=center valign=top><nobr>7</nobr></td>
+<td align=center valign=top><nobr>Braun</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 10:50.497</nobr></td>
+<td align=center valign=top><nobr>15:31:31.978</nobr></td>
+<td align=center valign=top><nobr>10:50.497</nobr></td>
+<td valign=top><nobr>1: 10:50.497</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>43</nobr></td>
+<td align=center valign=top><nobr>19</nobr></td>
+<td align=center valign=top><nobr>Englberger</nobr></td>
+<td align=center valign=top><nobr>Jonas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:02.611</nobr></td>
+<td align=center valign=top><nobr>15:31:44.092</nobr></td>
+<td align=center valign=top><nobr>11:02.611</nobr></td>
+<td valign=top><nobr>1: 11:02.611</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>44</nobr></td>
+<td align=center valign=top><nobr>108</nobr></td>
+<td align=center valign=top><nobr>&Uuml;berreiter</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:04.046</nobr></td>
+<td align=center valign=top><nobr>15:31:45.527</nobr></td>
+<td align=center valign=top><nobr>11:04.046</nobr></td>
+<td valign=top><nobr>1: 11:04.046</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>45</nobr></td>
+<td align=center valign=top><nobr>45</nobr></td>
+<td align=center valign=top><nobr>Horsch</nobr></td>
+<td align=center valign=top><nobr>David</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:29.089</nobr></td>
+<td align=center valign=top><nobr>15:32:10.570</nobr></td>
+<td align=center valign=top><nobr>11:29.089</nobr></td>
+<td valign=top><nobr>1: 11:29.089</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>46</nobr></td>
+<td align=center valign=top><nobr>5</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Benjamin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:33.081</nobr></td>
+<td align=center valign=top><nobr>15:32:14.562</nobr></td>
+<td align=center valign=top><nobr>11:33.081</nobr></td>
+<td valign=top><nobr>1: 11:33.081</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>47</nobr></td>
+<td align=center valign=top><nobr>56</nobr></td>
+<td align=center valign=top><nobr>Krieger</nobr></td>
+<td align=center valign=top><nobr>Paula</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:37.093</nobr></td>
+<td align=center valign=top><nobr>15:32:18.574</nobr></td>
+<td align=center valign=top><nobr>11:37.093</nobr></td>
+<td valign=top><nobr>1: 11:37.093</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>48</nobr></td>
+<td align=center valign=top><nobr>52</nobr></td>
+<td align=center valign=top><nobr>Karpfinger</nobr></td>
+<td align=center valign=top><nobr>Stephan</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:37.615</nobr></td>
+<td align=center valign=top><nobr>15:32:19.096</nobr></td>
+<td align=center valign=top><nobr>11:37.615</nobr></td>
+<td valign=top><nobr>1: 11:37.615</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>49</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td align=center valign=top><nobr>Rieder</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:38.986</nobr></td>
+<td align=center valign=top><nobr>15:32:20.467</nobr></td>
+<td align=center valign=top><nobr>11:38.986</nobr></td>
+<td valign=top><nobr>1: 11:38.986</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>50</nobr></td>
+<td align=center valign=top><nobr>117</nobr></td>
+<td align=center valign=top><nobr>Wittmann</nobr></td>
+<td align=center valign=top><nobr>Oliver</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:44.364</nobr></td>
+<td align=center valign=top><nobr>15:32:25.845</nobr></td>
+<td align=center valign=top><nobr>11:44.364</nobr></td>
+<td valign=top><nobr>1: 11:44.364</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>51</nobr></td>
+<td align=center valign=top><nobr>60</nobr></td>
+<td align=center valign=top><nobr>Landendinger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:44.814</nobr></td>
+<td align=center valign=top><nobr>15:32:26.295</nobr></td>
+<td align=center valign=top><nobr>11:44.814</nobr></td>
+<td valign=top><nobr>1: 11:44.814</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>52</nobr></td>
+<td align=center valign=top><nobr>18</nobr></td>
+<td align=center valign=top><nobr>Englberger</nobr></td>
+<td align=center valign=top><nobr>Christof</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:46.376</nobr></td>
+<td align=center valign=top><nobr>15:32:27.857</nobr></td>
+<td align=center valign=top><nobr>11:46.376</nobr></td>
+<td valign=top><nobr>1: 11:46.376</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>53</nobr></td>
+<td align=center valign=top><nobr>125</nobr></td>
+<td align=center valign=top><nobr>Brettner</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:47.237</nobr></td>
+<td align=center valign=top><nobr>15:32:28.718</nobr></td>
+<td align=center valign=top><nobr>11:47.237</nobr></td>
+<td valign=top><nobr>1: 11:47.237</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>54</nobr></td>
+<td align=center valign=top><nobr>92</nobr></td>
+<td align=center valign=top><nobr>Schneider</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:49.265</nobr></td>
+<td align=center valign=top><nobr>15:32:30.746</nobr></td>
+<td align=center valign=top><nobr>11:49.265</nobr></td>
+<td valign=top><nobr>1: 11:49.265</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>55</nobr></td>
+<td align=center valign=top><nobr>66</nobr></td>
+<td align=center valign=top><nobr>B&uuml;chl</nobr></td>
+<td align=center valign=top><nobr>Alexander</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:51.500</nobr></td>
+<td align=center valign=top><nobr>15:32:32.981</nobr></td>
+<td align=center valign=top><nobr>11:51.500</nobr></td>
+<td valign=top><nobr>1: 11:51.500</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>56</nobr></td>
+<td align=center valign=top><nobr>34</nobr></td>
+<td align=center valign=top><nobr>H&ouml;gl</nobr></td>
+<td align=center valign=top><nobr>J&uuml;rgen</nobr></td>
+<td align=center valign=top><nobr>Gas Gas EC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 11:52.360</nobr></td>
+<td align=center valign=top><nobr>15:32:33.841</nobr></td>
+<td align=center valign=top><nobr>11:52.360</nobr></td>
+<td valign=top><nobr>1: 11:52.360</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>57</nobr></td>
+<td align=center valign=top><nobr>55</nobr></td>
+<td align=center valign=top><nobr>Kasseckert</nobr></td>
+<td align=center valign=top><nobr>Lucas</nobr></td>
+<td align=center valign=top><nobr>Beta RX 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:01.841</nobr></td>
+<td align=center valign=top><nobr>15:32:43.322</nobr></td>
+<td align=center valign=top><nobr>12:01.841</nobr></td>
+<td valign=top><nobr>1: 12:01.841</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>58</nobr></td>
+<td align=center valign=top><nobr>70</nobr></td>
+<td align=center valign=top><nobr>Mayerhofer</nobr></td>
+<td align=center valign=top><nobr>Lukas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:14.499</nobr></td>
+<td align=center valign=top><nobr>15:32:55.980</nobr></td>
+<td align=center valign=top><nobr>12:14.499</nobr></td>
+<td valign=top><nobr>1: 12:14.499</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>59</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td align=center valign=top><nobr>Baumgartner</nobr></td>
+<td align=center valign=top><nobr>Paul</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:26.630</nobr></td>
+<td align=center valign=top><nobr>15:33:08.111</nobr></td>
+<td align=center valign=top><nobr>12:26.630</nobr></td>
+<td valign=top><nobr>1: 12:26.630</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>60</nobr></td>
+<td align=center valign=top><nobr>113</nobr></td>
+<td align=center valign=top><nobr>Wagner</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:27.795</nobr></td>
+<td align=center valign=top><nobr>15:33:09.276</nobr></td>
+<td align=center valign=top><nobr>12:27.795</nobr></td>
+<td valign=top><nobr>1: 12:27.795</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>61</nobr></td>
+<td align=center valign=top><nobr>107</nobr></td>
+<td align=center valign=top><nobr>Tschannerl</nobr></td>
+<td align=center valign=top><nobr>Philipp</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:29.585</nobr></td>
+<td align=center valign=top><nobr>15:33:11.066</nobr></td>
+<td align=center valign=top><nobr>12:29.585</nobr></td>
+<td valign=top><nobr>1: 12:29.585</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>62</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td align=center valign=top><nobr>Riebesecker</nobr></td>
+<td align=center valign=top><nobr>Georg</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:32.791</nobr></td>
+<td align=center valign=top><nobr>15:33:14.272</nobr></td>
+<td align=center valign=top><nobr>12:32.791</nobr></td>
+<td valign=top><nobr>1: 12:32.791</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>63</nobr></td>
+<td align=center valign=top><nobr>38</nobr></td>
+<td align=center valign=top><nobr>Ehrl</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:34.528</nobr></td>
+<td align=center valign=top><nobr>15:33:16.009</nobr></td>
+<td align=center valign=top><nobr>12:34.528</nobr></td>
+<td valign=top><nobr>1: 12:34.528</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>64</nobr></td>
+<td align=center valign=top><nobr>101</nobr></td>
+<td align=center valign=top><nobr>Stra&szlig;er</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Sherco SEF 450</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:38.425</nobr></td>
+<td align=center valign=top><nobr>15:33:19.906</nobr></td>
+<td align=center valign=top><nobr>12:38.425</nobr></td>
+<td valign=top><nobr>1: 12:38.425</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>65</nobr></td>
+<td align=center valign=top><nobr>102</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Franz</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 150</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:39.989</nobr></td>
+<td align=center valign=top><nobr>15:33:21.470</nobr></td>
+<td align=center valign=top><nobr>12:39.989</nobr></td>
+<td valign=top><nobr>1: 12:39.989</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>66</nobr></td>
+<td align=center valign=top><nobr>114</nobr></td>
+<td align=center valign=top><nobr>Wegmann</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 480</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:42.687</nobr></td>
+<td align=center valign=top><nobr>15:33:24.168</nobr></td>
+<td align=center valign=top><nobr>12:42.687</nobr></td>
+<td valign=top><nobr>1: 12:42.687</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>67</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td align=center valign=top><nobr>Daffner</nobr></td>
+<td align=center valign=top><nobr>Philipp</nobr></td>
+<td align=center valign=top><nobr>Beta RR 390</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:44.060</nobr></td>
+<td align=center valign=top><nobr>15:33:25.541</nobr></td>
+<td align=center valign=top><nobr>12:44.060</nobr></td>
+<td valign=top><nobr>1: 12:44.060</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>68</nobr></td>
+<td align=center valign=top><nobr>62</nobr></td>
+<td align=center valign=top><nobr>Lindtner</nobr></td>
+<td align=center valign=top><nobr>Martin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:45.246</nobr></td>
+<td align=center valign=top><nobr>15:33:26.727</nobr></td>
+<td align=center valign=top><nobr>12:45.246</nobr></td>
+<td valign=top><nobr>1: 12:45.246</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>69</nobr></td>
+<td align=center valign=top><nobr>49</nobr></td>
+<td align=center valign=top><nobr>H&uuml;ttinger</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>Kawasaki KXF 450</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:47.012</nobr></td>
+<td align=center valign=top><nobr>15:33:28.493</nobr></td>
+<td align=center valign=top><nobr>12:47.012</nobr></td>
+<td valign=top><nobr>1: 12:47.012</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>70</nobr></td>
+<td align=center valign=top><nobr>39</nobr></td>
+<td align=center valign=top><nobr>Forstner</nobr></td>
+<td align=center valign=top><nobr>Ralf</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:49.294</nobr></td>
+<td align=center valign=top><nobr>15:33:30.775</nobr></td>
+<td align=center valign=top><nobr>12:49.294</nobr></td>
+<td valign=top><nobr>1: 12:49.294</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>71</nobr></td>
+<td align=center valign=top><nobr>68</nobr></td>
+<td align=center valign=top><nobr>Mayer</nobr></td>
+<td align=center valign=top><nobr>Anton</nobr></td>
+<td align=center valign=top><nobr>Beta RR 200</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:52.391</nobr></td>
+<td align=center valign=top><nobr>15:33:33.872</nobr></td>
+<td align=center valign=top><nobr>12:52.391</nobr></td>
+<td valign=top><nobr>1: 12:52.391</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>72</nobr></td>
+<td align=center valign=top><nobr>44</nobr></td>
+<td align=center valign=top><nobr>Ostheimer</nobr></td>
+<td align=center valign=top><nobr>Heribert</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:52.582</nobr></td>
+<td align=center valign=top><nobr>15:33:34.063</nobr></td>
+<td align=center valign=top><nobr>12:52.582</nobr></td>
+<td valign=top><nobr>1: 12:52.582</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>73</nobr></td>
+<td align=center valign=top><nobr>31</nobr></td>
+<td align=center valign=top><nobr>Geigenberger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:54.019</nobr></td>
+<td align=center valign=top><nobr>15:33:35.500</nobr></td>
+<td align=center valign=top><nobr>12:54.019</nobr></td>
+<td valign=top><nobr>1: 12:54.019</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>74</nobr></td>
+<td align=center valign=top><nobr>89</nobr></td>
+<td align=center valign=top><nobr>Scheibinger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:55.535</nobr></td>
+<td align=center valign=top><nobr>15:33:37.016</nobr></td>
+<td align=center valign=top><nobr>12:55.535</nobr></td>
+<td valign=top><nobr>1: 12:55.535</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>75</nobr></td>
+<td align=center valign=top><nobr>99</nobr></td>
+<td align=center valign=top><nobr>Spagert</nobr></td>
+<td align=center valign=top><nobr>Timo</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:56.891</nobr></td>
+<td align=center valign=top><nobr>15:33:38.372</nobr></td>
+<td align=center valign=top><nobr>12:56.891</nobr></td>
+<td valign=top><nobr>1: 12:56.891</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>76</nobr></td>
+<td align=center valign=top><nobr>71</nobr></td>
+<td align=center valign=top><nobr>Meier</nobr></td>
+<td align=center valign=top><nobr>Maximilian</nobr></td>
+<td align=center valign=top><nobr>Kawasaki KXF 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 12:57.688</nobr></td>
+<td align=center valign=top><nobr>15:33:39.169</nobr></td>
+<td align=center valign=top><nobr>12:57.688</nobr></td>
+<td valign=top><nobr>1: 12:57.688</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>77</nobr></td>
+<td align=center valign=top><nobr>73</nobr></td>
+<td align=center valign=top><nobr>Abtmaier</nobr></td>
+<td align=center valign=top><nobr>Ed</nobr></td>
+<td align=center valign=top><nobr>Sherco SE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:00.643</nobr></td>
+<td align=center valign=top><nobr>15:33:42.124</nobr></td>
+<td align=center valign=top><nobr>13:00.643</nobr></td>
+<td valign=top><nobr>1: 13:00.643</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>78</nobr></td>
+<td align=center valign=top><nobr>59</nobr></td>
+<td align=center valign=top><nobr>Huber</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:01.744</nobr></td>
+<td align=center valign=top><nobr>15:33:43.225</nobr></td>
+<td align=center valign=top><nobr>13:01.744</nobr></td>
+<td valign=top><nobr>1: 13:01.744</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>79</nobr></td>
+<td align=center valign=top><nobr>93</nobr></td>
+<td align=center valign=top><nobr>Seidl</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:03.068</nobr></td>
+<td align=center valign=top><nobr>15:33:44.549</nobr></td>
+<td align=center valign=top><nobr>13:03.068</nobr></td>
+<td valign=top><nobr>1: 13:03.068</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>80</nobr></td>
+<td align=center valign=top><nobr>24</nobr></td>
+<td align=center valign=top><nobr>Fleischmann</nobr></td>
+<td align=center valign=top><nobr>Rolf</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:06.021</nobr></td>
+<td align=center valign=top><nobr>15:33:47.502</nobr></td>
+<td align=center valign=top><nobr>13:06.021</nobr></td>
+<td valign=top><nobr>1: 13:06.021</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>81</nobr></td>
+<td align=center valign=top><nobr>111</nobr></td>
+<td align=center valign=top><nobr>Rabl</nobr></td>
+<td align=center valign=top><nobr>Werner P.</nobr></td>
+<td align=center valign=top><nobr>Beta XT 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:08.559</nobr></td>
+<td align=center valign=top><nobr>15:33:50.040</nobr></td>
+<td align=center valign=top><nobr>13:08.559</nobr></td>
+<td valign=top><nobr>1: 13:08.559</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>82</nobr></td>
+<td align=center valign=top><nobr>112</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:11.574</nobr></td>
+<td align=center valign=top><nobr>15:33:53.055</nobr></td>
+<td align=center valign=top><nobr>13:11.574</nobr></td>
+<td valign=top><nobr>1: 13:11.574</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>83</nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td align=center valign=top><nobr>Zehentbauer</nobr></td>
+<td align=center valign=top><nobr>Didi</nobr></td>
+<td align=center valign=top><nobr>Fantic 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:12.580</nobr></td>
+<td align=center valign=top><nobr>15:33:54.061</nobr></td>
+<td align=center valign=top><nobr>13:12.580</nobr></td>
+<td valign=top><nobr>1: 13:12.580</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>84</nobr></td>
+<td align=center valign=top><nobr>46</nobr></td>
+<td align=center valign=top><nobr>Moser</nobr></td>
+<td align=center valign=top><nobr>Jonas</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:15.117</nobr></td>
+<td align=center valign=top><nobr>15:33:56.598</nobr></td>
+<td align=center valign=top><nobr>13:15.117</nobr></td>
+<td valign=top><nobr>1: 13:15.117</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>85</nobr></td>
+<td align=center valign=top><nobr>51</nobr></td>
+<td align=center valign=top><nobr>Gantze</nobr></td>
+<td align=center valign=top><nobr>Ronny</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:17.819</nobr></td>
+<td align=center valign=top><nobr>15:33:59.300</nobr></td>
+<td align=center valign=top><nobr>13:17.819</nobr></td>
+<td valign=top><nobr>1: 13:17.819</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>86</nobr></td>
+<td align=center valign=top><nobr>88</nobr></td>
+<td align=center valign=top><nobr>Schauer</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:20.482</nobr></td>
+<td align=center valign=top><nobr>15:34:01.963</nobr></td>
+<td align=center valign=top><nobr>13:20.482</nobr></td>
+<td valign=top><nobr>1: 13:20.482</nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>87</nobr></td>
+<td align=center valign=top><nobr>84</nobr></td>
+<td align=center valign=top><nobr>Rigel</nobr></td>
+<td align=center valign=top><nobr>Richard</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:23.052</nobr></td>
+<td align=center valign=top><nobr>15:34:04.533</nobr></td>
+<td align=center valign=top><nobr>13:23.052</nobr></td>
+<td valign=top><nobr>1: 13:23.052</nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>88</nobr></td>
+<td align=center valign=top><nobr>47</nobr></td>
+<td align=center valign=top><nobr>Huber</nobr></td>
+<td align=center valign=top><nobr>Florian</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 250</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:23.244</nobr></td>
+<td align=center valign=top><nobr>15:34:04.725</nobr></td>
+<td align=center valign=top><nobr>13:23.244</nobr></td>
+<td valign=top><nobr>1: 13:23.244</nobr></td>
+</tr>
+<tr class="odd">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Name</th>
+<th>Vorname</th>
+<th>Motorrad</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+</tr>
+</table>
+<p>
+* Runden/Zeitstrafe beachtet
+<br>
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+</td></tr>
+</table>
 </body>
 </html>

@@ -1,12 +1,1848 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <title></title>
+<title>MXStats V4.5 - http://mxstats.tk</title>
+<style type=text/css>
+body
+{
+	background-attachment: fixed;
+}
+table
+{
+	border-collapse: collapse;
+	border: 0px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+th
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+	vertical-align: top;
+	text-align: center;
+}
+td
+{
+	border: 1px solid #000000;
+	font-family: arial;
+	font-size: 12;
+	padding: 3px;
+}
+.even
+{
+
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWM4ceLEQQAHzgMaUUKpfgAAAABJRU5ErkJggg==);
+}
+.odd
+{
+	background-color: transparent;
+}
+.plus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIXhI8Wy6ze3gKRQkeTksFO31WR2FQaUgAAOw==);
+}
+.minus
+{
+	cursor: pointer;
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.minus_nopointer
+{
+	width: 11px;
+	height: 11px;
+	background-image: url(data:image/gif;base64,R0lGODlhCwALAIABAAAAAP///yH5BAEAAAEALAAAAAALAAsAAAIUhI8Wy6zdHlxyqnTBdHqHCoERlhQAOw==);
+}
+.noborder
+{
+	border: 0px solid #000000;
+}
+.event
+{
+	color: #404040;
+	text-align: left;
+	font-family: arial;
+	font-size: 25;
+	font-weight: bold;
+	padding: 3px;
+}
+.location
+{
+	color: #606060;
+	text-align: left;
+	font-family: arial;
+	font-size: 20;
+	font-weight: bold;
+	padding: 3px;
+}
+.date
+{
+	color: #808080;
+	text-align: left;
+	font-family: arial;
+	font-size: 15;
+	font-weight: bold;
+	padding: 3px;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+function ftoggle(object1_id, object2_id, image_id)
+{
+	image = document.getElementById(image_id);
+	if(image.className == "plus")
+	{
+		image.className = "minus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "block";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "block";
+		}
+	}
+	else if(image.className == "minus")
+	{
+		image.className = "plus";
+		if(object1_id != null)
+		{
+			object1 = document.getElementById(object1_id);
+			object1.style.display = "none";
+		}
+		if(object2_id != null)
+		{
+			object2 = document.getElementById(object2_id);
+			object2.style.display = "none";
+		}
+	}
+}
+
+function ftoggle_all()
+{
+	image = document.getElementById('img_0');
+	if(image.className == "minus")
+	{
+		image.className = "plus";
+		replace_minus();
+		replace_block();
+	}
+	else if(image.className == "plus")
+	{
+		image.className = "minus";
+		replace_plus();
+		replace_none();
+	}
+}
+
+function replace_minus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].id != "" && l[i].className == "minus")
+		{
+			l[i].className = "plus";
+		}
+	}
+}
+
+function replace_plus()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].className == "plus")
+		{
+			l[i].className = "minus";
+		}
+	}
+}
+
+function replace_block()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "block")
+		{
+			l[i].style.display = "none";
+		}
+	}
+}
+
+function replace_none()
+{
+	l = document.getElementsByTagName('div');
+	for(var i = 0; i < l.length; i++)
+	{
+		if(l[i].style.display == "none")
+		{
+			l[i].style.display = "block";
+		}
+	}
+}
+</script>
 </head>
-<body>
-<canvas id="565a7b4ce0c540e1b68f237f6a51bccc"></canvas>
-<script>
-var images=['data:image/bmp;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAYAAACadoJwAAAACXBIWXMAAA7DAAAOwwHHb6hkAABIT0lEQVR4nOzdC6xtV1U3cFFJfCUFg4IJIkZCAFEeIYhSGyLV0ogBoSAJGEEQKoK8Gmyw8giaQqAKolAs0sSirVQKlmglvEIw0qSCCDY1SDRGoNRHQPFDax/7+8aRw3d7evbea6095xpr3/GbyQjae89cY/33b++75tnr8TVf8zVfs1IyYIABBhhggAEGGGCAgZkMCFoGDDDAAAMMMMAAAwwwMJsB2GTAAAMMMMAAAwwwwAADFiAQ+CBggAEGGGCAAQYYYODkM5DegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMM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DDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQB0D6Q0oGTDAAAMMMMAAAwwwUMdAegNKBgwwwAADDDDAAAMM1DGQ3oCSAQMMMMAAAwwwwAADdQykN6BkwAADDDDAAAMMMMBAHQPpDSgZMMAAAwwwwAADDDBQx0B6A0oGDDDAAAMMMMAAAwzUMZDegJIBAwwwwAADDDDAAAN1DKQ3oGTAAAMMMMAAAwwwwEAdA+kNKBkwwAADDDDAAAMMMFDHQHoDSgYMMMAAAwwwwAADDNQxkN6AkgEDDDDAAAMMMMAAA3UMpDegZMAAAwwwwAADDDDAQBED/xcAAP//ozBHmQAAAAZJREFUAwAXpuMYwGYd4wAAAABJRU5ErkJggg=='];function LoadImagesAndRender(){var loadedImages=0;for(var i=0;i<images.length;i++){var source=images[i];images[i]=new Image();images[i].src=source;images[i].onload=function(){loadedImages++;if (loadedImages==images.length){Render();}};}}function Render(){let a=document.getElementById('565a7b4ce0c540e1b68f237f6a51bccc');let b=a.getContext('2d');a.width=800;a.height=600;b.drawImage(images[0],0,0,800,600,0,0,800,600);}window.addEventListener('onload',LoadImagesAndRender());</script>
+<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" oncontextmenu="return false" ondragstart="return false" onselectstart="return false" text="black" link="black" alink="black" vlink="black">
+<table width="100%" height="100%">
+<tr><td align="center" class="noborder">
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+<br>
+* Runden/Zeitstrafe beachtet
+<p>
+<table>
+<tr class="even">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Name</th>
+<th>Vorname</th>
+<th>Motorrad</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_11" onclick="ftoggle('div_laps_11', 'div_best_laps_11', 'img_11')"></nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td align=center valign=top><nobr>Scharl</nobr></td>
+<td align=center valign=top><nobr>Robert</nobr></td>
+<td align=center valign=top><nobr>Fantic XE 300</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 07:51.300<br><div id="div_laps_11" style="display:none">15: 07:48.585<br>14: 07:42.135<br>13: 07:46.892<br>12: 07:38.440<br>11: 07:43.633<br>10: 07:43.588<br>9: 07:33.115<br>8: 08:14.762<br>7: 07:50.485<br>6: 07:58.145<br>5: 07:40.455<br>4: 07:50.921<br>3: 07:48.864<br>2: 07:32.713<br>1: 07:56.173</div></nobr></td>
+<td align=center valign=top><nobr>17:25:21.687</nobr></td>
+<td align=center valign=top><nobr>02:04:40.206</nobr></td>
+<td valign=top><nobr>1: 07:32.713<br><div id="div_best_laps_11" style="display:none">2: 07:33.115<br>3: 07:38.440<br>4: 07:40.455<br>5: 07:42.135<br>6: 07:43.588<br>7: 07:43.633<br>8: 07:46.892<br>9: 07:48.585<br>10: 07:48.864<br>11: 07:50.485<br>12: 07:50.921<br>13: 07:51.300<br>14: 07:56.173<br>15: 07:58.145<br>16: 08:14.762</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_119" onclick="ftoggle('div_laps_119', 'div_best_laps_119', 'img_119')"></nobr></td>
+<td align=center valign=top><nobr>2</nobr></td>
+<td align=center valign=top><nobr>119</nobr></td>
+<td align=center valign=top><nobr>Maier</nobr></td>
+<td align=center valign=top><nobr>Christian</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 450</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 07:38.251<br><div id="div_laps_119" style="display:none">15: 07:47.877<br>14: 07:48.819<br>13: 07:44.977<br>12: 07:51.121<br>11: 07:45.700<br>10: 07:36.642<br>9: 08:42.405<br>8: 08:04.997<br>7: 08:05.695<br>6: 07:57.264<br>5: 08:06.523<br>4: 08:04.232<br>3: 08:09.270<br>2: 07:43.649<br>1: 08:10.860</div></nobr></td>
+<td align=center valign=top><nobr>17:27:59.763</nobr></td>
+<td align=center valign=top><nobr>02:07:18.282</nobr></td>
+<td valign=top><nobr>1: 07:36.642<br><div id="div_best_laps_119" style="display:none">2: 07:38.251<br>3: 07:43.649<br>4: 07:44.977<br>5: 07:45.700<br>6: 07:47.877<br>7: 07:48.819<br>8: 07:51.121<br>9: 07:57.264<br>10: 08:04.232<br>11: 08:04.997<br>12: 08:05.695<br>13: 08:06.523<br>14: 08:09.270<br>15: 08:10.860<br>16: 08:42.405</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_103" onclick="ftoggle('div_laps_103', 'div_best_laps_103', 'img_103')"></nobr></td>
+<td align=center valign=top><nobr>3</nobr></td>
+<td align=center valign=top><nobr>103</nobr></td>
+<td align=center valign=top><nobr>Stockhammer</nobr></td>
+<td align=center valign=top><nobr>Stephan</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 07:48.260<br><div id="div_laps_103" style="display:none">15: 07:50.285<br>14: 07:49.349<br>13: 07:48.757<br>12: 07:43.396<br>11: 07:46.626<br>10: 07:46.589<br>9: 08:17.917<br>8: 07:56.189<br>7: 07:53.147<br>6: 08:05.979<br>5: 07:58.399<br>4: 08:06.372<br>3: 08:07.741<br>2: 07:56.373<br>1: 08:30.709</div></nobr></td>
+<td align=center valign=top><nobr>17:28:07.569</nobr></td>
+<td align=center valign=top><nobr>02:07:26.088</nobr></td>
+<td valign=top><nobr>1: 07:43.396<br><div id="div_best_laps_103" style="display:none">2: 07:46.589<br>3: 07:46.626<br>4: 07:48.260<br>5: 07:48.757<br>6: 07:49.349<br>7: 07:50.285<br>8: 07:53.147<br>9: 07:56.189<br>10: 07:56.373<br>11: 07:58.399<br>12: 08:05.979<br>13: 08:06.372<br>14: 08:07.741<br>15: 08:17.917<br>16: 08:30.709</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_120" onclick="ftoggle('div_laps_120', 'div_best_laps_120', 'img_120')"></nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td align=center valign=top><nobr>120</nobr></td>
+<td align=center valign=top><nobr>Steinmassl</nobr></td>
+<td align=center valign=top><nobr>Tobias</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 07:43.985<br><div id="div_laps_120" style="display:none">15: 07:47.777<br>14: 07:47.399<br>13: 07:41.497<br>12: 07:44.803<br>11: 07:46.033<br>10: 07:41.626<br>9: 08:18.844<br>8: 08:01.806<br>7: 07:54.343<br>6: 08:04.815<br>5: 08:07.847<br>4: 08:07.967<br>3: 08:03.899<br>2: 08:01.540<br>1: 08:36.807</div></nobr></td>
+<td align=center valign=top><nobr>17:28:12.469</nobr></td>
+<td align=center valign=top><nobr>02:07:30.988</nobr></td>
+<td valign=top><nobr>1: 07:41.497<br><div id="div_best_laps_120" style="display:none">2: 07:41.626<br>3: 07:43.985<br>4: 07:44.803<br>5: 07:46.033<br>6: 07:47.399<br>7: 07:47.777<br>8: 07:54.343<br>9: 08:01.540<br>10: 08:01.806<br>11: 08:03.899<br>12: 08:04.815<br>13: 08:07.847<br>14: 08:07.967<br>15: 08:18.844<br>16: 08:36.807</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_1" onclick="ftoggle('div_laps_1', 'div_best_laps_1', 'img_1')"></nobr></td>
+<td align=center valign=top><nobr>5</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 08:10.730<br><div id="div_laps_1" style="display:none">15: 08:11.741<br>14: 08:01.969<br>13: 07:48.437<br>12: 07:52.097<br>11: 07:50.153<br>10: 07:42.341<br>9: 07:54.395<br>8: 08:18.069<br>7: 07:53.754<br>6: 08:14.950<br>5: 08:15.043<br>4: 08:25.031<br>3: 08:03.501<br>2: 07:54.932<br>1: 08:12.354</div></nobr></td>
+<td align=center valign=top><nobr>17:29:30.978</nobr></td>
+<td align=center valign=top><nobr>02:08:49.497</nobr></td>
+<td valign=top><nobr>1: 07:42.341<br><div id="div_best_laps_1" style="display:none">2: 07:48.437<br>3: 07:50.153<br>4: 07:52.097<br>5: 07:53.754<br>6: 07:54.395<br>7: 07:54.932<br>8: 08:01.969<br>9: 08:03.501<br>10: 08:10.730<br>11: 08:11.741<br>12: 08:12.354<br>13: 08:14.950<br>14: 08:15.043<br>15: 08:18.069<br>16: 08:25.031</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_104" onclick="ftoggle('div_laps_104', 'div_best_laps_104', 'img_104')"></nobr></td>
+<td align=center valign=top><nobr>6</nobr></td>
+<td align=center valign=top><nobr>104</nobr></td>
+<td align=center valign=top><nobr>Selyem</nobr></td>
+<td align=center valign=top><nobr>Gabor</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 350</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td valign=top><nobr>16: 08:21.681<br><div id="div_laps_104" style="display:none">15: 08:03.775<br>14: 08:11.160<br>13: 08:05.328<br>12: 08:01.015<br>11: 08:07.821<br>10: 08:08.985<br>9: 07:58.813<br>8: 08:34.833<br>7: 08:03.483<br>6: 08:37.602<br>5: 08:43.581<br>4: 08:29.979<br>3: 08:15.422<br>2: 08:08.803<br>1: 09:02.232</div></nobr></td>
+<td align=center valign=top><nobr>17:33:35.994</nobr></td>
+<td align=center valign=top><nobr>02:12:54.513</nobr></td>
+<td valign=top><nobr>1: 07:58.813<br><div id="div_best_laps_104" style="display:none">2: 08:01.015<br>3: 08:03.483<br>4: 08:03.775<br>5: 08:05.328<br>6: 08:07.821<br>7: 08:08.803<br>8: 08:08.985<br>9: 08:11.160<br>10: 08:15.422<br>11: 08:21.681<br>12: 08:29.979<br>13: 08:34.833<br>14: 08:37.602<br>15: 08:43.581<br>16: 09:02.232</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_106" onclick="ftoggle('div_laps_106', 'div_best_laps_106', 'img_106')"></nobr></td>
+<td align=center valign=top><nobr>7</nobr></td>
+<td align=center valign=top><nobr>106</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 250</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:01.891<br><div id="div_laps_106" style="display:none">14: 08:12.822<br>13: 08:14.071<br>12: 08:08.345<br>11: 08:06.778<br>10: 08:14.926<br>9: 08:16.339<br>8: 08:19.224<br>7: 08:10.971<br>6: 08:40.343<br>5: 08:25.387<br>4: 09:20.927<br>3: 08:23.962<br>2: 08:32.518<br>1: 08:18.852</div></nobr></td>
+<td align=center valign=top><nobr>17:26:08.837</nobr></td>
+<td align=center valign=top><nobr>02:05:27.356</nobr></td>
+<td valign=top><nobr>1: 08:01.891<br><div id="div_best_laps_106" style="display:none">2: 08:06.778<br>3: 08:08.345<br>4: 08:10.971<br>5: 08:12.822<br>6: 08:14.071<br>7: 08:14.926<br>8: 08:16.339<br>9: 08:18.852<br>10: 08:19.224<br>11: 08:23.962<br>12: 08:25.387<br>13: 08:32.518<br>14: 08:40.343<br>15: 09:20.927</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_129" onclick="ftoggle('div_laps_129', 'div_best_laps_129', 'img_129')"></nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td align=center valign=top><nobr>129</nobr></td>
+<td align=center valign=top><nobr>Deinb&ouml;ck</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Triumph TF 250 X</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:17.965<br><div id="div_laps_129" style="display:none">14: 08:25.477<br>13: 08:12.765<br>12: 08:11.582<br>11: 08:09.641<br>10: 08:09.224<br>9: 08:05.691<br>8: 08:16.383<br>7: 08:26.692<br>6: 08:19.498<br>5: 08:16.961<br>4: 08:18.728<br>3: 08:20.018<br>2: 08:19.481<br>1: 09:40.825</div></nobr></td>
+<td align=center valign=top><nobr>17:26:12.412</nobr></td>
+<td align=center valign=top><nobr>02:05:30.931</nobr></td>
+<td valign=top><nobr>1: 08:05.691<br><div id="div_best_laps_129" style="display:none">2: 08:09.224<br>3: 08:09.641<br>4: 08:11.582<br>5: 08:12.765<br>6: 08:16.383<br>7: 08:16.961<br>8: 08:17.965<br>9: 08:18.728<br>10: 08:19.481<br>11: 08:19.498<br>12: 08:20.018<br>13: 08:25.477<br>14: 08:26.692<br>15: 09:40.825</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_32" onclick="ftoggle('div_laps_32', 'div_best_laps_32', 'img_32')"></nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td align=center valign=top><nobr>32</nobr></td>
+<td align=center valign=top><nobr>Eberl</nobr></td>
+<td align=center valign=top><nobr>Sam</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:06.391<br><div id="div_laps_32" style="display:none">14: 08:19.176<br>13: 08:14.202<br>12: 08:25.898<br>11: 08:20.664<br>10: 08:30.073<br>9: 08:14.822<br>8: 08:06.966<br>7: 07:57.881<br>6: 08:27.625<br>5: 08:20.233<br>4: 08:22.700<br>3: 08:21.538<br>2: 08:37.131<br>1: 09:22.534</div></nobr></td>
+<td align=center valign=top><nobr>17:26:29.315</nobr></td>
+<td align=center valign=top><nobr>02:05:47.834</nobr></td>
+<td valign=top><nobr>1: 07:57.881<br><div id="div_best_laps_32" style="display:none">2: 08:06.391<br>3: 08:06.966<br>4: 08:14.202<br>5: 08:14.822<br>6: 08:19.176<br>7: 08:20.233<br>8: 08:20.664<br>9: 08:21.538<br>10: 08:22.700<br>11: 08:25.898<br>12: 08:27.625<br>13: 08:30.073<br>14: 08:37.131<br>15: 09:22.534</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_26" onclick="ftoggle('div_laps_26', 'div_best_laps_26', 'img_26')"></nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td align=center valign=top><nobr>26</nobr></td>
+<td align=center valign=top><nobr>Wagenhofer</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:27.907<br><div id="div_laps_26" style="display:none">14: 08:26.547<br>13: 08:16.611<br>12: 08:22.451<br>11: 08:21.658<br>10: 08:26.477<br>9: 08:19.101<br>8: 08:22.353<br>7: 08:18.453<br>6: 08:32.762<br>5: 08:42.276<br>4: 08:42.557<br>3: 08:28.080<br>2: 08:24.216<br>1: 08:43.753</div></nobr></td>
+<td align=center valign=top><nobr>17:27:36.683</nobr></td>
+<td align=center valign=top><nobr>02:06:55.202</nobr></td>
+<td valign=top><nobr>1: 08:16.611<br><div id="div_best_laps_26" style="display:none">2: 08:18.453<br>3: 08:19.101<br>4: 08:21.658<br>5: 08:22.353<br>6: 08:22.451<br>7: 08:24.216<br>8: 08:26.477<br>9: 08:26.547<br>10: 08:27.907<br>11: 08:28.080<br>12: 08:32.762<br>13: 08:42.276<br>14: 08:42.557<br>15: 08:43.753</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_12" onclick="ftoggle('div_laps_12', 'div_best_laps_12', 'img_12')"></nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td align=center valign=top><nobr>Ostheimer</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:44.299<br><div id="div_laps_12" style="display:none">14: 08:36.923<br>13: 08:34.789<br>12: 08:22.195<br>11: 08:25.203<br>10: 08:21.847<br>9: 08:41.032<br>8: 08:25.142<br>7: 08:18.186<br>6: 08:29.062<br>5: 08:27.765<br>4: 08:42.172<br>3: 08:27.459<br>2: 08:27.013<br>1: 08:53.054</div></nobr></td>
+<td align=center valign=top><nobr>17:28:37.622</nobr></td>
+<td align=center valign=top><nobr>02:07:56.141</nobr></td>
+<td valign=top><nobr>1: 08:18.186<br><div id="div_best_laps_12" style="display:none">2: 08:21.847<br>3: 08:22.195<br>4: 08:25.142<br>5: 08:25.203<br>6: 08:27.013<br>7: 08:27.459<br>8: 08:27.765<br>9: 08:29.062<br>10: 08:34.789<br>11: 08:36.923<br>12: 08:41.032<br>13: 08:42.172<br>14: 08:44.299<br>15: 08:53.054</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_98" onclick="ftoggle('div_laps_98', 'div_best_laps_98', 'img_98')"></nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td align=center valign=top><nobr>98</nobr></td>
+<td align=center valign=top><nobr>Brunner</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FC 350</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:20.152<br><div id="div_laps_98" style="display:none">14: 08:25.049<br>13: 08:29.935<br>12: 08:26.615<br>11: 08:25.522<br>10: 09:08.664<br>9: 08:21.814<br>8: 08:24.395<br>7: 08:19.492<br>6: 08:37.600<br>5: 08:29.457<br>4: 08:51.684<br>3: 08:25.927<br>2: 08:25.910<br>1: 08:56.792</div></nobr></td>
+<td align=center valign=top><nobr>17:28:50.489</nobr></td>
+<td align=center valign=top><nobr>02:08:09.008</nobr></td>
+<td valign=top><nobr>1: 08:19.492<br><div id="div_best_laps_98" style="display:none">2: 08:20.152<br>3: 08:21.814<br>4: 08:24.395<br>5: 08:25.049<br>6: 08:25.522<br>7: 08:25.910<br>8: 08:25.927<br>9: 08:26.615<br>10: 08:29.457<br>11: 08:29.935<br>12: 08:37.600<br>13: 08:51.684<br>14: 08:56.792<br>15: 09:08.664</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_64" onclick="ftoggle('div_laps_64', 'div_best_laps_64', 'img_64')"></nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td align=center valign=top><nobr>64</nobr></td>
+<td align=center valign=top><nobr>Maier</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:18.360<br><div id="div_laps_64" style="display:none">14: 08:26.806<br>13: 08:18.842<br>12: 08:14.712<br>11: 08:10.896<br>10: 08:21.421<br>9: 08:25.485<br>8: 08:36.017<br>7: 08:24.869<br>6: 08:40.154<br>5: 09:26.105<br>4: 08:41.948<br>3: 08:34.525<br>2: 08:31.613<br>1: 09:43.379</div></nobr></td>
+<td align=center valign=top><nobr>17:29:36.613</nobr></td>
+<td align=center valign=top><nobr>02:08:55.132</nobr></td>
+<td valign=top><nobr>1: 08:10.896<br><div id="div_best_laps_64" style="display:none">2: 08:14.712<br>3: 08:18.360<br>4: 08:18.842<br>5: 08:21.421<br>6: 08:24.869<br>7: 08:25.485<br>8: 08:26.806<br>9: 08:31.613<br>10: 08:34.525<br>11: 08:36.017<br>12: 08:40.154<br>13: 08:41.948<br>14: 09:26.105<br>15: 09:43.379</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_81" onclick="ftoggle('div_laps_81', 'div_best_laps_81', 'img_81')"></nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td align=center valign=top><nobr>81</nobr></td>
+<td align=center valign=top><nobr>Niedermeier</nobr></td>
+<td align=center valign=top><nobr>Vitus</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:21.672<br><div id="div_laps_81" style="display:none">14: 08:24.613<br>13: 08:22.911<br>12: 08:15.637<br>11: 08:23.906<br>10: 08:19.475<br>9: 08:31.101<br>8: 08:22.113<br>7: 08:25.238<br>6: 08:59.880<br>5: 08:43.091<br>4: 08:52.403<br>3: 08:40.866<br>2: 08:52.980<br>1: 09:19.598</div></nobr></td>
+<td align=center valign=top><nobr>17:29:36.965</nobr></td>
+<td align=center valign=top><nobr>02:08:55.484</nobr></td>
+<td valign=top><nobr>1: 08:15.637<br><div id="div_best_laps_81" style="display:none">2: 08:19.475<br>3: 08:21.672<br>4: 08:22.113<br>5: 08:22.911<br>6: 08:23.906<br>7: 08:24.613<br>8: 08:25.238<br>9: 08:31.101<br>10: 08:40.866<br>11: 08:43.091<br>12: 08:52.403<br>13: 08:52.980<br>14: 08:59.880<br>15: 09:19.598</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_50" onclick="ftoggle('div_laps_50', 'div_best_laps_50', 'img_50')"></nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td align=center valign=top><nobr>50</nobr></td>
+<td align=center valign=top><nobr>Iffelsberger</nobr></td>
+<td align=center valign=top><nobr>Sylvester</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:28.147<br><div id="div_laps_50" style="display:none">14: 08:25.656<br>13: 08:43.500<br>12: 08:16.658<br>11: 08:20.604<br>10: 08:23.583<br>9: 08:28.206<br>8: 08:34.928<br>7: 08:16.621<br>6: 09:37.707<br>5: 08:45.177<br>4: 09:02.111<br>3: 08:27.089<br>2: 08:33.511<br>1: 08:49.974</div></nobr></td>
+<td align=center valign=top><nobr>17:29:54.953</nobr></td>
+<td align=center valign=top><nobr>02:09:13.472</nobr></td>
+<td valign=top><nobr>1: 08:16.621<br><div id="div_best_laps_50" style="display:none">2: 08:16.658<br>3: 08:20.604<br>4: 08:23.583<br>5: 08:25.656<br>6: 08:27.089<br>7: 08:28.147<br>8: 08:28.206<br>9: 08:33.511<br>10: 08:34.928<br>11: 08:43.500<br>12: 08:45.177<br>13: 08:49.974<br>14: 09:02.111<br>15: 09:37.707</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_126" onclick="ftoggle('div_laps_126', 'div_best_laps_126', 'img_126')"></nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td align=center valign=top><nobr>126</nobr></td>
+<td align=center valign=top><nobr>Baumann</nobr></td>
+<td align=center valign=top><nobr>Alexander</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:50.826<br><div id="div_laps_126" style="display:none">14: 08:34.865<br>13: 08:32.311<br>12: 08:37.236<br>11: 08:30.715<br>10: 08:32.964<br>9: 08:25.692<br>8: 08:36.669<br>7: 08:26.049<br>6: 08:49.699<br>5: 09:43.982<br>4: 09:03.722<br>3: 08:31.122<br>2: 08:27.225<br>1: 09:14.347</div></nobr></td>
+<td align=center valign=top><nobr>17:31:38.905</nobr></td>
+<td align=center valign=top><nobr>02:10:57.424</nobr></td>
+<td valign=top><nobr>1: 08:25.692<br><div id="div_best_laps_126" style="display:none">2: 08:26.049<br>3: 08:27.225<br>4: 08:30.715<br>5: 08:31.122<br>6: 08:32.311<br>7: 08:32.964<br>8: 08:34.865<br>9: 08:36.669<br>10: 08:37.236<br>11: 08:49.699<br>12: 08:50.826<br>13: 09:03.722<br>14: 09:14.347<br>15: 09:43.982</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_122" onclick="ftoggle('div_laps_122', 'div_best_laps_122', 'img_122')"></nobr></td>
+<td align=center valign=top><nobr>17</nobr></td>
+<td align=center valign=top><nobr>122</nobr></td>
+<td align=center valign=top><nobr>Indlekofer</nobr></td>
+<td align=center valign=top><nobr>Phillipp</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 09:28.365<br><div id="div_laps_122" style="display:none">14: 09:00.244<br>13: 09:29.212<br>12: 08:48.054<br>11: 09:04.846<br>10: 09:09.640<br>9: 09:11.884<br>8: 09:00.144<br>7: 08:09.791<br>6: 08:26.698<br>5: 08:22.115<br>4: 08:39.014<br>3: 08:15.944<br>2: 08:06.780<br>1: 08:30.837</div></nobr></td>
+<td align=center valign=top><nobr>17:32:25.049</nobr></td>
+<td align=center valign=top><nobr>02:11:43.568</nobr></td>
+<td valign=top><nobr>1: 08:06.780<br><div id="div_best_laps_122" style="display:none">2: 08:09.791<br>3: 08:15.944<br>4: 08:22.115<br>5: 08:26.698<br>6: 08:30.837<br>7: 08:39.014<br>8: 08:48.054<br>9: 09:00.144<br>10: 09:00.244<br>11: 09:04.846<br>12: 09:09.640<br>13: 09:11.884<br>14: 09:28.365<br>15: 09:29.212</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_63" onclick="ftoggle('div_laps_63', 'div_best_laps_63', 'img_63')"></nobr></td>
+<td align=center valign=top><nobr>18</nobr></td>
+<td align=center valign=top><nobr>63</nobr></td>
+<td align=center valign=top><nobr>Loidl</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 10:30.800<br><div id="div_laps_63" style="display:none">14: 08:56.576<br>13: 08:38.040<br>12: 08:25.870<br>11: 08:23.203<br>10: 08:36.950<br>9: 08:57.613<br>8: 08:33.252<br>7: 08:51.211<br>6: 08:42.662<br>5: 08:29.469<br>4: 08:51.732<br>3: 08:39.286<br>2: 08:27.090<br>1: 08:39.875</div></nobr></td>
+<td align=center valign=top><nobr>17:32:25.110</nobr></td>
+<td align=center valign=top><nobr>02:11:43.629</nobr></td>
+<td valign=top><nobr>1: 08:23.203<br><div id="div_best_laps_63" style="display:none">2: 08:25.870<br>3: 08:27.090<br>4: 08:29.469<br>5: 08:33.252<br>6: 08:36.950<br>7: 08:38.040<br>8: 08:39.286<br>9: 08:39.875<br>10: 08:42.662<br>11: 08:51.211<br>12: 08:51.732<br>13: 08:56.576<br>14: 08:57.613<br>15: 10:30.800</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_58" onclick="ftoggle('div_laps_58', 'div_best_laps_58', 'img_58')"></nobr></td>
+<td align=center valign=top><nobr>19</nobr></td>
+<td align=center valign=top><nobr>58</nobr></td>
+<td align=center valign=top><nobr>Reiterer</nobr></td>
+<td align=center valign=top><nobr>Simon</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:48.653<br><div id="div_laps_58" style="display:none">14: 08:47.971<br>13: 08:54.921<br>12: 08:38.771<br>11: 08:39.148<br>10: 08:51.188<br>9: 08:33.911<br>8: 08:39.639<br>7: 08:39.745<br>6: 09:08.629<br>5: 09:02.353<br>4: 08:46.915<br>3: 08:49.341<br>2: 08:43.930<br>1: 09:10.740</div></nobr></td>
+<td align=center valign=top><nobr>17:32:57.336</nobr></td>
+<td align=center valign=top><nobr>02:12:15.855</nobr></td>
+<td valign=top><nobr>1: 08:33.911<br><div id="div_best_laps_58" style="display:none">2: 08:38.771<br>3: 08:39.148<br>4: 08:39.639<br>5: 08:39.745<br>6: 08:43.930<br>7: 08:46.915<br>8: 08:47.971<br>9: 08:48.653<br>10: 08:49.341<br>11: 08:51.188<br>12: 08:54.921<br>13: 09:02.353<br>14: 09:08.629<br>15: 09:10.740</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_82" onclick="ftoggle('div_laps_82', 'div_best_laps_82', 'img_82')"></nobr></td>
+<td align=center valign=top><nobr>20</nobr></td>
+<td align=center valign=top><nobr>82</nobr></td>
+<td align=center valign=top><nobr>N&uuml;tzl</nobr></td>
+<td align=center valign=top><nobr>Philip</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td valign=top><nobr>15: 08:45.461<br><div id="div_laps_82" style="display:none">14: 09:02.783<br>13: 08:48.047<br>12: 08:45.979<br>11: 08:38.766<br>10: 08:49.255<br>9: 09:04.589<br>8: 08:41.653<br>7: 08:45.984<br>6: 08:58.940<br>5: 08:47.686<br>4: 08:56.729<br>3: 09:04.455<br>2: 08:51.081<br>1: 09:07.086</div></nobr></td>
+<td align=center valign=top><nobr>17:33:49.975</nobr></td>
+<td align=center valign=top><nobr>02:13:08.494</nobr></td>
+<td valign=top><nobr>1: 08:38.766<br><div id="div_best_laps_82" style="display:none">2: 08:41.653<br>3: 08:45.461<br>4: 08:45.979<br>5: 08:45.984<br>6: 08:47.686<br>7: 08:48.047<br>8: 08:49.255<br>9: 08:51.081<br>10: 08:56.729<br>11: 08:58.940<br>12: 09:02.783<br>13: 09:04.455<br>14: 09:04.589<br>15: 09:07.086</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_124" onclick="ftoggle('div_laps_124', 'div_best_laps_124', 'img_124')"></nobr></td>
+<td align=center valign=top><nobr>21</nobr></td>
+<td align=center valign=top><nobr>124</nobr></td>
+<td align=center valign=top><nobr>Paukner</nobr></td>
+<td align=center valign=top><nobr>Leo</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:48.194<br><div id="div_laps_124" style="display:none">13: 08:45.792<br>12: 08:46.702<br>11: 08:49.747<br>10: 09:00.149<br>9: 08:28.989<br>8: 08:41.511<br>7: 08:50.275<br>6: 09:10.830<br>5: 08:59.531<br>4: 08:53.058<br>3: 08:50.026<br>2: 08:46.772<br>1: 09:50.067</div></nobr></td>
+<td align=center valign=top><nobr>17:25:23.124</nobr></td>
+<td align=center valign=top><nobr>02:04:41.643</nobr></td>
+<td valign=top><nobr>1: 08:28.989<br><div id="div_best_laps_124" style="display:none">2: 08:41.511<br>3: 08:45.792<br>4: 08:46.702<br>5: 08:46.772<br>6: 08:48.194<br>7: 08:49.747<br>8: 08:50.026<br>9: 08:50.275<br>10: 08:53.058<br>11: 08:59.531<br>12: 09:00.149<br>13: 09:10.830<br>14: 09:50.067</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_75" onclick="ftoggle('div_laps_75', 'div_best_laps_75', 'img_75')"></nobr></td>
+<td align=center valign=top><nobr>22</nobr></td>
+<td align=center valign=top><nobr>75</nobr></td>
+<td align=center valign=top><nobr>Weichselgartner</nobr></td>
+<td align=center valign=top><nobr>Dominik</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:05.145<br><div id="div_laps_75" style="display:none">13: 08:55.928<br>12: 08:46.812<br>11: 08:36.355<br>10: 08:50.135<br>9: 08:29.332<br>8: 09:10.271<br>7: 08:46.895<br>6: 08:49.377<br>5: 09:01.829<br>4: 09:00.071<br>3: 08:49.191<br>2: 08:48.989<br>1: 09:36.963</div></nobr></td>
+<td align=center valign=top><nobr>17:25:28.774</nobr></td>
+<td align=center valign=top><nobr>02:04:47.293</nobr></td>
+<td valign=top><nobr>1: 08:29.332<br><div id="div_best_laps_75" style="display:none">2: 08:36.355<br>3: 08:46.812<br>4: 08:46.895<br>5: 08:48.989<br>6: 08:49.191<br>7: 08:49.377<br>8: 08:50.135<br>9: 08:55.928<br>10: 09:00.071<br>11: 09:01.829<br>12: 09:05.145<br>13: 09:10.271<br>14: 09:36.963</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_10" onclick="ftoggle('div_laps_10', 'div_best_laps_10', 'img_10')"></nobr></td>
+<td align=center valign=top><nobr>23</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td align=center valign=top><nobr>Eckl</nobr></td>
+<td align=center valign=top><nobr>Tobias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FC 350</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:54.483<br><div id="div_laps_10" style="display:none">13: 08:49.131<br>12: 08:47.737<br>11: 08:51.004<br>10: 09:09.478<br>9: 08:41.434<br>8: 08:53.000<br>7: 08:53.979<br>6: 09:05.245<br>5: 09:08.500<br>4: 09:25.843<br>3: 09:11.222<br>2: 09:06.930<br>1: 09:35.718</div></nobr></td>
+<td align=center valign=top><nobr>17:27:15.185</nobr></td>
+<td align=center valign=top><nobr>02:06:33.704</nobr></td>
+<td valign=top><nobr>1: 08:41.434<br><div id="div_best_laps_10" style="display:none">2: 08:47.737<br>3: 08:49.131<br>4: 08:51.004<br>5: 08:53.000<br>6: 08:53.979<br>7: 08:54.483<br>8: 09:05.245<br>9: 09:06.930<br>10: 09:08.500<br>11: 09:09.478<br>12: 09:11.222<br>13: 09:25.843<br>14: 09:35.718</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_28" onclick="ftoggle('div_laps_28', 'div_best_laps_28', 'img_28')"></nobr></td>
+<td align=center valign=top><nobr>24</nobr></td>
+<td align=center valign=top><nobr>28</nobr></td>
+<td align=center valign=top><nobr>Simmel</nobr></td>
+<td align=center valign=top><nobr>Martin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:09.041<br><div id="div_laps_28" style="display:none">13: 09:00.925<br>12: 08:49.507<br>11: 08:42.962<br>10: 08:45.314<br>9: 08:30.418<br>8: 09:22.113<br>7: 08:53.742<br>6: 09:06.504<br>5: 09:00.265<br>4: 09:10.104<br>3: 09:01.167<br>2: 09:05.239<br>1: 10:00.745</div></nobr></td>
+<td align=center valign=top><nobr>17:27:19.527</nobr></td>
+<td align=center valign=top><nobr>02:06:38.046</nobr></td>
+<td valign=top><nobr>1: 08:30.418<br><div id="div_best_laps_28" style="display:none">2: 08:42.962<br>3: 08:45.314<br>4: 08:49.507<br>5: 08:53.742<br>6: 09:00.265<br>7: 09:00.925<br>8: 09:01.167<br>9: 09:05.239<br>10: 09:06.504<br>11: 09:09.041<br>12: 09:10.104<br>13: 09:22.113<br>14: 10:00.745</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_115" onclick="ftoggle('div_laps_115', 'div_best_laps_115', 'img_115')"></nobr></td>
+<td align=center valign=top><nobr>25</nobr></td>
+<td align=center valign=top><nobr>115</nobr></td>
+<td align=center valign=top><nobr>Haider</nobr></td>
+<td align=center valign=top><nobr>Felix</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:57.134<br><div id="div_laps_115" style="display:none">13: 09:03.847<br>12: 08:53.959<br>11: 08:49.504<br>10: 09:00.909<br>9: 08:48.612<br>8: 08:52.110<br>7: 08:50.293<br>6: 09:05.882<br>5: 09:24.236<br>4: 09:13.650<br>3: 09:08.605<br>2: 09:06.014<br>1: 09:58.788</div></nobr></td>
+<td align=center valign=top><nobr>17:27:55.024</nobr></td>
+<td align=center valign=top><nobr>02:07:13.543</nobr></td>
+<td valign=top><nobr>1: 08:48.612<br><div id="div_best_laps_115" style="display:none">2: 08:49.504<br>3: 08:50.293<br>4: 08:52.110<br>5: 08:53.959<br>6: 08:57.134<br>7: 09:00.909<br>8: 09:03.847<br>9: 09:05.882<br>10: 09:06.014<br>11: 09:08.605<br>12: 09:13.650<br>13: 09:24.236<br>14: 09:58.788</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_29" onclick="ftoggle('div_laps_29', 'div_best_laps_29', 'img_29')"></nobr></td>
+<td align=center valign=top><nobr>26</nobr></td>
+<td align=center valign=top><nobr>29</nobr></td>
+<td align=center valign=top><nobr>Hotz</nobr></td>
+<td align=center valign=top><nobr>Lukas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:53.124<br><div id="div_laps_29" style="display:none">13: 08:59.093<br>12: 08:54.610<br>11: 08:50.627<br>10: 08:52.528<br>9: 08:44.334<br>8: 08:46.827<br>7: 09:00.893<br>6: 09:30.412<br>5: 09:28.677<br>4: 09:11.429<br>3: 08:56.202<br>2: 08:52.005<br>1: 10:16.021</div></nobr></td>
+<td align=center valign=top><nobr>17:27:58.263</nobr></td>
+<td align=center valign=top><nobr>02:07:16.782</nobr></td>
+<td valign=top><nobr>1: 08:44.334<br><div id="div_best_laps_29" style="display:none">2: 08:46.827<br>3: 08:50.627<br>4: 08:52.005<br>5: 08:52.528<br>6: 08:53.124<br>7: 08:54.610<br>8: 08:56.202<br>9: 08:59.093<br>10: 09:00.893<br>11: 09:11.429<br>12: 09:28.677<br>13: 09:30.412<br>14: 10:16.021</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_110" onclick="ftoggle('div_laps_110', 'div_best_laps_110', 'img_110')"></nobr></td>
+<td align=center valign=top><nobr>27</nobr></td>
+<td align=center valign=top><nobr>110</nobr></td>
+<td align=center valign=top><nobr>Zettl</nobr></td>
+<td align=center valign=top><nobr>Toni</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:08.033<br><div id="div_laps_110" style="display:none">13: 08:59.858<br>12: 09:03.663<br>11: 08:59.321<br>10: 08:57.540<br>9: 08:52.317<br>8: 09:10.144<br>7: 09:08.299<br>6: 09:11.532<br>5: 09:01.317<br>4: 09:10.582<br>3: 09:11.909<br>2: 09:09.100<br>1: 10:28.726</div></nobr></td>
+<td align=center valign=top><nobr>17:29:13.822</nobr></td>
+<td align=center valign=top><nobr>02:08:32.341</nobr></td>
+<td valign=top><nobr>1: 08:52.317<br><div id="div_best_laps_110" style="display:none">2: 08:57.540<br>3: 08:59.321<br>4: 08:59.858<br>5: 09:01.317<br>6: 09:03.663<br>7: 09:08.033<br>8: 09:08.299<br>9: 09:09.100<br>10: 09:10.144<br>11: 09:10.582<br>12: 09:11.532<br>13: 09:11.909<br>14: 10:28.726</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_96" onclick="ftoggle('div_laps_96', 'div_best_laps_96', 'img_96')"></nobr></td>
+<td align=center valign=top><nobr>28</nobr></td>
+<td align=center valign=top><nobr>96</nobr></td>
+<td align=center valign=top><nobr>Haderer</nobr></td>
+<td align=center valign=top><nobr>Maxi</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 250</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:47.410<br><div id="div_laps_96" style="display:none">13: 09:08.540<br>12: 09:11.196<br>11: 09:09.377<br>10: 09:15.333<br>9: 08:58.658<br>8: 09:14.292<br>7: 09:39.757<br>6: 09:12.011<br>5: 09:07.462<br>4: 08:50.041<br>3: 09:09.693<br>2: 09:01.964<br>1: 10:27.225</div></nobr></td>
+<td align=center valign=top><nobr>17:29:54.440</nobr></td>
+<td align=center valign=top><nobr>02:09:12.959</nobr></td>
+<td valign=top><nobr>1: 08:47.410<br><div id="div_best_laps_96" style="display:none">2: 08:50.041<br>3: 08:58.658<br>4: 09:01.964<br>5: 09:07.462<br>6: 09:08.540<br>7: 09:09.377<br>8: 09:09.693<br>9: 09:11.196<br>10: 09:12.011<br>11: 09:14.292<br>12: 09:15.333<br>13: 09:39.757<br>14: 10:27.225</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_19" onclick="ftoggle('div_laps_19', 'div_best_laps_19', 'img_19')"></nobr></td>
+<td align=center valign=top><nobr>29</nobr></td>
+<td align=center valign=top><nobr>19</nobr></td>
+<td align=center valign=top><nobr>Englberger</nobr></td>
+<td align=center valign=top><nobr>Jonas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:46.888<br><div id="div_laps_19" style="display:none">13: 08:54.830<br>12: 09:15.298<br>11: 08:55.475<br>10: 08:50.052<br>9: 09:51.775<br>8: 08:51.899<br>7: 09:04.771<br>6: 09:36.174<br>5: 08:58.222<br>4: 08:47.935<br>3: 09:12.916<br>2: 09:07.342<br>1: 11:02.611</div></nobr></td>
+<td align=center valign=top><nobr>17:29:57.669</nobr></td>
+<td align=center valign=top><nobr>02:09:16.188</nobr></td>
+<td valign=top><nobr>1: 08:46.888<br><div id="div_best_laps_19" style="display:none">2: 08:47.935<br>3: 08:50.052<br>4: 08:51.899<br>5: 08:54.830<br>6: 08:55.475<br>7: 08:58.222<br>8: 09:04.771<br>9: 09:07.342<br>10: 09:12.916<br>11: 09:15.298<br>12: 09:36.174<br>13: 09:51.775<br>14: 11:02.611</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_27" onclick="ftoggle('div_laps_27', 'div_best_laps_27', 'img_27')"></nobr></td>
+<td align=center valign=top><nobr>30</nobr></td>
+<td align=center valign=top><nobr>27</nobr></td>
+<td align=center valign=top><nobr>Ga&szlig;ner</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:17.033<br><div id="div_laps_27" style="display:none">13: 09:20.466<br>12: 09:01.633<br>11: 09:38.793<br>10: 09:22.263<br>9: 09:13.336<br>8: 09:03.539<br>7: 09:10.500<br>6: 09:39.273<br>5: 09:19.306<br>4: 09:21.979<br>3: 09:00.126<br>2: 08:56.256<br>1: 09:27.785</div></nobr></td>
+<td align=center valign=top><nobr>17:30:33.769</nobr></td>
+<td align=center valign=top><nobr>02:09:52.288</nobr></td>
+<td valign=top><nobr>1: 08:56.256<br><div id="div_best_laps_27" style="display:none">2: 09:00.126<br>3: 09:01.633<br>4: 09:03.539<br>5: 09:10.500<br>6: 09:13.336<br>7: 09:17.033<br>8: 09:19.306<br>9: 09:20.466<br>10: 09:21.979<br>11: 09:22.263<br>12: 09:27.785<br>13: 09:38.793<br>14: 09:39.273</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_78" onclick="ftoggle('div_laps_78', 'div_best_laps_78', 'img_78')"></nobr></td>
+<td align=center valign=top><nobr>31</nobr></td>
+<td align=center valign=top><nobr>78</nobr></td>
+<td align=center valign=top><nobr>Paukner</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:13.793<br><div id="div_laps_78" style="display:none">13: 09:08.607<br>12: 09:18.567<br>11: 09:07.639<br>10: 08:57.188<br>9: 09:12.861<br>8: 08:59.319<br>7: 09:17.143<br>6: 09:00.134<br>5: 09:21.350<br>4: 09:05.733<br>3: 09:24.371<br>2: 09:07.600<br>1: 10:50.034</div></nobr></td>
+<td align=center valign=top><nobr>17:30:45.820</nobr></td>
+<td align=center valign=top><nobr>02:10:04.339</nobr></td>
+<td valign=top><nobr>1: 08:57.188<br><div id="div_best_laps_78" style="display:none">2: 08:59.319<br>3: 09:00.134<br>4: 09:05.733<br>5: 09:07.600<br>6: 09:07.639<br>7: 09:08.607<br>8: 09:12.861<br>9: 09:13.793<br>10: 09:17.143<br>11: 09:18.567<br>12: 09:21.350<br>13: 09:24.371<br>14: 10:50.034</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_30" onclick="ftoggle('div_laps_30', 'div_best_laps_30', 'img_30')"></nobr></td>
+<td align=center valign=top><nobr>32</nobr></td>
+<td align=center valign=top><nobr>30</nobr></td>
+<td align=center valign=top><nobr>Geidobler</nobr></td>
+<td align=center valign=top><nobr>Andreas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 350</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:13.888<br><div id="div_laps_30" style="display:none">13: 09:22.657<br>12: 09:32.371<br>11: 09:14.247<br>10: 09:01.479<br>9: 09:20.235<br>8: 09:09.407<br>7: 09:11.141<br>6: 09:12.696<br>5: 09:01.430<br>4: 09:07.050<br>3: 09:15.715<br>2: 09:12.067<br>1: 10:28.263</div></nobr></td>
+<td align=center valign=top><nobr>17:31:04.127</nobr></td>
+<td align=center valign=top><nobr>02:10:22.646</nobr></td>
+<td valign=top><nobr>1: 09:01.430<br><div id="div_best_laps_30" style="display:none">2: 09:01.479<br>3: 09:07.050<br>4: 09:09.407<br>5: 09:11.141<br>6: 09:12.067<br>7: 09:12.696<br>8: 09:13.888<br>9: 09:14.247<br>10: 09:15.715<br>11: 09:20.235<br>12: 09:22.657<br>13: 09:32.371<br>14: 10:28.263</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_79" onclick="ftoggle('div_laps_79', 'div_best_laps_79', 'img_79')"></nobr></td>
+<td align=center valign=top><nobr>33</nobr></td>
+<td align=center valign=top><nobr>79</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Gerhard</nobr></td>
+<td align=center valign=top><nobr>Hurqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:18.997<br><div id="div_laps_79" style="display:none">13: 09:07.823<br>12: 09:17.499<br>11: 08:55.921<br>10: 09:09.302<br>9: 09:31.854<br>8: 09:07.063<br>7: 09:14.621<br>6: 09:09.742<br>5: 09:22.625<br>4: 09:08.670<br>3: 09:32.753<br>2: 09:08.636<br>1: 10:47.145</div></nobr></td>
+<td align=center valign=top><nobr>17:31:34.132</nobr></td>
+<td align=center valign=top><nobr>02:10:52.651</nobr></td>
+<td valign=top><nobr>1: 08:55.921<br><div id="div_best_laps_79" style="display:none">2: 09:07.063<br>3: 09:07.823<br>4: 09:08.636<br>5: 09:08.670<br>6: 09:09.302<br>7: 09:09.742<br>8: 09:14.621<br>9: 09:17.499<br>10: 09:18.997<br>11: 09:22.625<br>12: 09:31.854<br>13: 09:32.753<br>14: 10:47.145</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_70" onclick="ftoggle('div_laps_70', 'div_best_laps_70', 'img_70')"></nobr></td>
+<td align=center valign=top><nobr>34</nobr></td>
+<td align=center valign=top><nobr>70</nobr></td>
+<td align=center valign=top><nobr>Mayerhofer</nobr></td>
+<td align=center valign=top><nobr>Lukas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:04.707<br><div id="div_laps_70" style="display:none">13: 08:48.612<br>12: 08:46.612<br>11: 08:58.189<br>10: 08:59.485<br>9: 09:08.485<br>8: 09:23.107<br>7: 09:06.369<br>6: 08:43.534<br>5: 09:27.348<br>4: 09:16.782<br>3: 09:34.858<br>2: 09:21.820<br>1: 12:14.499</div></nobr></td>
+<td align=center valign=top><nobr>17:31:35.888</nobr></td>
+<td align=center valign=top><nobr>02:10:54.407</nobr></td>
+<td valign=top><nobr>1: 08:43.534<br><div id="div_best_laps_70" style="display:none">2: 08:46.612<br>3: 08:48.612<br>4: 08:58.189<br>5: 08:59.485<br>6: 09:04.707<br>7: 09:06.369<br>8: 09:08.485<br>9: 09:16.782<br>10: 09:21.820<br>11: 09:23.107<br>12: 09:27.348<br>13: 09:34.858<br>14: 12:14.499</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_69" onclick="ftoggle('div_laps_69', 'div_best_laps_69', 'img_69')"></nobr></td>
+<td align=center valign=top><nobr>35</nobr></td>
+<td align=center valign=top><nobr>69</nobr></td>
+<td align=center valign=top><nobr>Niedermeier</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:16.029<br><div id="div_laps_69" style="display:none">13: 09:06.281<br>12: 09:08.829<br>11: 09:11.119<br>10: 08:55.013<br>9: 09:13.437<br>8: 09:11.960<br>7: 09:02.972<br>6: 10:44.773<br>5: 09:25.003<br>4: 09:19.925<br>3: 09:39.294<br>2: 09:23.977<br>1: 09:35.192</div></nobr></td>
+<td align=center valign=top><nobr>17:31:55.285</nobr></td>
+<td align=center valign=top><nobr>02:11:13.804</nobr></td>
+<td valign=top><nobr>1: 08:55.013<br><div id="div_best_laps_69" style="display:none">2: 09:02.972<br>3: 09:06.281<br>4: 09:08.829<br>5: 09:11.119<br>6: 09:11.960<br>7: 09:13.437<br>8: 09:16.029<br>9: 09:19.925<br>10: 09:23.977<br>11: 09:25.003<br>12: 09:35.192<br>13: 09:39.294<br>14: 10:44.773</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_90" onclick="ftoggle('div_laps_90', 'div_best_laps_90', 'img_90')"></nobr></td>
+<td align=center valign=top><nobr>36</nobr></td>
+<td align=center valign=top><nobr>90</nobr></td>
+<td align=center valign=top><nobr>Schlepp</nobr></td>
+<td align=center valign=top><nobr>Leonhard</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:15.548<br><div id="div_laps_90" style="display:none">13: 10:08.572<br>12: 09:58.104<br>11: 09:00.259<br>10: 09:08.109<br>9: 08:59.882<br>8: 09:08.249<br>7: 10:44.443<br>6: 09:14.531<br>5: 09:24.767<br>4: 09:00.511<br>3: 09:12.611<br>2: 08:48.274<br>1: 09:12.909</div></nobr></td>
+<td align=center valign=top><nobr>17:31:58.250</nobr></td>
+<td align=center valign=top><nobr>02:11:16.769</nobr></td>
+<td valign=top><nobr>1: 08:48.274<br><div id="div_best_laps_90" style="display:none">2: 08:59.882<br>3: 09:00.259<br>4: 09:00.511<br>5: 09:08.109<br>6: 09:08.249<br>7: 09:12.611<br>8: 09:12.909<br>9: 09:14.531<br>10: 09:15.548<br>11: 09:24.767<br>12: 09:58.104<br>13: 10:08.572<br>14: 10:44.443</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_9" onclick="ftoggle('div_laps_9', 'div_best_laps_9', 'img_9')"></nobr></td>
+<td align=center valign=top><nobr>37</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td align=center valign=top><nobr>Weindl</nobr></td>
+<td align=center valign=top><nobr>Jakob</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:26.514<br><div id="div_laps_9" style="display:none">13: 09:06.146<br>12: 09:04.779<br>11: 08:59.195<br>10: 09:07.594<br>9: 09:23.628<br>8: 09:15.688<br>7: 09:14.269<br>6: 09:17.419<br>5: 09:27.782<br>4: 09:41.950<br>3: 09:36.183<br>2: 09:13.104<br>1: 10:38.431</div></nobr></td>
+<td align=center valign=top><nobr>17:32:14.163</nobr></td>
+<td align=center valign=top><nobr>02:11:32.682</nobr></td>
+<td valign=top><nobr>1: 08:59.195<br><div id="div_best_laps_9" style="display:none">2: 09:04.779<br>3: 09:06.146<br>4: 09:07.594<br>5: 09:13.104<br>6: 09:14.269<br>7: 09:15.688<br>8: 09:17.419<br>9: 09:23.628<br>10: 09:26.514<br>11: 09:27.782<br>12: 09:36.183<br>13: 09:41.950<br>14: 10:38.431</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_3" onclick="ftoggle('div_laps_3', 'div_best_laps_3', 'img_3')"></nobr></td>
+<td align=center valign=top><nobr>38</nobr></td>
+<td align=center valign=top><nobr>3</nobr></td>
+<td align=center valign=top><nobr>Baier</nobr></td>
+<td align=center valign=top><nobr>Johannes</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 09:20.860<br><div id="div_laps_3" style="display:none">13: 09:11.115<br>12: 09:17.818<br>11: 09:14.884<br>10: 09:08.691<br>9: 09:18.260<br>8: 09:47.044<br>7: 09:20.288<br>6: 09:10.525<br>5: 09:41.427<br>4: 09:32.894<br>3: 09:28.045<br>2: 09:20.696<br>1: 10:25.735</div></nobr></td>
+<td align=center valign=top><nobr>17:32:59.763</nobr></td>
+<td align=center valign=top><nobr>02:12:18.282</nobr></td>
+<td valign=top><nobr>1: 09:08.691<br><div id="div_best_laps_3" style="display:none">2: 09:10.525<br>3: 09:11.115<br>4: 09:14.884<br>5: 09:17.818<br>6: 09:18.260<br>7: 09:20.288<br>8: 09:20.696<br>9: 09:20.860<br>10: 09:28.045<br>11: 09:32.894<br>12: 09:41.427<br>13: 09:47.044<br>14: 10:25.735</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_60" onclick="ftoggle('div_laps_60', 'div_best_laps_60', 'img_60')"></nobr></td>
+<td align=center valign=top><nobr>39</nobr></td>
+<td align=center valign=top><nobr>60</nobr></td>
+<td align=center valign=top><nobr>Landendinger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td valign=top><nobr>14: 08:58.691<br><div id="div_laps_60" style="display:none">13: 09:14.020<br>12: 09:14.145<br>11: 09:11.931<br>10: 09:09.204<br>9: 09:13.676<br>8: 09:14.724<br>7: 09:05.831<br>6: 09:01.901<br>5: 09:44.955<br>4: 09:18.404<br>3: 09:49.354<br>2: 09:19.264<br>1: 11:44.814</div></nobr></td>
+<td align=center valign=top><nobr>17:33:02.395</nobr></td>
+<td align=center valign=top><nobr>02:12:20.914</nobr></td>
+<td valign=top><nobr>1: 08:58.691<br><div id="div_best_laps_60" style="display:none">2: 09:01.901<br>3: 09:05.831<br>4: 09:09.204<br>5: 09:11.931<br>6: 09:13.676<br>7: 09:14.020<br>8: 09:14.145<br>9: 09:14.724<br>10: 09:18.404<br>11: 09:19.264<br>12: 09:44.955<br>13: 09:49.354<br>14: 11:44.814</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_97" onclick="ftoggle('div_laps_97', 'div_best_laps_97', 'img_97')"></nobr></td>
+<td align=center valign=top><nobr>40</nobr></td>
+<td align=center valign=top><nobr>97</nobr></td>
+<td align=center valign=top><nobr>Sporrer</nobr></td>
+<td align=center valign=top><nobr>Johannes</nobr></td>
+<td align=center valign=top><nobr>Triumph TF 250</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 08:49.067<br><div id="div_laps_97" style="display:none">12: 08:42.372<br>11: 08:36.530<br>10: 08:56.322<br>9: 08:32.755<br>8: 09:14.420<br>7: 08:57.779<br>6: 08:41.382<br>5: 08:39.421<br>4: 08:48.333<br>3: 08:42.571<br>2: 08:55.229<br>1: 10:40.586</div></nobr></td>
+<td align=center valign=top><nobr>17:16:58.248</nobr></td>
+<td align=center valign=top><nobr>01:56:16.767</nobr></td>
+<td valign=top><nobr>1: 08:32.755<br><div id="div_best_laps_97" style="display:none">2: 08:36.530<br>3: 08:39.421<br>4: 08:41.382<br>5: 08:42.372<br>6: 08:42.571<br>7: 08:48.333<br>8: 08:49.067<br>9: 08:55.229<br>10: 08:56.322<br>11: 08:57.779<br>12: 09:14.420<br>13: 10:40.586</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_14" onclick="ftoggle('div_laps_14', 'div_best_laps_14', 'img_14')"></nobr></td>
+<td align=center valign=top><nobr>41</nobr></td>
+<td align=center valign=top><nobr>14</nobr></td>
+<td align=center valign=top><nobr>Rieder</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:29.441<br><div id="div_laps_14" style="display:none">12: 09:25.425<br>11: 09:26.235<br>10: 09:13.578<br>9: 09:30.435<br>8: 09:22.274<br>7: 09:17.702<br>6: 09:11.783<br>5: 09:42.083<br>4: 09:33.555<br>3: 09:25.426<br>2: 09:21.675<br>1: 11:38.986</div></nobr></td>
+<td align=center valign=top><nobr>17:25:20.079</nobr></td>
+<td align=center valign=top><nobr>02:04:38.598</nobr></td>
+<td valign=top><nobr>1: 09:11.783<br><div id="div_best_laps_14" style="display:none">2: 09:13.578<br>3: 09:17.702<br>4: 09:21.675<br>5: 09:22.274<br>6: 09:25.425<br>7: 09:25.426<br>8: 09:26.235<br>9: 09:29.441<br>10: 09:30.435<br>11: 09:33.555<br>12: 09:42.083<br>13: 11:38.986</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_76" onclick="ftoggle('div_laps_76', 'div_best_laps_76', 'img_76')"></nobr></td>
+<td align=center valign=top><nobr>42</nobr></td>
+<td align=center valign=top><nobr>76</nobr></td>
+<td align=center valign=top><nobr>Miller</nobr></td>
+<td align=center valign=top><nobr>Alois</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 10:06.803<br><div id="div_laps_76" style="display:none">12: 09:45.762<br>11: 09:50.110<br>10: 09:29.713<br>9: 09:43.425<br>8: 09:13.084<br>7: 09:42.053<br>6: 09:25.816<br>5: 09:21.497<br>4: 09:25.825<br>3: 09:25.251<br>2: 09:05.620<br>1: 10:09.142</div></nobr></td>
+<td align=center valign=top><nobr>17:25:25.582</nobr></td>
+<td align=center valign=top><nobr>02:04:44.101</nobr></td>
+<td valign=top><nobr>1: 09:05.620<br><div id="div_best_laps_76" style="display:none">2: 09:13.084<br>3: 09:21.497<br>4: 09:25.251<br>5: 09:25.816<br>6: 09:25.825<br>7: 09:29.713<br>8: 09:42.053<br>9: 09:43.425<br>10: 09:45.762<br>11: 09:50.110<br>12: 10:06.803<br>13: 10:09.142</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_7" onclick="ftoggle('div_laps_7', 'div_best_laps_7', 'img_7')"></nobr></td>
+<td align=center valign=top><nobr>43</nobr></td>
+<td align=center valign=top><nobr>7</nobr></td>
+<td align=center valign=top><nobr>Braun</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:50.170<br><div id="div_laps_7" style="display:none">12: 09:35.850<br>11: 09:23.967<br>10: 09:32.232<br>9: 09:35.931<br>8: 09:30.366<br>7: 09:20.320<br>6: 09:20.836<br>5: 09:19.767<br>4: 09:33.314<br>3: 09:31.410<br>2: 09:26.912<br>1: 10:50.497</div></nobr></td>
+<td align=center valign=top><nobr>17:25:33.053</nobr></td>
+<td align=center valign=top><nobr>02:04:51.572</nobr></td>
+<td valign=top><nobr>1: 09:19.767<br><div id="div_best_laps_7" style="display:none">2: 09:20.320<br>3: 09:20.836<br>4: 09:23.967<br>5: 09:26.912<br>6: 09:30.366<br>7: 09:31.410<br>8: 09:32.232<br>9: 09:33.314<br>10: 09:35.850<br>11: 09:35.931<br>12: 09:50.170<br>13: 10:50.497</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_52" onclick="ftoggle('div_laps_52', 'div_best_laps_52', 'img_52')"></nobr></td>
+<td align=center valign=top><nobr>44</nobr></td>
+<td align=center valign=top><nobr>52</nobr></td>
+<td align=center valign=top><nobr>Karpfinger</nobr></td>
+<td align=center valign=top><nobr>Stephan</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:35.391<br><div id="div_laps_52" style="display:none">12: 09:14.045<br>11: 09:16.754<br>10: 09:28.836<br>9: 09:02.647<br>8: 09:48.496<br>7: 09:21.328<br>6: 09:17.084<br>5: 10:01.217<br>4: 09:20.677<br>3: 09:31.362<br>2: 09:19.583<br>1: 11:37.615</div></nobr></td>
+<td align=center valign=top><nobr>17:25:36.516</nobr></td>
+<td align=center valign=top><nobr>02:04:55.035</nobr></td>
+<td valign=top><nobr>1: 09:02.647<br><div id="div_best_laps_52" style="display:none">2: 09:14.045<br>3: 09:16.754<br>4: 09:17.084<br>5: 09:19.583<br>6: 09:20.677<br>7: 09:21.328<br>8: 09:28.836<br>9: 09:31.362<br>10: 09:35.391<br>11: 09:48.496<br>12: 10:01.217<br>13: 11:37.615</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_71" onclick="ftoggle('div_laps_71', 'div_best_laps_71', 'img_71')"></nobr></td>
+<td align=center valign=top><nobr>45</nobr></td>
+<td align=center valign=top><nobr>71</nobr></td>
+<td align=center valign=top><nobr>Meier</nobr></td>
+<td align=center valign=top><nobr>Maximilian</nobr></td>
+<td align=center valign=top><nobr>Kawasaki KXF 250</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 08:53.478<br><div id="div_laps_71" style="display:none">12: 09:01.292<br>11: 09:07.192<br>10: 09:01.830<br>9: 09:55.701<br>8: 09:08.916<br>7: 09:21.633<br>6: 09:10.868<br>5: 09:47.443<br>4: 09:27.652<br>3: 09:39.712<br>2: 10:10.118<br>1: 12:57.688</div></nobr></td>
+<td align=center valign=top><nobr>17:26:25.004</nobr></td>
+<td align=center valign=top><nobr>02:05:43.523</nobr></td>
+<td valign=top><nobr>1: 08:53.478<br><div id="div_best_laps_71" style="display:none">2: 09:01.292<br>3: 09:01.830<br>4: 09:07.192<br>5: 09:08.916<br>6: 09:10.868<br>7: 09:21.633<br>8: 09:27.652<br>9: 09:39.712<br>10: 09:47.443<br>11: 09:55.701<br>12: 10:10.118<br>13: 12:57.688</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_113" onclick="ftoggle('div_laps_113', 'div_best_laps_113', 'img_113')"></nobr></td>
+<td align=center valign=top><nobr>46</nobr></td>
+<td align=center valign=top><nobr>113</nobr></td>
+<td align=center valign=top><nobr>Wagner</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:12.727<br><div id="div_laps_113" style="display:none">12: 09:17.557<br>11: 09:27.399<br>10: 09:48.898<br>9: 09:13.626<br>8: 09:08.665<br>7: 09:15.595<br>6: 09:19.649<br>5: 09:44.048<br>4: 09:40.242<br>3: 09:41.945<br>2: 09:36.774<br>1: 12:27.795</div></nobr></td>
+<td align=center valign=top><nobr>17:26:36.401</nobr></td>
+<td align=center valign=top><nobr>02:05:54.920</nobr></td>
+<td valign=top><nobr>1: 09:08.665<br><div id="div_best_laps_113" style="display:none">2: 09:12.727<br>3: 09:13.626<br>4: 09:15.595<br>5: 09:17.557<br>6: 09:19.649<br>7: 09:27.399<br>8: 09:36.774<br>9: 09:40.242<br>10: 09:41.945<br>11: 09:44.048<br>12: 09:48.898<br>13: 12:27.795</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_93" onclick="ftoggle('div_laps_93', 'div_best_laps_93', 'img_93')"></nobr></td>
+<td align=center valign=top><nobr>47</nobr></td>
+<td align=center valign=top><nobr>93</nobr></td>
+<td align=center valign=top><nobr>Seidl</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:05.369<br><div id="div_laps_93" style="display:none">12: 09:36.916<br>11: 09:17.425<br>10: 09:06.491<br>9: 09:26.317<br>8: 09:11.865<br>7: 09:40.882<br>6: 09:07.328<br>5: 09:47.317<br>4: 09:23.326<br>3: 09:22.536<br>2: 09:54.858<br>1: 13:03.068</div></nobr></td>
+<td align=center valign=top><nobr>17:26:45.179</nobr></td>
+<td align=center valign=top><nobr>02:06:03.698</nobr></td>
+<td valign=top><nobr>1: 09:05.369<br><div id="div_best_laps_93" style="display:none">2: 09:06.491<br>3: 09:07.328<br>4: 09:11.865<br>5: 09:17.425<br>6: 09:22.536<br>7: 09:23.326<br>8: 09:26.317<br>9: 09:36.916<br>10: 09:40.882<br>11: 09:47.317<br>12: 09:54.858<br>13: 13:03.068</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_5" onclick="ftoggle('div_laps_5', 'div_best_laps_5', 'img_5')"></nobr></td>
+<td align=center valign=top><nobr>48</nobr></td>
+<td align=center valign=top><nobr>5</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Benjamin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:36.573<br><div id="div_laps_5" style="display:none">12: 09:37.077<br>11: 09:36.049<br>10: 09:22.308<br>9: 09:22.503<br>8: 09:21.699<br>7: 09:56.857<br>6: 09:17.559<br>5: 09:40.101<br>4: 09:35.390<br>3: 09:53.616<br>2: 09:38.673<br>1: 11:33.081</div></nobr></td>
+<td align=center valign=top><nobr>17:27:12.967</nobr></td>
+<td align=center valign=top><nobr>02:06:31.486</nobr></td>
+<td valign=top><nobr>1: 09:17.559<br><div id="div_best_laps_5" style="display:none">2: 09:21.699<br>3: 09:22.308<br>4: 09:22.503<br>5: 09:35.390<br>6: 09:36.049<br>7: 09:36.573<br>8: 09:37.077<br>9: 09:38.673<br>10: 09:40.101<br>11: 09:53.616<br>12: 09:56.857<br>13: 11:33.081</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_92" onclick="ftoggle('div_laps_92', 'div_best_laps_92', 'img_92')"></nobr></td>
+<td align=center valign=top><nobr>49</nobr></td>
+<td align=center valign=top><nobr>92</nobr></td>
+<td align=center valign=top><nobr>Schneider</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:34.338<br><div id="div_laps_92" style="display:none">12: 09:33.120<br>11: 09:35.579<br>10: 09:27.613<br>9: 09:28.679<br>8: 09:17.696<br>7: 09:13.540<br>6: 09:32.718<br>5: 10:32.136<br>4: 09:33.972<br>3: 09:48.472<br>2: 09:46.000<br>1: 11:49.265</div></nobr></td>
+<td align=center valign=top><nobr>17:27:54.609</nobr></td>
+<td align=center valign=top><nobr>02:07:13.128</nobr></td>
+<td valign=top><nobr>1: 09:13.540<br><div id="div_best_laps_92" style="display:none">2: 09:17.696<br>3: 09:27.613<br>4: 09:28.679<br>5: 09:32.718<br>6: 09:33.120<br>7: 09:33.972<br>8: 09:34.338<br>9: 09:35.579<br>10: 09:46.000<br>11: 09:48.472<br>12: 10:32.136<br>13: 11:49.265</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_18" onclick="ftoggle('div_laps_18', 'div_best_laps_18', 'img_18')"></nobr></td>
+<td align=center valign=top><nobr>50</nobr></td>
+<td align=center valign=top><nobr>18</nobr></td>
+<td align=center valign=top><nobr>Englberger</nobr></td>
+<td align=center valign=top><nobr>Christof</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:44.308<br><div id="div_laps_18" style="display:none">12: 09:46.388<br>11: 09:24.909<br>10: 09:36.303<br>9: 09:32.592<br>8: 09:20.217<br>7: 10:02.171<br>6: 09:16.729<br>5: 09:38.923<br>4: 09:30.936<br>3: 09:48.358<br>2: 09:46.802<br>1: 11:46.376</div></nobr></td>
+<td align=center valign=top><nobr>17:27:56.493</nobr></td>
+<td align=center valign=top><nobr>02:07:15.012</nobr></td>
+<td valign=top><nobr>1: 09:16.729<br><div id="div_best_laps_18" style="display:none">2: 09:20.217<br>3: 09:24.909<br>4: 09:30.936<br>5: 09:32.592<br>6: 09:36.303<br>7: 09:38.923<br>8: 09:44.308<br>9: 09:46.388<br>10: 09:46.802<br>11: 09:48.358<br>12: 10:02.171<br>13: 11:46.376</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_125" onclick="ftoggle('div_laps_125', 'div_best_laps_125', 'img_125')"></nobr></td>
+<td align=center valign=top><nobr>51</nobr></td>
+<td align=center valign=top><nobr>125</nobr></td>
+<td align=center valign=top><nobr>Brettner</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>Husqvarna 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 11:14.878<br><div id="div_laps_125" style="display:none">12: 09:04.852<br>11: 09:11.645<br>10: 09:15.179<br>9: 09:19.845<br>8: 09:23.711<br>7: 09:29.627<br>6: 09:30.410<br>5: 09:58.205<br>4: 09:29.756<br>3: 09:48.615<br>2: 09:47.853<br>1: 11:47.237</div></nobr></td>
+<td align=center valign=top><nobr>17:28:03.294</nobr></td>
+<td align=center valign=top><nobr>02:07:21.813</nobr></td>
+<td valign=top><nobr>1: 09:04.852<br><div id="div_best_laps_125" style="display:none">2: 09:11.645<br>3: 09:15.179<br>4: 09:19.845<br>5: 09:23.711<br>6: 09:29.627<br>7: 09:29.756<br>8: 09:30.410<br>9: 09:47.853<br>10: 09:48.615<br>11: 09:58.205<br>12: 11:14.878<br>13: 11:47.237</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_35" onclick="ftoggle('div_laps_35', 'div_best_laps_35', 'img_35')"></nobr></td>
+<td align=center valign=top><nobr>52</nobr></td>
+<td align=center valign=top><nobr>35</nobr></td>
+<td align=center valign=top><nobr>Knogler</nobr></td>
+<td align=center valign=top><nobr>Louis</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:45.622<br><div id="div_laps_35" style="display:none">12: 09:57.222<br>11: 09:46.854<br>10: 09:37.262<br>9: 09:50.946<br>8: 09:37.391<br>7: 11:01.480<br>6: 09:23.979<br>5: 09:47.301<br>4: 09:44.406<br>3: 09:48.091<br>2: 09:45.074<br>1: 10:23.555</div></nobr></td>
+<td align=center valign=top><nobr>17:29:10.664</nobr></td>
+<td align=center valign=top><nobr>02:08:29.183</nobr></td>
+<td valign=top><nobr>1: 09:23.979<br><div id="div_best_laps_35" style="display:none">2: 09:37.262<br>3: 09:37.391<br>4: 09:44.406<br>5: 09:45.074<br>6: 09:45.622<br>7: 09:46.854<br>8: 09:47.301<br>9: 09:48.091<br>10: 09:50.946<br>11: 09:57.222<br>12: 10:23.555<br>13: 11:01.480</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_117" onclick="ftoggle('div_laps_117', 'div_best_laps_117', 'img_117')"></nobr></td>
+<td align=center valign=top><nobr>53</nobr></td>
+<td align=center valign=top><nobr>117</nobr></td>
+<td align=center valign=top><nobr>Wittmann</nobr></td>
+<td align=center valign=top><nobr>Oliver</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:45.699<br><div id="div_laps_117" style="display:none">12: 09:43.496<br>11: 09:27.523<br>10: 09:23.586<br>9: 09:29.876<br>8: 09:19.954<br>7: 09:46.508<br>6: 09:44.290<br>5: 10:18.379<br>4: 09:51.767<br>3: 10:07.545<br>2: 10:07.900<br>1: 11:44.364</div></nobr></td>
+<td align=center valign=top><nobr>17:29:32.368</nobr></td>
+<td align=center valign=top><nobr>02:08:50.887</nobr></td>
+<td valign=top><nobr>1: 09:19.954<br><div id="div_best_laps_117" style="display:none">2: 09:23.586<br>3: 09:27.523<br>4: 09:29.876<br>5: 09:43.496<br>6: 09:44.290<br>7: 09:45.699<br>8: 09:46.508<br>9: 09:51.767<br>10: 10:07.545<br>11: 10:07.900<br>12: 10:18.379<br>13: 11:44.364</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_34" onclick="ftoggle('div_laps_34', 'div_best_laps_34', 'img_34')"></nobr></td>
+<td align=center valign=top><nobr>54</nobr></td>
+<td align=center valign=top><nobr>34</nobr></td>
+<td align=center valign=top><nobr>H&ouml;gl</nobr></td>
+<td align=center valign=top><nobr>J&uuml;rgen</nobr></td>
+<td align=center valign=top><nobr>Gas Gas EC 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:58.438<br><div id="div_laps_34" style="display:none">12: 09:38.500<br>11: 09:44.280<br>10: 09:37.216<br>9: 09:41.274<br>8: 09:31.866<br>7: 09:33.398<br>6: 10:04.337<br>5: 10:04.221<br>4: 09:44.313<br>3: 09:45.170<br>2: 09:54.827<br>1: 11:52.360</div></nobr></td>
+<td align=center valign=top><nobr>17:29:51.681</nobr></td>
+<td align=center valign=top><nobr>02:09:10.200</nobr></td>
+<td valign=top><nobr>1: 09:31.866<br><div id="div_best_laps_34" style="display:none">2: 09:33.398<br>3: 09:37.216<br>4: 09:38.500<br>5: 09:41.274<br>6: 09:44.280<br>7: 09:44.313<br>8: 09:45.170<br>9: 09:54.827<br>10: 09:58.438<br>11: 10:04.221<br>12: 10:04.337<br>13: 11:52.360</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_107" onclick="ftoggle('div_laps_107', 'div_best_laps_107', 'img_107')"></nobr></td>
+<td align=center valign=top><nobr>55</nobr></td>
+<td align=center valign=top><nobr>107</nobr></td>
+<td align=center valign=top><nobr>Tschannerl</nobr></td>
+<td align=center valign=top><nobr>Philipp</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:28.321<br><div id="div_laps_107" style="display:none">12: 09:33.407<br>11: 09:42.990<br>10: 09:59.768<br>9: 09:30.275<br>8: 09:26.729<br>7: 09:51.510<br>6: 09:33.471<br>5: 10:03.820<br>4: 10:11.449<br>3: 09:42.791<br>2: 09:48.550<br>1: 12:29.585</div></nobr></td>
+<td align=center valign=top><nobr>17:30:04.147</nobr></td>
+<td align=center valign=top><nobr>02:09:22.666</nobr></td>
+<td valign=top><nobr>1: 09:26.729<br><div id="div_best_laps_107" style="display:none">2: 09:28.321<br>3: 09:30.275<br>4: 09:33.407<br>5: 09:33.471<br>6: 09:42.791<br>7: 09:42.990<br>8: 09:48.550<br>9: 09:51.510<br>10: 09:59.768<br>11: 10:03.820<br>12: 10:11.449<br>13: 12:29.585</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_56" onclick="ftoggle('div_laps_56', 'div_best_laps_56', 'img_56')"></nobr></td>
+<td align=center valign=top><nobr>56</nobr></td>
+<td align=center valign=top><nobr>56</nobr></td>
+<td align=center valign=top><nobr>Krieger</nobr></td>
+<td align=center valign=top><nobr>Paula</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:51.095<br><div id="div_laps_56" style="display:none">12: 09:43.751<br>11: 09:50.061<br>10: 10:12.932<br>9: 10:26.732<br>8: 09:34.502<br>7: 09:33.521<br>6: 09:24.265<br>5: 10:04.827<br>4: 09:34.510<br>3: 09:56.836<br>2: 09:37.073<br>1: 11:37.093</div></nobr></td>
+<td align=center valign=top><nobr>17:30:08.679</nobr></td>
+<td align=center valign=top><nobr>02:09:27.198</nobr></td>
+<td valign=top><nobr>1: 09:24.265<br><div id="div_best_laps_56" style="display:none">2: 09:33.521<br>3: 09:34.502<br>4: 09:34.510<br>5: 09:37.073<br>6: 09:43.751<br>7: 09:50.061<br>8: 09:51.095<br>9: 09:56.836<br>10: 10:04.827<br>11: 10:12.932<br>12: 10:26.732<br>13: 11:37.093</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_4" onclick="ftoggle('div_laps_4', 'div_best_laps_4', 'img_4')"></nobr></td>
+<td align=center valign=top><nobr>57</nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td align=center valign=top><nobr>Zehentbauer</nobr></td>
+<td align=center valign=top><nobr>Didi</nobr></td>
+<td align=center valign=top><nobr>Fantic 250</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:46.131<br><div id="div_laps_4" style="display:none">12: 09:22.286<br>11: 09:42.064<br>10: 09:22.574<br>9: 09:33.820<br>8: 09:03.631<br>7: 10:15.616<br>6: 09:29.879<br>5: 10:34.370<br>4: 10:15.228<br>3: 09:29.882<br>2: 10:24.066<br>1: 13:12.580</div></nobr></td>
+<td align=center valign=top><nobr>17:31:13.608</nobr></td>
+<td align=center valign=top><nobr>02:10:32.127</nobr></td>
+<td valign=top><nobr>1: 09:03.631<br><div id="div_best_laps_4" style="display:none">2: 09:22.286<br>3: 09:22.574<br>4: 09:29.879<br>5: 09:29.882<br>6: 09:33.820<br>7: 09:42.064<br>8: 09:46.131<br>9: 10:15.228<br>10: 10:15.616<br>11: 10:24.066<br>12: 10:34.370<br>13: 13:12.580</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_89" onclick="ftoggle('div_laps_89', 'div_best_laps_89', 'img_89')"></nobr></td>
+<td align=center valign=top><nobr>58</nobr></td>
+<td align=center valign=top><nobr>89</nobr></td>
+<td align=center valign=top><nobr>Scheibinger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:20.599<br><div id="div_laps_89" style="display:none">12: 09:17.050<br>11: 09:56.728<br>10: 09:28.852<br>9: 09:29.766<br>8: 09:42.035<br>7: 09:37.389<br>6: 09:48.503<br>5: 09:55.521<br>4: 10:43.992<br>3: 10:05.729<br>2: 10:21.846<br>1: 12:55.535</div></nobr></td>
+<td align=center valign=top><nobr>17:31:25.026</nobr></td>
+<td align=center valign=top><nobr>02:10:43.545</nobr></td>
+<td valign=top><nobr>1: 09:17.050<br><div id="div_best_laps_89" style="display:none">2: 09:20.599<br>3: 09:28.852<br>4: 09:29.766<br>5: 09:37.389<br>6: 09:42.035<br>7: 09:48.503<br>8: 09:55.521<br>9: 09:56.728<br>10: 10:05.729<br>11: 10:21.846<br>12: 10:43.992<br>13: 12:55.535</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_45" onclick="ftoggle('div_laps_45', 'div_best_laps_45', 'img_45')"></nobr></td>
+<td align=center valign=top><nobr>59</nobr></td>
+<td align=center valign=top><nobr>45</nobr></td>
+<td align=center valign=top><nobr>Horsch</nobr></td>
+<td align=center valign=top><nobr>David</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:23.114<br><div id="div_laps_45" style="display:none">12: 09:18.546<br>11: 09:34.869<br>10: 09:48.051<br>9: 10:00.267<br>8: 09:48.309<br>7: 10:32.579<br>6: 10:05.392<br>5: 10:15.488<br>4: 10:08.014<br>3: 10:09.975<br>2: 10:14.028<br>1: 11:29.089</div></nobr></td>
+<td align=center valign=top><nobr>17:31:29.202</nobr></td>
+<td align=center valign=top><nobr>02:10:47.721</nobr></td>
+<td valign=top><nobr>1: 09:18.546<br><div id="div_best_laps_45" style="display:none">2: 09:23.114<br>3: 09:34.869<br>4: 09:48.051<br>5: 09:48.309<br>6: 10:00.267<br>7: 10:05.392<br>8: 10:08.014<br>9: 10:09.975<br>10: 10:14.028<br>11: 10:15.488<br>12: 10:32.579<br>13: 11:29.089</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_66" onclick="ftoggle('div_laps_66', 'div_best_laps_66', 'img_66')"></nobr></td>
+<td align=center valign=top><nobr>60</nobr></td>
+<td align=center valign=top><nobr>66</nobr></td>
+<td align=center valign=top><nobr>B&uuml;chl</nobr></td>
+<td align=center valign=top><nobr>Alexander</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 10:20.092<br><div id="div_laps_66" style="display:none">12: 10:08.556<br>11: 09:38.934<br>10: 09:35.126<br>9: 09:39.323<br>8: 09:38.749<br>7: 09:43.946<br>6: 09:51.597<br>5: 10:55.778<br>4: 10:20.845<br>3: 10:11.076<br>2: 09:55.641<br>1: 11:51.500</div></nobr></td>
+<td align=center valign=top><nobr>17:32:32.644</nobr></td>
+<td align=center valign=top><nobr>02:11:51.163</nobr></td>
+<td valign=top><nobr>1: 09:35.126<br><div id="div_best_laps_66" style="display:none">2: 09:38.749<br>3: 09:38.934<br>4: 09:39.323<br>5: 09:43.946<br>6: 09:51.597<br>7: 09:55.641<br>8: 10:08.556<br>9: 10:11.076<br>10: 10:20.092<br>11: 10:20.845<br>12: 10:55.778<br>13: 11:51.500</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_16" onclick="ftoggle('div_laps_16', 'div_best_laps_16', 'img_16')"></nobr></td>
+<td align=center valign=top><nobr>61</nobr></td>
+<td align=center valign=top><nobr>16</nobr></td>
+<td align=center valign=top><nobr>Baumgartner</nobr></td>
+<td align=center valign=top><nobr>Paul</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:59.155<br><div id="div_laps_16" style="display:none">12: 09:44.518<br>11: 09:56.379<br>10: 09:51.244<br>9: 09:40.907<br>8: 09:48.196<br>7: 09:42.239<br>6: 09:52.302<br>5: 11:01.440<br>4: 10:00.690<br>3: 10:02.312<br>2: 09:56.421<br>1: 12:26.630</div></nobr></td>
+<td align=center valign=top><nobr>17:32:43.914</nobr></td>
+<td align=center valign=top><nobr>02:12:02.433</nobr></td>
+<td valign=top><nobr>1: 09:40.907<br><div id="div_best_laps_16" style="display:none">2: 09:42.239<br>3: 09:44.518<br>4: 09:48.196<br>5: 09:51.244<br>6: 09:52.302<br>7: 09:56.379<br>8: 09:56.421<br>9: 09:59.155<br>10: 10:00.690<br>11: 10:02.312<br>12: 11:01.440<br>13: 12:26.630</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_62" onclick="ftoggle('div_laps_62', 'div_best_laps_62', 'img_62')"></nobr></td>
+<td align=center valign=top><nobr>62</nobr></td>
+<td align=center valign=top><nobr>62</nobr></td>
+<td align=center valign=top><nobr>Lindtner</nobr></td>
+<td align=center valign=top><nobr>Martin</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 10:37.780<br><div id="div_laps_62" style="display:none">12: 10:24.689<br>11: 10:15.614<br>10: 09:50.863<br>9: 09:52.844<br>8: 09:57.550<br>7: 09:37.083<br>6: 09:40.092<br>5: 10:25.707<br>4: 09:29.341<br>3: 09:35.879<br>2: 09:40.232<br>1: 12:45.246</div></nobr></td>
+<td align=center valign=top><nobr>17:32:54.401</nobr></td>
+<td align=center valign=top><nobr>02:12:12.920</nobr></td>
+<td valign=top><nobr>1: 09:29.341<br><div id="div_best_laps_62" style="display:none">2: 09:35.879<br>3: 09:37.083<br>4: 09:40.092<br>5: 09:40.232<br>6: 09:50.863<br>7: 09:52.844<br>8: 09:57.550<br>9: 10:15.614<br>10: 10:24.689<br>11: 10:25.707<br>12: 10:37.780<br>13: 12:45.246</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_102" onclick="ftoggle('div_laps_102', 'div_best_laps_102', 'img_102')"></nobr></td>
+<td align=center valign=top><nobr>63</nobr></td>
+<td align=center valign=top><nobr>102</nobr></td>
+<td align=center valign=top><nobr>Steckermeier</nobr></td>
+<td align=center valign=top><nobr>Franz</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 150</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 09:48.715<br><div id="div_laps_102" style="display:none">12: 09:32.866<br>11: 09:35.453<br>10: 09:30.607<br>9: 10:09.041<br>8: 09:42.201<br>7: 09:56.174<br>6: 10:02.358<br>5: 10:31.750<br>4: 10:37.639<br>3: 10:53.215<br>2: 10:24.783<br>1: 12:39.989</div></nobr></td>
+<td align=center valign=top><nobr>17:34:06.272</nobr></td>
+<td align=center valign=top><nobr>02:13:24.791</nobr></td>
+<td valign=top><nobr>1: 09:30.607<br><div id="div_best_laps_102" style="display:none">2: 09:32.866<br>3: 09:35.453<br>4: 09:42.201<br>5: 09:48.715<br>6: 09:56.174<br>7: 10:02.358<br>8: 10:09.041<br>9: 10:24.783<br>10: 10:31.750<br>11: 10:37.639<br>12: 10:53.215<br>13: 12:39.989</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_108" onclick="ftoggle('div_laps_108', 'div_best_laps_108', 'img_108')"></nobr></td>
+<td align=center valign=top><nobr>64</nobr></td>
+<td align=center valign=top><nobr>108</nobr></td>
+<td align=center valign=top><nobr>&Uuml;berreiter</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TC 250</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 10:33.979<br><div id="div_laps_108" style="display:none">12: 10:02.126<br>11: 11:29.351<br>10: 09:41.459<br>9: 09:34.473<br>8: 09:16.945<br>7: 11:26.399<br>6: 09:34.302<br>5: 11:23.913<br>4: 09:47.105<br>3: 09:54.986<br>2: 09:36.441<br>1: 11:04.046</div></nobr></td>
+<td align=center valign=top><nobr>17:34:07.006</nobr></td>
+<td align=center valign=top><nobr>02:13:25.525</nobr></td>
+<td valign=top><nobr>1: 09:16.945<br><div id="div_best_laps_108" style="display:none">2: 09:34.302<br>3: 09:34.473<br>4: 09:36.441<br>5: 09:41.459<br>6: 09:47.105<br>7: 09:54.986<br>8: 10:02.126<br>9: 10:33.979<br>10: 11:04.046<br>11: 11:23.913<br>12: 11:26.399<br>13: 11:29.351</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_13" onclick="ftoggle('div_laps_13', 'div_best_laps_13', 'img_13')"></nobr></td>
+<td align=center valign=top><nobr>65</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td align=center valign=top><nobr>Daffner</nobr></td>
+<td align=center valign=top><nobr>Philipp</nobr></td>
+<td align=center valign=top><nobr>Beta RR 390</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 11:55.637<br><div id="div_laps_13" style="display:none">12: 09:39.317<br>11: 10:13.089<br>10: 10:21.441<br>9: 09:29.602<br>8: 09:42.869<br>7: 10:02.656<br>6: 09:42.581<br>5: 10:33.987<br>4: 10:01.982<br>3: 09:57.939<br>2: 10:17.186<br>1: 12:44.060</div></nobr></td>
+<td align=center valign=top><nobr>17:35:23.827</nobr></td>
+<td align=center valign=top><nobr>02:14:42.346</nobr></td>
+<td valign=top><nobr>1: 09:29.602<br><div id="div_best_laps_13" style="display:none">2: 09:39.317<br>3: 09:42.581<br>4: 09:42.869<br>5: 09:57.939<br>6: 10:01.982<br>7: 10:02.656<br>8: 10:13.089<br>9: 10:17.186<br>10: 10:21.441<br>11: 10:33.987<br>12: 11:55.637<br>13: 12:44.060</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_39" onclick="ftoggle('div_laps_39', 'div_best_laps_39', 'img_39')"></nobr></td>
+<td align=center valign=top><nobr>66</nobr></td>
+<td align=center valign=top><nobr>39</nobr></td>
+<td align=center valign=top><nobr>Forstner</nobr></td>
+<td align=center valign=top><nobr>Ralf</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 350</nobr></td>
+<td align=center valign=top><nobr>13</nobr></td>
+<td valign=top><nobr>13: 11:06.857<br><div id="div_laps_39" style="display:none">12: 12:03.539<br>11: 10:02.023<br>10: 09:33.820<br>9: 09:49.860<br>8: 09:42.276<br>7: 09:45.526<br>6: 09:43.956<br>5: 09:58.282<br>4: 10:33.184<br>3: 10:02.522<br>2: 10:01.992<br>1: 12:49.294</div></nobr></td>
+<td align=center valign=top><nobr>17:35:54.612</nobr></td>
+<td align=center valign=top><nobr>02:15:13.131</nobr></td>
+<td valign=top><nobr>1: 09:33.820<br><div id="div_best_laps_39" style="display:none">2: 09:42.276<br>3: 09:43.956<br>4: 09:45.526<br>5: 09:49.860<br>6: 09:58.282<br>7: 10:01.992<br>8: 10:02.023<br>9: 10:02.522<br>10: 10:33.184<br>11: 11:06.857<br>12: 12:03.539<br>13: 12:49.294</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_68" onclick="ftoggle('div_laps_68', 'div_best_laps_68', 'img_68')"></nobr></td>
+<td align=center valign=top><nobr>67</nobr></td>
+<td align=center valign=top><nobr>68</nobr></td>
+<td align=center valign=top><nobr>Mayer</nobr></td>
+<td align=center valign=top><nobr>Anton</nobr></td>
+<td align=center valign=top><nobr>Beta RR 200</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:53.107<br><div id="div_laps_68" style="display:none">11: 09:41.193<br>10: 09:31.583<br>9: 12:07.669<br>8: 09:55.332<br>7: 09:47.682<br>6: 09:47.305<br>5: 10:15.219<br>4: 11:06.081<br>3: 09:55.944<br>2: 09:59.805<br>1: 12:52.391</div></nobr></td>
+<td align=center valign=top><nobr>17:25:34.792</nobr></td>
+<td align=center valign=top><nobr>02:04:53.311</nobr></td>
+<td valign=top><nobr>1: 09:31.583<br><div id="div_best_laps_68" style="display:none">2: 09:41.193<br>3: 09:47.305<br>4: 09:47.682<br>5: 09:53.107<br>6: 09:55.332<br>7: 09:55.944<br>8: 09:59.805<br>9: 10:15.219<br>10: 11:06.081<br>11: 12:07.669<br>12: 12:52.391</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_112" onclick="ftoggle('div_laps_112', 'div_best_laps_112', 'img_112')"></nobr></td>
+<td align=center valign=top><nobr>68</nobr></td>
+<td align=center valign=top><nobr>112</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:58.199<br><div id="div_laps_112" style="display:none">11: 09:53.760<br>10: 09:42.207<br>9: 10:02.213<br>8: 09:48.405<br>7: 09:44.780<br>6: 10:05.581<br>5: 10:30.818<br>4: 11:35.282<br>3: 09:57.926<br>2: 10:31.360<br>1: 13:11.574</div></nobr></td>
+<td align=center valign=top><nobr>17:25:43.586</nobr></td>
+<td align=center valign=top><nobr>02:05:02.105</nobr></td>
+<td valign=top><nobr>1: 09:42.207<br><div id="div_best_laps_112" style="display:none">2: 09:44.780<br>3: 09:48.405<br>4: 09:53.760<br>5: 09:57.926<br>6: 09:58.199<br>7: 10:02.213<br>8: 10:05.581<br>9: 10:30.818<br>10: 10:31.360<br>11: 11:35.282<br>12: 13:11.574</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_15" onclick="ftoggle('div_laps_15', 'div_best_laps_15', 'img_15')"></nobr></td>
+<td align=center valign=top><nobr>69</nobr></td>
+<td align=center valign=top><nobr>15</nobr></td>
+<td align=center valign=top><nobr>Riebesecker</nobr></td>
+<td align=center valign=top><nobr>Georg</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:36.473<br><div id="div_laps_15" style="display:none">11: 10:45.249<br>10: 10:00.414<br>9: 09:53.233<br>8: 09:52.556<br>7: 10:04.344<br>6: 09:50.420<br>5: 11:38.343<br>4: 09:59.541<br>3: 10:15.111<br>2: 09:55.113<br>1: 12:32.791</div></nobr></td>
+<td align=center valign=top><nobr>17:26:05.069</nobr></td>
+<td align=center valign=top><nobr>02:05:23.588</nobr></td>
+<td valign=top><nobr>1: 09:50.420<br><div id="div_best_laps_15" style="display:none">2: 09:52.556<br>3: 09:53.233<br>4: 09:55.113<br>5: 09:59.541<br>6: 10:00.414<br>7: 10:04.344<br>8: 10:15.111<br>9: 10:36.473<br>10: 10:45.249<br>11: 11:38.343<br>12: 12:32.791</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_31" onclick="ftoggle('div_laps_31', 'div_best_laps_31', 'img_31')"></nobr></td>
+<td align=center valign=top><nobr>70</nobr></td>
+<td align=center valign=top><nobr>31</nobr></td>
+<td align=center valign=top><nobr>Geigenberger</nobr></td>
+<td align=center valign=top><nobr>Stefan</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:56.901<br><div id="div_laps_31" style="display:none">11: 10:04.759<br>10: 10:57.019<br>9: 09:43.537<br>8: 09:41.160<br>7: 09:58.457<br>6: 10:22.305<br>5: 10:20.868<br>4: 10:21.872<br>3: 10:35.044<br>2: 10:30.151<br>1: 12:54.019</div></nobr></td>
+<td align=center valign=top><nobr>17:26:07.573</nobr></td>
+<td align=center valign=top><nobr>02:05:26.092</nobr></td>
+<td valign=top><nobr>1: 09:41.160<br><div id="div_best_laps_31" style="display:none">2: 09:43.537<br>3: 09:56.901<br>4: 09:58.457<br>5: 10:04.759<br>6: 10:20.868<br>7: 10:21.872<br>8: 10:22.305<br>9: 10:30.151<br>10: 10:35.044<br>11: 10:57.019<br>12: 12:54.019</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_73" onclick="ftoggle('div_laps_73', 'div_best_laps_73', 'img_73')"></nobr></td>
+<td align=center valign=top><nobr>71</nobr></td>
+<td align=center valign=top><nobr>73</nobr></td>
+<td align=center valign=top><nobr>Abtmaier</nobr></td>
+<td align=center valign=top><nobr>Ed</nobr></td>
+<td align=center valign=top><nobr>Sherco SE 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:51.497<br><div id="div_laps_73" style="display:none">11: 09:50.453<br>10: 09:49.916<br>9: 10:07.545<br>8: 09:46.668<br>7: 09:34.037<br>6: 09:51.281<br>5: 10:29.518<br>4: 10:18.902<br>3: 11:36.513<br>2: 11:16.831<br>1: 13:00.643</div></nobr></td>
+<td align=center valign=top><nobr>17:26:15.285</nobr></td>
+<td align=center valign=top><nobr>02:05:33.804</nobr></td>
+<td valign=top><nobr>1: 09:34.037<br><div id="div_best_laps_73" style="display:none">2: 09:46.668<br>3: 09:49.916<br>4: 09:50.453<br>5: 09:51.281<br>6: 09:51.497<br>7: 10:07.545<br>8: 10:18.902<br>9: 10:29.518<br>10: 11:16.831<br>11: 11:36.513<br>12: 13:00.643</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_123" onclick="ftoggle('div_laps_123', 'div_best_laps_123', 'img_123')"></nobr></td>
+<td align=center valign=top><nobr>72</nobr></td>
+<td align=center valign=top><nobr>123</nobr></td>
+<td align=center valign=top><nobr>Apfel</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:28.350<br><div id="div_laps_123" style="display:none">11: 10:22.955<br>10: 09:41.821<br>9: 09:37.520<br>8: 09:49.126<br>7: 09:47.038<br>6: 10:14.480<br>5: 10:20.668<br>4: 10:56.578<br>3: 10:38.703<br>2: 10:37.750<br>1: 13:46.666</div></nobr></td>
+<td align=center valign=top><nobr>17:27:03.136</nobr></td>
+<td align=center valign=top><nobr>02:06:21.655</nobr></td>
+<td valign=top><nobr>1: 09:37.520<br><div id="div_best_laps_123" style="display:none">2: 09:41.821<br>3: 09:47.038<br>4: 09:49.126<br>5: 10:14.480<br>6: 10:20.668<br>7: 10:22.955<br>8: 10:28.350<br>9: 10:37.750<br>10: 10:38.703<br>11: 10:56.578<br>12: 13:46.666</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_111" onclick="ftoggle('div_laps_111', 'div_best_laps_111', 'img_111')"></nobr></td>
+<td align=center valign=top><nobr>73</nobr></td>
+<td align=center valign=top><nobr>111</nobr></td>
+<td align=center valign=top><nobr>Rabl</nobr></td>
+<td align=center valign=top><nobr>Werner P.</nobr></td>
+<td align=center valign=top><nobr>Beta XT 250</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 11:37.747<br><div id="div_laps_111" style="display:none">11: 09:52.306<br>10: 09:41.283<br>9: 09:50.063<br>8: 10:05.010<br>7: 09:44.954<br>6: 10:05.709<br>5: 10:01.554<br>4: 10:13.812<br>3: 12:11.722<br>2: 10:04.753<br>1: 13:08.559</div></nobr></td>
+<td align=center valign=top><nobr>17:27:18.953</nobr></td>
+<td align=center valign=top><nobr>02:06:37.472</nobr></td>
+<td valign=top><nobr>1: 09:41.283<br><div id="div_best_laps_111" style="display:none">2: 09:44.954<br>3: 09:50.063<br>4: 09:52.306<br>5: 10:01.554<br>6: 10:04.753<br>7: 10:05.010<br>8: 10:05.709<br>9: 10:13.812<br>10: 11:37.747<br>11: 12:11.722<br>12: 13:08.559</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_114" onclick="ftoggle('div_laps_114', 'div_best_laps_114', 'img_114')"></nobr></td>
+<td align=center valign=top><nobr>74</nobr></td>
+<td align=center valign=top><nobr>114</nobr></td>
+<td align=center valign=top><nobr>Wegmann</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 480</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:21.519<br><div id="div_laps_114" style="display:none">11: 11:39.977<br>10: 09:58.058<br>9: 09:57.490<br>8: 10:01.206<br>7: 09:58.453<br>6: 10:29.541<br>5: 10:24.140<br>4: 10:48.782<br>3: 10:13.931<br>2: 10:33.577<br>1: 12:42.687</div></nobr></td>
+<td align=center valign=top><nobr>17:27:50.842</nobr></td>
+<td align=center valign=top><nobr>02:07:09.361</nobr></td>
+<td valign=top><nobr>1: 09:57.490<br><div id="div_best_laps_114" style="display:none">2: 09:58.058<br>3: 09:58.453<br>4: 10:01.206<br>5: 10:13.931<br>6: 10:21.519<br>7: 10:24.140<br>8: 10:29.541<br>9: 10:33.577<br>10: 10:48.782<br>11: 11:39.977<br>12: 12:42.687</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_99" onclick="ftoggle('div_laps_99', 'div_best_laps_99', 'img_99')"></nobr></td>
+<td align=center valign=top><nobr>75</nobr></td>
+<td align=center valign=top><nobr>99</nobr></td>
+<td align=center valign=top><nobr>Spagert</nobr></td>
+<td align=center valign=top><nobr>Timo</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 350</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:34.481<br><div id="div_laps_99" style="display:none">11: 10:01.784<br>10: 10:23.086<br>9: 09:18.988<br>8: 09:43.539<br>7: 09:35.364<br>6: 11:34.645<br>5: 11:46.576<br>4: 11:31.491<br>3: 10:33.051<br>2: 10:17.844<br>1: 12:56.891</div></nobr></td>
+<td align=center valign=top><nobr>17:27:59.221</nobr></td>
+<td align=center valign=top><nobr>02:07:17.740</nobr></td>
+<td valign=top><nobr>1: 09:18.988<br><div id="div_best_laps_99" style="display:none">2: 09:34.481<br>3: 09:35.364<br>4: 09:43.539<br>5: 10:01.784<br>6: 10:17.844<br>7: 10:23.086<br>8: 10:33.051<br>9: 11:31.491<br>10: 11:34.645<br>11: 11:46.576<br>12: 12:56.891</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_25" onclick="ftoggle('div_laps_25', 'div_best_laps_25', 'img_25')"></nobr></td>
+<td align=center valign=top><nobr>76</nobr></td>
+<td align=center valign=top><nobr>25</nobr></td>
+<td align=center valign=top><nobr>Fries</nobr></td>
+<td align=center valign=top><nobr>J&ouml;rg</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:54.108<br><div id="div_laps_25" style="display:none">11: 10:15.244<br>10: 10:04.346<br>9: 10:17.501<br>8: 10:18.333<br>7: 09:58.141<br>6: 10:08.468<br>5: 10:39.097<br>4: 10:18.918<br>3: 10:33.868<br>2: 11:10.622<br>1: 13:54.702</div></nobr></td>
+<td align=center valign=top><nobr>17:28:14.829</nobr></td>
+<td align=center valign=top><nobr>02:07:33.348</nobr></td>
+<td valign=top><nobr>1: 09:54.108<br><div id="div_best_laps_25" style="display:none">2: 09:58.141<br>3: 10:04.346<br>4: 10:08.468<br>5: 10:15.244<br>6: 10:17.501<br>7: 10:18.333<br>8: 10:18.918<br>9: 10:33.868<br>10: 10:39.097<br>11: 11:10.622<br>12: 13:54.702</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_77" onclick="ftoggle('div_laps_77', 'div_best_laps_77', 'img_77')"></nobr></td>
+<td align=center valign=top><nobr>77</nobr></td>
+<td align=center valign=top><nobr>77</nobr></td>
+<td align=center valign=top><nobr>Lenz</nobr></td>
+<td align=center valign=top><nobr>Christine</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:45.903<br><div id="div_laps_77" style="display:none">11: 10:07.169<br>10: 09:58.763<br>9: 09:46.521<br>8: 10:55.983<br>7: 09:52.507<br>6: 10:03.109<br>5: 10:25.701<br>4: 11:14.878<br>3: 11:06.460<br>2: 10:49.188<br>1: 13:47.231</div></nobr></td>
+<td align=center valign=top><nobr>17:28:34.894</nobr></td>
+<td align=center valign=top><nobr>02:07:53.413</nobr></td>
+<td valign=top><nobr>1: 09:45.903<br><div id="div_best_laps_77" style="display:none">2: 09:46.521<br>3: 09:52.507<br>4: 09:58.763<br>5: 10:03.109<br>6: 10:07.169<br>7: 10:25.701<br>8: 10:49.188<br>9: 10:55.983<br>10: 11:06.460<br>11: 11:14.878<br>12: 13:47.231</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_80" onclick="ftoggle('div_laps_80', 'div_best_laps_80', 'img_80')"></nobr></td>
+<td align=center valign=top><nobr>78</nobr></td>
+<td align=center valign=top><nobr>80</nobr></td>
+<td align=center valign=top><nobr>Niedermeier</nobr></td>
+<td align=center valign=top><nobr>Kilian</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 450</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 09:36.953<br><div id="div_laps_80" style="display:none">11: 09:52.003<br>10: 09:56.558<br>9: 10:04.075<br>8: 12:41.251<br>7: 10:59.509<br>6: 10:11.151<br>5: 10:12.872<br>4: 10:57.685<br>3: 10:00.958<br>2: 10:29.602<br>1: 13:29.404</div></nobr></td>
+<td align=center valign=top><nobr>17:29:13.502</nobr></td>
+<td align=center valign=top><nobr>02:08:32.021</nobr></td>
+<td valign=top><nobr>1: 09:36.953<br><div id="div_best_laps_80" style="display:none">2: 09:52.003<br>3: 09:56.558<br>4: 10:00.958<br>5: 10:04.075<br>6: 10:11.151<br>7: 10:12.872<br>8: 10:29.602<br>9: 10:57.685<br>10: 10:59.509<br>11: 12:41.251<br>12: 13:29.404</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_61" onclick="ftoggle('div_laps_61', 'div_best_laps_61', 'img_61')"></nobr></td>
+<td align=center valign=top><nobr>79</nobr></td>
+<td align=center valign=top><nobr>61</nobr></td>
+<td align=center valign=top><nobr>L&ouml;w</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>GasGas EC 500</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:41.463<br><div id="div_laps_61" style="display:none">11: 10:17.000<br>10: 10:01.585<br>9: 09:44.939<br>8: 09:54.012<br>7: 10:19.143<br>6: 09:59.488<br>5: 10:44.198<br>4: 10:41.011<br>3: 11:51.291<br>2: 10:39.101<br>1: 13:43.417</div></nobr></td>
+<td align=center valign=top><nobr>17:29:18.129</nobr></td>
+<td align=center valign=top><nobr>02:08:36.648</nobr></td>
+<td valign=top><nobr>1: 09:44.939<br><div id="div_best_laps_61" style="display:none">2: 09:54.012<br>3: 09:59.488<br>4: 10:01.585<br>5: 10:17.000<br>6: 10:19.143<br>7: 10:39.101<br>8: 10:41.011<br>9: 10:41.463<br>10: 10:44.198<br>11: 11:51.291<br>12: 13:43.417</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_44" onclick="ftoggle('div_laps_44', 'div_best_laps_44', 'img_44')"></nobr></td>
+<td align=center valign=top><nobr>80</nobr></td>
+<td align=center valign=top><nobr>44</nobr></td>
+<td align=center valign=top><nobr>Ostheimer</nobr></td>
+<td align=center valign=top><nobr>Heribert</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:34.647<br><div id="div_laps_44" style="display:none">11: 10:19.296<br>10: 10:17.083<br>9: 11:29.262<br>8: 10:21.685<br>7: 10:32.760<br>6: 10:38.028<br>5: 10:22.048<br>4: 10:30.825<br>3: 10:24.867<br>2: 10:28.661<br>1: 12:52.582</div></nobr></td>
+<td align=center valign=top><nobr>17:29:33.225</nobr></td>
+<td align=center valign=top><nobr>02:08:51.744</nobr></td>
+<td valign=top><nobr>1: 10:17.083<br><div id="div_best_laps_44" style="display:none">2: 10:19.296<br>3: 10:21.685<br>4: 10:22.048<br>5: 10:24.867<br>6: 10:28.661<br>7: 10:30.825<br>8: 10:32.760<br>9: 10:34.647<br>10: 10:38.028<br>11: 11:29.262<br>12: 12:52.582</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_49" onclick="ftoggle('div_laps_49', 'div_best_laps_49', 'img_49')"></nobr></td>
+<td align=center valign=top><nobr>81</nobr></td>
+<td align=center valign=top><nobr>49</nobr></td>
+<td align=center valign=top><nobr>H&uuml;ttinger</nobr></td>
+<td align=center valign=top><nobr>Thomas</nobr></td>
+<td align=center valign=top><nobr>Kawasaki KXF 450</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:21.118<br><div id="div_laps_49" style="display:none">11: 10:38.080<br>10: 10:19.684<br>9: 10:37.627<br>8: 10:54.138<br>7: 09:52.228<br>6: 13:02.418<br>5: 10:31.865<br>4: 09:56.761<br>3: 09:45.571<br>2: 10:22.613<br>1: 12:47.012</div></nobr></td>
+<td align=center valign=top><nobr>17:29:50.596</nobr></td>
+<td align=center valign=top><nobr>02:09:09.115</nobr></td>
+<td valign=top><nobr>1: 09:45.571<br><div id="div_best_laps_49" style="display:none">2: 09:52.228<br>3: 09:56.761<br>4: 10:19.684<br>5: 10:21.118<br>6: 10:22.613<br>7: 10:31.865<br>8: 10:37.627<br>9: 10:38.080<br>10: 10:54.138<br>11: 12:47.012<br>12: 13:02.418</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_46" onclick="ftoggle('div_laps_46', 'div_best_laps_46', 'img_46')"></nobr></td>
+<td align=center valign=top><nobr>82</nobr></td>
+<td align=center valign=top><nobr>46</nobr></td>
+<td align=center valign=top><nobr>Moser</nobr></td>
+<td align=center valign=top><nobr>Jonas</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 250</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:00.290<br><div id="div_laps_46" style="display:none">11: 10:08.937<br>10: 10:04.908<br>9: 10:06.850<br>8: 10:41.015<br>7: 11:12.120<br>6: 10:16.963<br>5: 10:15.454<br>4: 11:01.808<br>3: 11:00.983<br>2: 11:35.524<br>1: 13:15.117</div></nobr></td>
+<td align=center valign=top><nobr>17:30:21.450</nobr></td>
+<td align=center valign=top><nobr>02:09:39.969</nobr></td>
+<td valign=top><nobr>1: 10:00.290<br><div id="div_best_laps_46" style="display:none">2: 10:04.908<br>3: 10:06.850<br>4: 10:08.937<br>5: 10:15.454<br>6: 10:16.963<br>7: 10:41.015<br>8: 11:00.983<br>9: 11:01.808<br>10: 11:12.120<br>11: 11:35.524<br>12: 13:15.117</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_47" onclick="ftoggle('div_laps_47', 'div_best_laps_47', 'img_47')"></nobr></td>
+<td align=center valign=top><nobr>83</nobr></td>
+<td align=center valign=top><nobr>47</nobr></td>
+<td align=center valign=top><nobr>Huber</nobr></td>
+<td align=center valign=top><nobr>Florian</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 250</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:38.147<br><div id="div_laps_47" style="display:none">11: 09:43.528<br>10: 10:01.011<br>9: 10:15.152<br>8: 10:46.955<br>7: 10:14.481<br>6: 10:24.544<br>5: 10:00.772<br>4: 10:38.218<br>3: 12:33.333<br>2: 11:19.049<br>1: 13:23.244</div></nobr></td>
+<td align=center valign=top><nobr>17:30:39.915</nobr></td>
+<td align=center valign=top><nobr>02:09:58.434</nobr></td>
+<td valign=top><nobr>1: 09:43.528<br><div id="div_best_laps_47" style="display:none">2: 10:00.772<br>3: 10:01.011<br>4: 10:14.481<br>5: 10:15.152<br>6: 10:24.544<br>7: 10:38.147<br>8: 10:38.218<br>9: 10:46.955<br>10: 11:19.049<br>11: 12:33.333<br>12: 13:23.244</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_24" onclick="ftoggle('div_laps_24', 'div_best_laps_24', 'img_24')"></nobr></td>
+<td align=center valign=top><nobr>84</nobr></td>
+<td align=center valign=top><nobr>24</nobr></td>
+<td align=center valign=top><nobr>Fleischmann</nobr></td>
+<td align=center valign=top><nobr>Rolf</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:52.580<br><div id="div_laps_24" style="display:none">11: 12:17.853<br>10: 10:09.277<br>9: 10:12.221<br>8: 10:30.051<br>7: 10:34.368<br>6: 10:15.109<br>5: 10:22.257<br>4: 10:48.781<br>3: 10:19.359<br>2: 10:59.657<br>1: 13:06.021</div></nobr></td>
+<td align=center valign=top><nobr>17:31:09.015</nobr></td>
+<td align=center valign=top><nobr>02:10:27.534</nobr></td>
+<td valign=top><nobr>1: 10:09.277<br><div id="div_best_laps_24" style="display:none">2: 10:12.221<br>3: 10:15.109<br>4: 10:19.359<br>5: 10:22.257<br>6: 10:30.051<br>7: 10:34.368<br>8: 10:48.781<br>9: 10:52.580<br>10: 10:59.657<br>11: 12:17.853<br>12: 13:06.021</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_86" onclick="ftoggle('div_laps_86', 'div_best_laps_86', 'img_86')"></nobr></td>
+<td align=center valign=top><nobr>85</nobr></td>
+<td align=center valign=top><nobr>86</nobr></td>
+<td align=center valign=top><nobr>S&ouml;ll</nobr></td>
+<td align=center valign=top><nobr>Daniel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 10:32.388<br><div id="div_laps_86" style="display:none">11: 11:14.090<br>10: 10:52.133<br>9: 10:20.389<br>8: 10:23.363<br>7: 10:57.306<br>6: 10:17.310<br>5: 10:33.064<br>4: 11:14.925<br>3: 10:34.234<br>2: 10:41.655<br>1: 13:55.483</div></nobr></td>
+<td align=center valign=top><nobr>17:32:17.821</nobr></td>
+<td align=center valign=top><nobr>02:11:36.340</nobr></td>
+<td valign=top><nobr>1: 10:17.310<br><div id="div_best_laps_86" style="display:none">2: 10:20.389<br>3: 10:23.363<br>4: 10:32.388<br>5: 10:33.064<br>6: 10:34.234<br>7: 10:41.655<br>8: 10:52.133<br>9: 10:57.306<br>10: 11:14.090<br>11: 11:14.925<br>12: 13:55.483</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_83" onclick="ftoggle('div_laps_83', 'div_best_laps_83', 'img_83')"></nobr></td>
+<td align=center valign=top><nobr>86</nobr></td>
+<td align=center valign=top><nobr>83</nobr></td>
+<td align=center valign=top><nobr>Schmiedler</nobr></td>
+<td align=center valign=top><nobr>Alex</nobr></td>
+<td align=center valign=top><nobr>Beta RR 200</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 11:19.498<br><div id="div_laps_83" style="display:none">11: 10:15.483<br>10: 10:17.464<br>9: 09:50.588<br>8: 09:56.610<br>7: 09:52.302<br>6: 11:12.059<br>5: 10:05.462<br>4: 12:26.847<br>3: 15:15.483<br>2: 11:18.667<br>1: 13:26.514</div></nobr></td>
+<td align=center valign=top><nobr>17:35:58.458</nobr></td>
+<td align=center valign=top><nobr>02:15:16.977</nobr></td>
+<td valign=top><nobr>1: 09:50.588<br><div id="div_best_laps_83" style="display:none">2: 09:52.302<br>3: 09:56.610<br>4: 10:05.462<br>5: 10:15.483<br>6: 10:17.464<br>7: 11:12.059<br>8: 11:18.667<br>9: 11:19.498<br>10: 12:26.847<br>11: 13:26.514<br>12: 15:15.483</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_20" onclick="ftoggle('div_laps_20', 'div_best_laps_20', 'img_20')"></nobr></td>
+<td align=center valign=top><nobr>87</nobr></td>
+<td align=center valign=top><nobr>20</nobr></td>
+<td align=center valign=top><nobr>Huber</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 11:03.103<br><div id="div_laps_20" style="display:none">11: 10:16.796<br>10: 10:28.459<br>9: 11:04.886<br>8: 10:09.189<br>7: 10:18.124<br>6: 11:52.092<br>5: 10:37.909<br>4: 11:09.262<br>3: 12:08.572<br>2: 11:11.059<br>1: 14:59.712</div></nobr></td>
+<td align=center valign=top><nobr>17:36:00.644</nobr></td>
+<td align=center valign=top><nobr>02:15:19.163</nobr></td>
+<td valign=top><nobr>1: 10:09.189<br><div id="div_best_laps_20" style="display:none">2: 10:16.796<br>3: 10:18.124<br>4: 10:28.459<br>5: 10:37.909<br>6: 11:03.103<br>7: 11:04.886<br>8: 11:09.262<br>9: 11:11.059<br>10: 11:52.092<br>11: 12:08.572<br>12: 14:59.712</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_38" onclick="ftoggle('div_laps_38', 'div_best_laps_38', 'img_38')"></nobr></td>
+<td align=center valign=top><nobr>88</nobr></td>
+<td align=center valign=top><nobr>38</nobr></td>
+<td align=center valign=top><nobr>Ehrl</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 12:19.957<br><div id="div_laps_38" style="display:none">11: 13:13.399<br>10: 10:40.911<br>9: 10:50.605<br>8: 10:29.140<br>7: 11:09.469<br>6: 11:19.001<br>5: 10:38.599<br>4: 11:45.053<br>3: 10:23.063<br>2: 10:01.776<br>1: 12:34.528</div></nobr></td>
+<td align=center valign=top><nobr>17:36:06.982</nobr></td>
+<td align=center valign=top><nobr>02:15:25.501</nobr></td>
+<td valign=top><nobr>1: 10:01.776<br><div id="div_best_laps_38" style="display:none">2: 10:23.063<br>3: 10:29.140<br>4: 10:38.599<br>5: 10:40.911<br>6: 10:50.605<br>7: 11:09.469<br>8: 11:19.001<br>9: 11:45.053<br>10: 12:19.957<br>11: 12:34.528<br>12: 13:13.399</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_36" onclick="ftoggle('div_laps_36', 'div_best_laps_36', 'img_36')"></nobr></td>
+<td align=center valign=top><nobr>89</nobr></td>
+<td align=center valign=top><nobr>36</nobr></td>
+<td align=center valign=top><nobr>Herbst</nobr></td>
+<td align=center valign=top><nobr>Dominic</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>12</nobr></td>
+<td valign=top><nobr>12: 12:59.333<br><div id="div_laps_36" style="display:none">11: 11:34.553<br>10: 10:38.261<br>9: 10:24.539<br>8: 10:58.254<br>7: 10:18.601<br>6: 10:46.684<br>5: 10:29.436<br>4: 11:00.306<br>3: 11:03.458<br>2: 11:30.750<br>1: 13:50.982</div></nobr></td>
+<td align=center valign=top><nobr>17:36:16.638</nobr></td>
+<td align=center valign=top><nobr>02:15:35.157</nobr></td>
+<td valign=top><nobr>1: 10:18.601<br><div id="div_best_laps_36" style="display:none">2: 10:24.539<br>3: 10:29.436<br>4: 10:38.261<br>5: 10:46.684<br>6: 10:58.254<br>7: 11:00.306<br>8: 11:03.458<br>9: 11:30.750<br>10: 11:34.553<br>11: 12:59.333<br>12: 13:50.982</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_101" onclick="ftoggle('div_laps_101', 'div_best_laps_101', 'img_101')"></nobr></td>
+<td align=center valign=top><nobr>90</nobr></td>
+<td align=center valign=top><nobr>101</nobr></td>
+<td align=center valign=top><nobr>Stra&szlig;er</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Sherco SEF 450</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 11:22.994<br><div id="div_laps_101" style="display:none">10: 10:53.795<br>9: 10:14.673<br>8: 10:13.995<br>7: 10:09.248<br>6: 10:21.397<br>5: 10:00.023<br>4: 10:19.876<br>3: 12:19.097<br>2: 10:28.535<br>1: 12:38.425</div></nobr></td>
+<td align=center valign=top><nobr>17:19:43.539</nobr></td>
+<td align=center valign=top><nobr>01:59:02.058</nobr></td>
+<td valign=top><nobr>1: 10:00.023<br><div id="div_best_laps_101" style="display:none">2: 10:09.248<br>3: 10:13.995<br>4: 10:14.673<br>5: 10:19.876<br>6: 10:21.397<br>7: 10:28.535<br>8: 10:53.795<br>9: 11:22.994<br>10: 12:19.097<br>11: 12:38.425</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_51" onclick="ftoggle('div_laps_51', 'div_best_laps_51', 'img_51')"></nobr></td>
+<td align=center valign=top><nobr>91</nobr></td>
+<td align=center valign=top><nobr>51</nobr></td>
+<td align=center valign=top><nobr>Gantze</nobr></td>
+<td align=center valign=top><nobr>Ronny</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 11:16.070<br><div id="div_laps_51" style="display:none">10: 10:52.644<br>9: 10:46.213<br>8: 10:36.020<br>7: 11:31.702<br>6: 10:46.683<br>5: 10:49.610<br>4: 10:51.123<br>3: 10:22.827<br>2: 10:54.197<br>1: 13:17.819</div></nobr></td>
+<td align=center valign=top><nobr>17:22:46.389</nobr></td>
+<td align=center valign=top><nobr>02:02:04.908</nobr></td>
+<td valign=top><nobr>1: 10:22.827<br><div id="div_best_laps_51" style="display:none">2: 10:36.020<br>3: 10:46.213<br>4: 10:46.683<br>5: 10:49.610<br>6: 10:51.123<br>7: 10:52.644<br>8: 10:54.197<br>9: 11:16.070<br>10: 11:31.702<br>11: 13:17.819</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_84" onclick="ftoggle('div_laps_84', 'div_best_laps_84', 'img_84')"></nobr></td>
+<td align=center valign=top><nobr>92</nobr></td>
+<td align=center valign=top><nobr>84</nobr></td>
+<td align=center valign=top><nobr>Rigel</nobr></td>
+<td align=center valign=top><nobr>Richard</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 12:07.553<br><div id="div_laps_84" style="display:none">10: 10:39.353<br>9: 10:44.030<br>8: 10:55.376<br>7: 11:06.466<br>6: 10:37.381<br>5: 10:35.737<br>4: 12:27.551<br>3: 11:13.690<br>2: 11:18.602<br>1: 13:23.052</div></nobr></td>
+<td align=center valign=top><nobr>17:25:50.272</nobr></td>
+<td align=center valign=top><nobr>02:05:08.791</nobr></td>
+<td valign=top><nobr>1: 10:35.737<br><div id="div_best_laps_84" style="display:none">2: 10:37.381<br>3: 10:39.353<br>4: 10:44.030<br>5: 10:55.376<br>6: 11:06.466<br>7: 11:13.690<br>8: 11:18.602<br>9: 12:07.553<br>10: 12:27.551<br>11: 13:23.052</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_22" onclick="ftoggle('div_laps_22', 'div_best_laps_22', 'img_22')"></nobr></td>
+<td align=center valign=top><nobr>93</nobr></td>
+<td align=center valign=top><nobr>22</nobr></td>
+<td align=center valign=top><nobr>Esterl</nobr></td>
+<td align=center valign=top><nobr>Christoph</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 250</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 09:38.150<br><div id="div_laps_22" style="display:none">10: 09:32.578<br>9: 10:34.802<br>8: 10:04.429<br>7: 11:12.953<br>6: 10:18.968<br>5: 10:58.936<br>4: 13:38.818<br>3: 11:19.342<br>2: 12:16.543<br>1: 17:19.828</div></nobr></td>
+<td align=center valign=top><nobr>17:27:36.828</nobr></td>
+<td align=center valign=top><nobr>02:06:55.347</nobr></td>
+<td valign=top><nobr>1: 09:32.578<br><div id="div_best_laps_22" style="display:none">2: 09:38.150<br>3: 10:04.429<br>4: 10:18.968<br>5: 10:34.802<br>6: 10:58.936<br>7: 11:12.953<br>8: 11:19.342<br>9: 12:16.543<br>10: 13:38.818<br>11: 17:19.828</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_59" onclick="ftoggle('div_laps_59', 'div_best_laps_59', 'img_59')"></nobr></td>
+<td align=center valign=top><nobr>94</nobr></td>
+<td align=center valign=top><nobr>59</nobr></td>
+<td align=center valign=top><nobr>Huber</nobr></td>
+<td align=center valign=top><nobr>Matthias</nobr></td>
+<td align=center valign=top><nobr>GasGas MC 250</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 10:30.203<br><div id="div_laps_59" style="display:none">10: 13:12.953<br>9: 10:01.201<br>8: 10:55.074<br>7: 10:19.563<br>6: 11:04.518<br>5: 10:28.072<br>4: 13:00.365<br>3: 11:29.938<br>2: 13:18.214<br>1: 13:01.744</div></nobr></td>
+<td align=center valign=top><nobr>17:28:03.326</nobr></td>
+<td align=center valign=top><nobr>02:07:21.845</nobr></td>
+<td valign=top><nobr>1: 10:01.201<br><div id="div_best_laps_59" style="display:none">2: 10:19.563<br>3: 10:28.072<br>4: 10:30.203<br>5: 10:55.074<br>6: 11:04.518<br>7: 11:29.938<br>8: 13:00.365<br>9: 13:01.744<br>10: 13:12.953<br>11: 13:18.214</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_67" onclick="ftoggle('div_laps_67', 'div_best_laps_67', 'img_67')"></nobr></td>
+<td align=center valign=top><nobr>95</nobr></td>
+<td align=center valign=top><nobr>67</nobr></td>
+<td align=center valign=top><nobr>Meierholzner</nobr></td>
+<td align=center valign=top><nobr>Bernhad</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 10:44.739<br><div id="div_laps_67" style="display:none">10: 10:51.649<br>9: 10:35.233<br>8: 10:36.842<br>7: 10:37.921<br>6: 10:43.531<br>5: 11:03.569<br>4: 16:23.788<br>3: 11:54.725<br>2: 11:36.303<br>1: 13:39.108</div></nobr></td>
+<td align=center valign=top><nobr>17:29:28.889</nobr></td>
+<td align=center valign=top><nobr>02:08:47.408</nobr></td>
+<td valign=top><nobr>1: 10:35.233<br><div id="div_best_laps_67" style="display:none">2: 10:36.842<br>3: 10:37.921<br>4: 10:43.531<br>5: 10:44.739<br>6: 10:51.649<br>7: 11:03.569<br>8: 11:36.303<br>9: 11:54.725<br>10: 13:39.108<br>11: 16:23.788</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_33" onclick="ftoggle('div_laps_33', 'div_best_laps_33', 'img_33')"></nobr></td>
+<td align=center valign=top><nobr>96</nobr></td>
+<td align=center valign=top><nobr>33</nobr></td>
+<td align=center valign=top><nobr>Gropp</nobr></td>
+<td align=center valign=top><nobr>Jakob</nobr></td>
+<td align=center valign=top><nobr>Surron</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 11:01.769<br><div id="div_laps_33" style="display:none">10: 10:32.271<br>9: 10:14.035<br>8: 16:04.003<br>7: 11:09.229<br>6: 11:31.778<br>5: 11:10.192<br>4: 11:11.453<br>3: 11:54.723<br>2: 11:50.463<br>1: 13:38.707</div></nobr></td>
+<td align=center valign=top><nobr>17:31:00.104</nobr></td>
+<td align=center valign=top><nobr>02:10:18.623</nobr></td>
+<td valign=top><nobr>1: 10:14.035<br><div id="div_best_laps_33" style="display:none">2: 10:32.271<br>3: 11:01.769<br>4: 11:09.229<br>5: 11:10.192<br>6: 11:11.453<br>7: 11:31.778<br>8: 11:50.463<br>9: 11:54.723<br>10: 13:38.707<br>11: 16:04.003</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_65" onclick="ftoggle('div_laps_65', 'div_best_laps_65', 'img_65')"></nobr></td>
+<td align=center valign=top><nobr>97</nobr></td>
+<td align=center valign=top><nobr>65</nobr></td>
+<td align=center valign=top><nobr>Manhart</nobr></td>
+<td align=center valign=top><nobr>J&uuml;rgen</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 10:36.025<br><div id="div_laps_65" style="display:none">10: 10:44.689<br>9: 10:38.680<br>8: 10:53.220<br>7: 12:27.365<br>6: 12:29.411<br>5: 11:00.171<br>4: 13:25.682<br>3: 12:46.851<br>2: 11:44.477<br>1: 13:32.277</div></nobr></td>
+<td align=center valign=top><nobr>17:31:00.329</nobr></td>
+<td align=center valign=top><nobr>02:10:18.848</nobr></td>
+<td valign=top><nobr>1: 10:36.025<br><div id="div_best_laps_65" style="display:none">2: 10:38.680<br>3: 10:44.689<br>4: 10:53.220<br>5: 11:00.171<br>6: 11:44.477<br>7: 12:27.365<br>8: 12:29.411<br>9: 12:46.851<br>10: 13:25.682<br>11: 13:32.277</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_94" onclick="ftoggle('div_laps_94', 'div_best_laps_94', 'img_94')"></nobr></td>
+<td align=center valign=top><nobr>98</nobr></td>
+<td align=center valign=top><nobr>94</nobr></td>
+<td align=center valign=top><nobr>Sicheneder</nobr></td>
+<td align=center valign=top><nobr>Fabian</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 13:15.964<br><div id="div_laps_94" style="display:none">10: 11:23.520<br>9: 11:09.566<br>8: 12:25.891<br>7: 12:26.255<br>6: 10:35.126<br>5: 10:43.202<br>4: 13:28.234<br>3: 14:54.158<br>2: 11:02.145<br>1: 13:50.379</div></nobr></td>
+<td align=center valign=top><nobr>17:35:55.921</nobr></td>
+<td align=center valign=top><nobr>02:15:14.440</nobr></td>
+<td valign=top><nobr>1: 10:35.126<br><div id="div_best_laps_94" style="display:none">2: 10:43.202<br>3: 11:02.145<br>4: 11:09.566<br>5: 11:23.520<br>6: 12:25.891<br>7: 12:26.255<br>8: 13:15.964<br>9: 13:28.234<br>10: 13:50.379<br>11: 14:54.158</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_116" onclick="ftoggle('div_laps_116', 'div_best_laps_116', 'img_116')"></nobr></td>
+<td align=center valign=top><nobr>99</nobr></td>
+<td align=center valign=top><nobr>116</nobr></td>
+<td align=center valign=top><nobr>Wippenbeck</nobr></td>
+<td align=center valign=top><nobr>Fabian</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>11</nobr></td>
+<td valign=top><nobr>11: 15:35.034<br><div id="div_laps_116" style="display:none">10: 11:31.121<br>9: 11:23.659<br>8: 11:55.094<br>7: 11:50.912<br>6: 11:39.762<br>5: 11:54.453<br>4: 13:50.754<br>3: 12:29.327<br>2: 12:10.886<br>1: 13:43.838</div></nobr></td>
+<td align=center valign=top><nobr>17:38:46.321</nobr></td>
+<td align=center valign=top><nobr>02:18:04.840</nobr></td>
+<td valign=top><nobr>1: 11:23.659<br><div id="div_best_laps_116" style="display:none">2: 11:31.121<br>3: 11:39.762<br>4: 11:50.912<br>5: 11:54.453<br>6: 11:55.094<br>7: 12:10.886<br>8: 12:29.327<br>9: 13:43.838<br>10: 13:50.754<br>11: 15:35.034</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_55" onclick="ftoggle('div_laps_55', 'div_best_laps_55', 'img_55')"></nobr></td>
+<td align=center valign=top><nobr>100</nobr></td>
+<td align=center valign=top><nobr>55</nobr></td>
+<td align=center valign=top><nobr>Kasseckert</nobr></td>
+<td align=center valign=top><nobr>Lucas</nobr></td>
+<td align=center valign=top><nobr>Beta RX 350</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 10:03.052<br><div id="div_laps_55" style="display:none">9: 10:29.591<br>8: 14:50.944<br>7: 10:43.937<br>6: 12:40.191<br>5: 12:10.060<br>4: 16:14.689<br>3: 12:38.892<br>2: 13:23.976<br>1: 12:01.841</div></nobr></td>
+<td align=center valign=top><nobr>17:25:58.654</nobr></td>
+<td align=center valign=top><nobr>02:05:17.173</nobr></td>
+<td valign=top><nobr>1: 10:03.052<br><div id="div_best_laps_55" style="display:none">2: 10:29.591<br>3: 10:43.937<br>4: 12:01.841<br>5: 12:10.060<br>6: 12:38.892<br>7: 12:40.191<br>8: 13:23.976<br>9: 14:50.944<br>10: 16:14.689</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_40" onclick="ftoggle('div_laps_40', 'div_best_laps_40', 'img_40')"></nobr></td>
+<td align=center valign=top><nobr>101</nobr></td>
+<td align=center valign=top><nobr>40</nobr></td>
+<td align=center valign=top><nobr>Bachhuber</nobr></td>
+<td align=center valign=top><nobr>Manuel</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 150</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 11:32.029<br><div id="div_laps_40" style="display:none">9: 12:02.824<br>8: 11:32.307<br>7: 11:38.125<br>6: 12:14.283<br>5: 11:44.653<br>4: 14:55.334<br>3: 12:17.854<br>2: 12:05.062<br>1: 15:40.349</div></nobr></td>
+<td align=center valign=top><nobr>17:26:24.301</nobr></td>
+<td align=center valign=top><nobr>02:05:42.820</nobr></td>
+<td valign=top><nobr>1: 11:32.029<br><div id="div_best_laps_40" style="display:none">2: 11:32.307<br>3: 11:38.125<br>4: 11:44.653<br>5: 12:02.824<br>6: 12:05.062<br>7: 12:14.283<br>8: 12:17.854<br>9: 14:55.334<br>10: 15:40.349</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_48" onclick="ftoggle('div_laps_48', 'div_best_laps_48', 'img_48')"></nobr></td>
+<td align=center valign=top><nobr>102</nobr></td>
+<td align=center valign=top><nobr>48</nobr></td>
+<td align=center valign=top><nobr>Bauer</nobr></td>
+<td align=center valign=top><nobr>Martin</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 350</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 11:45.137<br><div id="div_laps_48" style="display:none">9: 11:34.007<br>8: 13:07.454<br>7: 11:50.942<br>6: 12:41.499<br>5: 14:54.027<br>4: 13:46.239<br>3: 13:38.360<br>2: 12:15.408<br>1: 14:17.110</div></nobr></td>
+<td align=center valign=top><nobr>17:30:31.664</nobr></td>
+<td align=center valign=top><nobr>02:09:50.183</nobr></td>
+<td valign=top><nobr>1: 11:34.007<br><div id="div_best_laps_48" style="display:none">2: 11:45.137<br>3: 11:50.942<br>4: 12:15.408<br>5: 12:41.499<br>6: 13:07.454<br>7: 13:38.360<br>8: 13:46.239<br>9: 14:17.110<br>10: 14:54.027</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_54" onclick="ftoggle('div_laps_54', 'div_best_laps_54', 'img_54')"></nobr></td>
+<td align=center valign=top><nobr>103</nobr></td>
+<td align=center valign=top><nobr>54</nobr></td>
+<td align=center valign=top><nobr>Gropp</nobr></td>
+<td align=center valign=top><nobr>Leo</nobr></td>
+<td align=center valign=top><nobr></nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 12:47.929<br><div id="div_laps_54" style="display:none">9: 10:53.019<br>8: 11:09.533<br>7: 15:41.322<br>6: 11:58.979<br>5: 12:54.017<br>4: 14:21.241<br>3: 12:00.544<br>2: 11:12.771<br>1: 16:52.887</div></nobr></td>
+<td align=center valign=top><nobr>17:30:33.723</nobr></td>
+<td align=center valign=top><nobr>02:09:52.242</nobr></td>
+<td valign=top><nobr>1: 10:53.019<br><div id="div_best_laps_54" style="display:none">2: 11:09.533<br>3: 11:12.771<br>4: 11:58.979<br>5: 12:00.544<br>6: 12:47.929<br>7: 12:54.017<br>8: 14:21.241<br>9: 15:41.322<br>10: 16:52.887</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_88" onclick="ftoggle('div_laps_88', 'div_best_laps_88', 'img_88')"></nobr></td>
+<td align=center valign=top><nobr>104</nobr></td>
+<td align=center valign=top><nobr>88</nobr></td>
+<td align=center valign=top><nobr>Schauer</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 10:28.124<br><div id="div_laps_88" style="display:none">9: 21:37.972<br>8: 10:28.767<br>7: 20:29.036<br>6: 11:39.100<br>5: 10:28.716<br>4: 10:42.894<br>3: 11:10.496<br>2: 11:40.422<br>1: 13:20.482</div></nobr></td>
+<td align=center valign=top><nobr>17:32:47.490</nobr></td>
+<td align=center valign=top><nobr>02:12:06.009</nobr></td>
+<td valign=top><nobr>1: 10:28.124<br><div id="div_best_laps_88" style="display:none">2: 10:28.716<br>3: 10:28.767<br>4: 10:42.894<br>5: 11:10.496<br>6: 11:39.100<br>7: 11:40.422<br>8: 13:20.482<br>9: 20:29.036<br>10: 21:37.972</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_43" onclick="ftoggle('div_laps_43', 'div_best_laps_43', 'img_43')"></nobr></td>
+<td align=center valign=top><nobr>105</nobr></td>
+<td align=center valign=top><nobr>43</nobr></td>
+<td align=center valign=top><nobr>Wein</nobr></td>
+<td align=center valign=top><nobr>Franziska</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 12:48.206<br><div id="div_laps_43" style="display:none">9: 12:45.576<br>8: 11:57.207<br>7: 12:17.645<br>6: 13:13.467<br>5: 12:38.238<br>4: 16:15.136<br>3: 11:27.977<br>2: 12:51.987<br>1: 16:52.427</div></nobr></td>
+<td align=center valign=top><nobr>17:33:49.347</nobr></td>
+<td align=center valign=top><nobr>02:13:07.866</nobr></td>
+<td valign=top><nobr>1: 11:27.977<br><div id="div_best_laps_43" style="display:none">2: 11:57.207<br>3: 12:17.645<br>4: 12:38.238<br>5: 12:45.576<br>6: 12:48.206<br>7: 12:51.987<br>8: 13:13.467<br>9: 16:15.136<br>10: 16:52.427</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_95" onclick="ftoggle('div_laps_95', 'div_best_laps_95', 'img_95')"></nobr></td>
+<td align=center valign=top><nobr>106</nobr></td>
+<td align=center valign=top><nobr>95</nobr></td>
+<td align=center valign=top><nobr>Solms</nobr></td>
+<td align=center valign=top><nobr>Niklas</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>10</nobr></td>
+<td valign=top><nobr>10: 12:03.745<br><div id="div_laps_95" style="display:none">9: 12:59.479<br>8: 11:26.499<br>7: 15:05.872<br>6: 11:18.377<br>5: 11:11.740<br>4: 11:38.149<br>3: 14:22.337<br>2: 17:02.816<br>1: 16:01.956</div></nobr></td>
+<td align=center valign=top><nobr>17:33:52.451</nobr></td>
+<td align=center valign=top><nobr>02:13:10.970</nobr></td>
+<td valign=top><nobr>1: 11:11.740<br><div id="div_best_laps_95" style="display:none">2: 11:18.377<br>3: 11:26.499<br>4: 11:38.149<br>5: 12:03.745<br>6: 12:59.479<br>7: 14:22.337<br>8: 15:05.872<br>9: 16:01.956<br>10: 17:02.816</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_8" onclick="ftoggle('div_laps_8', 'div_best_laps_8', 'img_8')"></nobr></td>
+<td align=center valign=top><nobr>107</nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td align=center valign=top><nobr>Bruckbauer</nobr></td>
+<td align=center valign=top><nobr>Erwin</nobr></td>
+<td align=center valign=top><nobr>Beta RR 480</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td valign=top><nobr>9: 11:43.699<br><div id="div_laps_8" style="display:none">8: 11:06.784<br>7: 12:06.094<br>6: 11:37.044<br>5: 12:01.596<br>4: 13:13.840<br>3: 21:03.648<br>2: 17:03.143<br>1: 15:24.692</div></nobr></td>
+<td align=center valign=top><nobr>17:26:02.021</nobr></td>
+<td align=center valign=top><nobr>02:05:20.540</nobr></td>
+<td valign=top><nobr>1: 11:06.784<br><div id="div_best_laps_8" style="display:none">2: 11:37.044<br>3: 11:43.699<br>4: 12:01.596<br>5: 12:06.094<br>6: 13:13.840<br>7: 15:24.692<br>8: 17:03.143<br>9: 21:03.648</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_109" onclick="ftoggle('div_laps_109', 'div_best_laps_109', 'img_109')"></nobr></td>
+<td align=center valign=top><nobr>108</nobr></td>
+<td align=center valign=top><nobr>109</nobr></td>
+<td align=center valign=top><nobr>Weber</nobr></td>
+<td align=center valign=top><nobr>Leopold</nobr></td>
+<td align=center valign=top><nobr>Beta X-Pro 300</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td valign=top><nobr>9: 16:25.124<br><div id="div_laps_109" style="display:none">8: 15:42.510<br>7: 13:03.292<br>6: 12:09.275<br>5: 13:44.246<br>4: 16:51.720<br>3: 15:01.294<br>2: 11:33.019<br>1: 13:35.242</div></nobr></td>
+<td align=center valign=top><nobr>17:28:47.203</nobr></td>
+<td align=center valign=top><nobr>02:08:05.722</nobr></td>
+<td valign=top><nobr>1: 11:33.019<br><div id="div_best_laps_109" style="display:none">2: 12:09.275<br>3: 13:03.292<br>4: 13:35.242<br>5: 13:44.246<br>6: 15:01.294<br>7: 15:42.510<br>8: 16:25.124<br>9: 16:51.720</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_41" onclick="ftoggle('div_laps_41', 'div_best_laps_41', 'img_41')"></nobr></td>
+<td align=center valign=top><nobr>109</nobr></td>
+<td align=center valign=top><nobr>41</nobr></td>
+<td align=center valign=top><nobr>Effler</nobr></td>
+<td align=center valign=top><nobr>Tom</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 350</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td valign=top><nobr>9: 12:27.863<br><div id="div_laps_41" style="display:none">8: 12:47.137<br>7: 14:26.342<br>6: 12:16.999<br>5: 13:04.962<br>4: 12:55.980<br>3: 20:00.793<br>2: 16:34.324<br>1: 17:21.473</div></nobr></td>
+<td align=center valign=top><nobr>17:32:37.354</nobr></td>
+<td align=center valign=top><nobr>02:11:55.873</nobr></td>
+<td valign=top><nobr>1: 12:16.999<br><div id="div_best_laps_41" style="display:none">2: 12:27.863<br>3: 12:47.137<br>4: 12:55.980<br>5: 13:04.962<br>6: 14:26.342<br>7: 16:34.324<br>8: 17:21.473<br>9: 20:00.793</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_87" onclick="ftoggle('div_laps_87', 'div_best_laps_87', 'img_87')"></nobr></td>
+<td align=center valign=top><nobr>110</nobr></td>
+<td align=center valign=top><nobr>87</nobr></td>
+<td align=center valign=top><nobr>Reiter</nobr></td>
+<td align=center valign=top><nobr>Hubert</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td valign=top><nobr>9: 12:11.884<br><div id="div_laps_87" style="display:none">8: 15:46.703<br>7: 12:23.623<br>6: 24:59.208<br>5: 11:44.348<br>4: 17:17.672<br>3: 12:11.357<br>2: 11:51.946<br>1: 14:16.727</div></nobr></td>
+<td align=center valign=top><nobr>17:33:24.949</nobr></td>
+<td align=center valign=top><nobr>02:12:43.468</nobr></td>
+<td valign=top><nobr>1: 11:44.348<br><div id="div_best_laps_87" style="display:none">2: 11:51.946<br>3: 12:11.357<br>4: 12:11.884<br>5: 12:23.623<br>6: 14:16.727<br>7: 15:46.703<br>8: 17:17.672<br>9: 24:59.208</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_100" onclick="ftoggle('div_laps_100', 'div_best_laps_100', 'img_100')"></nobr></td>
+<td align=center valign=top><nobr>111</nobr></td>
+<td align=center valign=top><nobr>100</nobr></td>
+<td align=center valign=top><nobr>Sporer</nobr></td>
+<td align=center valign=top><nobr>Albert</nobr></td>
+<td align=center valign=top><nobr>Husqvarna 310</nobr></td>
+<td align=center valign=top><nobr>9</nobr></td>
+<td valign=top><nobr>9: 13:02.559<br><div id="div_laps_100" style="display:none">8: 21:01.693<br>7: 11:10.263<br>6: 17:40.999<br>5: 14:41.395<br>4: 17:41.257<br>3: 11:05.804<br>2: 14:51.508<br>1: 14:30.867</div></nobr></td>
+<td align=center valign=top><nobr>17:36:27.826</nobr></td>
+<td align=center valign=top><nobr>02:15:46.345</nobr></td>
+<td valign=top><nobr>1: 11:05.804<br><div id="div_best_laps_100" style="display:none">2: 11:10.263<br>3: 13:02.559<br>4: 14:30.867<br>5: 14:41.395<br>6: 14:51.508<br>7: 17:40.999<br>8: 17:41.257<br>9: 21:01.693</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_128" onclick="ftoggle('div_laps_128', 'div_best_laps_128', 'img_128')"></nobr></td>
+<td align=center valign=top><nobr>112</nobr></td>
+<td align=center valign=top><nobr>128</nobr></td>
+<td align=center valign=top><nobr>Tomsa</nobr></td>
+<td align=center valign=top><nobr>Marc</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td valign=top><nobr>8: 13:42.190<br><div id="div_laps_128" style="display:none">7: 14:47.259<br>6: 13:09.622<br>5: 14:24.767<br>4: 15:22.854<br>3: 22:37.594<br>2: 13:40.746<br>1: 17:06.585</div></nobr></td>
+<td align=center valign=top><nobr>17:25:33.098</nobr></td>
+<td align=center valign=top><nobr>02:04:51.617</nobr></td>
+<td valign=top><nobr>1: 13:09.622<br><div id="div_best_laps_128" style="display:none">2: 13:40.746<br>3: 13:42.190<br>4: 14:24.767<br>5: 14:47.259<br>6: 15:22.854<br>7: 17:06.585<br>8: 22:37.594</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_74" onclick="ftoggle('div_laps_74', 'div_best_laps_74', 'img_74')"></nobr></td>
+<td align=center valign=top><nobr>113</nobr></td>
+<td align=center valign=top><nobr>74</nobr></td>
+<td align=center valign=top><nobr>Paukner</nobr></td>
+<td align=center valign=top><nobr>Robert</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 450</nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td valign=top><nobr>8: 14:48.000<br><div id="div_laps_74" style="display:none">7: 15:20.592<br>6: 14:23.755<br>5: 12:58.929<br>4: 13:47.822<br>3: 19:48.040<br>2: 16:50.139<br>1: 18:28.974</div></nobr></td>
+<td align=center valign=top><nobr>17:27:07.732</nobr></td>
+<td align=center valign=top><nobr>02:06:26.251</nobr></td>
+<td valign=top><nobr>1: 12:58.929<br><div id="div_best_laps_74" style="display:none">2: 13:47.822<br>3: 14:23.755<br>4: 14:48.000<br>5: 15:20.592<br>6: 16:50.139<br>7: 18:28.974<br>8: 19:48.040</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_85" onclick="ftoggle('div_laps_85', 'div_best_laps_85', 'img_85')"></nobr></td>
+<td align=center valign=top><nobr>114</nobr></td>
+<td align=center valign=top><nobr>85</nobr></td>
+<td align=center valign=top><nobr>Hofer</nobr></td>
+<td align=center valign=top><nobr>Sophia</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>8</nobr></td>
+<td valign=top><nobr>8: 13:12.563<br><div id="div_laps_85" style="display:none">7: 16:48.568<br>6: 17:16.603<br>5: 15:27.868<br>4: 17:43.582<br>3: 18:52.417<br>2: 18:31.741<br>1: 18:18.252</div></nobr></td>
+<td align=center valign=top><nobr>17:36:53.075</nobr></td>
+<td align=center valign=top><nobr>02:16:11.594</nobr></td>
+<td valign=top><nobr>1: 13:12.563<br><div id="div_best_laps_85" style="display:none">2: 15:27.868<br>3: 16:48.568<br>4: 17:16.603<br>5: 17:43.582<br>6: 18:18.252<br>7: 18:31.741<br>8: 18:52.417</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_23" onclick="ftoggle('div_laps_23', 'div_best_laps_23', 'img_23')"></nobr></td>
+<td align=center valign=top><nobr>115</nobr></td>
+<td align=center valign=top><nobr>23</nobr></td>
+<td align=center valign=top><nobr>Ri&szlig;</nobr></td>
+<td align=center valign=top><nobr>Andreas</nobr></td>
+<td align=center valign=top><nobr>Beta X-Trainer 300</nobr></td>
+<td align=center valign=top><nobr>7</nobr></td>
+<td valign=top><nobr>7: 18:30.157<br><div id="div_laps_23" style="display:none">6: 16:09.219<br>5: 15:17.070<br>4: 15:55.140<br>3: 25:41.617<br>2: 17:11.721<br>1: 17:44.074</div></nobr></td>
+<td align=center valign=top><nobr>17:27:10.479</nobr></td>
+<td align=center valign=top><nobr>02:06:28.998</nobr></td>
+<td valign=top><nobr>1: 15:17.070<br><div id="div_best_laps_23" style="display:none">2: 15:55.140<br>3: 16:09.219<br>4: 17:11.721<br>5: 17:44.074<br>6: 18:30.157<br>7: 25:41.617</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_53" onclick="ftoggle('div_laps_53', 'div_best_laps_53', 'img_53')"></nobr></td>
+<td align=center valign=top><nobr>116</nobr></td>
+<td align=center valign=top><nobr>53</nobr></td>
+<td align=center valign=top><nobr>Herbst</nobr></td>
+<td align=center valign=top><nobr>Cilyan</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 250</nobr></td>
+<td align=center valign=top><nobr>6</nobr></td>
+<td valign=top><nobr>6: 28:31.606<br><div id="div_laps_53" style="display:none">5: 12:51.595<br>4: 14:02.106<br>3: 19:20.077<br>2: 20:59.834<br>1: 17:27.282</div></nobr></td>
+<td align=center valign=top><nobr>17:13:53.981</nobr></td>
+<td align=center valign=top><nobr>01:53:12.500</nobr></td>
+<td valign=top><nobr>1: 12:51.595<br><div id="div_best_laps_53" style="display:none">2: 14:02.106<br>3: 17:27.282<br>4: 19:20.077<br>5: 20:59.834<br>6: 28:31.606</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_118" onclick="ftoggle('div_laps_118', 'div_best_laps_118', 'img_118')"></nobr></td>
+<td align=center valign=top><nobr>117</nobr></td>
+<td align=center valign=top><nobr>118</nobr></td>
+<td align=center valign=top><nobr>H&ouml;sl</nobr></td>
+<td align=center valign=top><nobr>Michael</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 300</nobr></td>
+<td align=center valign=top><nobr>6</nobr></td>
+<td valign=top><nobr>6: 18:24.765<br><div id="div_laps_118" style="display:none">5: 22:27.757<br>4: 17:11.493<br>3: 20:04.791<br>2: 17:19.893<br>1: 18:07.392</div></nobr></td>
+<td align=center valign=top><nobr>17:14:17.572</nobr></td>
+<td align=center valign=top><nobr>01:53:36.091</nobr></td>
+<td valign=top><nobr>1: 17:11.493<br><div id="div_best_laps_118" style="display:none">2: 17:19.893<br>3: 18:07.392<br>4: 18:24.765<br>5: 20:04.791<br>6: 22:27.757</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_121" onclick="ftoggle('div_laps_121', 'div_best_laps_121', 'img_121')"></nobr></td>
+<td align=center valign=top><nobr>118</nobr></td>
+<td align=center valign=top><nobr>121</nobr></td>
+<td align=center valign=top><nobr>Felser</nobr></td>
+<td align=center valign=top><nobr>Petra</nobr></td>
+<td align=center valign=top><nobr>Triumph 250</nobr></td>
+<td align=center valign=top><nobr>6</nobr></td>
+<td valign=top><nobr>6: 16:18.410<br><div id="div_laps_121" style="display:none">5: 23:09.842<br>4: 17:47.545<br>3: 20:30.987<br>2: 16:19.598<br>1: 21:41.695</div></nobr></td>
+<td align=center valign=top><nobr>17:16:29.558</nobr></td>
+<td align=center valign=top><nobr>01:55:48.077</nobr></td>
+<td valign=top><nobr>1: 16:18.410<br><div id="div_best_laps_121" style="display:none">2: 16:19.598<br>3: 17:47.545<br>4: 20:30.987<br>5: 21:41.695<br>6: 23:09.842</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_57" onclick="ftoggle('div_laps_57', 'div_best_laps_57', 'img_57')"></nobr></td>
+<td align=center valign=top><nobr>119</nobr></td>
+<td align=center valign=top><nobr>57</nobr></td>
+<td align=center valign=top><nobr>Krutina</nobr></td>
+<td align=center valign=top><nobr>Markus</nobr></td>
+<td align=center valign=top><nobr>Husqvarna FE 350</nobr></td>
+<td align=center valign=top><nobr>5</nobr></td>
+<td valign=top><nobr>5: 11:23.118<br><div id="div_laps_57" style="display:none">4: 19:32.131<br>3: 13:01.689<br>2: 14:52.892<br>1: 17:12.950</div></nobr></td>
+<td align=center valign=top><nobr>16:36:44.261</nobr></td>
+<td align=center valign=top><nobr>01:16:02.780</nobr></td>
+<td valign=top><nobr>1: 11:23.118<br><div id="div_best_laps_57" style="display:none">2: 13:01.689<br>3: 14:52.892<br>4: 17:12.950<br>5: 19:32.131</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_2" onclick="ftoggle('div_laps_2', 'div_best_laps_2', 'img_2')"></nobr></td>
+<td align=center valign=top><nobr>120</nobr></td>
+<td align=center valign=top><nobr>2</nobr></td>
+<td align=center valign=top><nobr>Aigner</nobr></td>
+<td align=center valign=top><nobr>Moritz</nobr></td>
+<td align=center valign=top><nobr>Beta RR 300</nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td valign=top><nobr>4: 10:27.149<br><div id="div_laps_2" style="display:none">3: 09:29.978<br>2: 09:01.712<br>1: 09:40.953</div></nobr></td>
+<td align=center valign=top><nobr>15:59:21.273</nobr></td>
+<td align=center valign=top><nobr>38:39.792</nobr></td>
+<td valign=top><nobr>1: 09:01.712<br><div id="div_best_laps_2" style="display:none">2: 09:29.978<br>3: 09:40.953<br>4: 10:27.149</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_91" onclick="ftoggle('div_laps_91', 'div_best_laps_91', 'img_91')"></nobr></td>
+<td align=center valign=top><nobr>121</nobr></td>
+<td align=center valign=top><nobr>91</nobr></td>
+<td align=center valign=top><nobr>Schwarz</nobr></td>
+<td align=center valign=top><nobr>Felix</nobr></td>
+<td align=center valign=top><nobr>KTM SXF 250</nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td valign=top><nobr>4: 10:02.455<br><div id="div_laps_91" style="display:none">3: 09:57.030<br>2: 10:00.875<br>1: 13:47.631</div></nobr></td>
+<td align=center valign=top><nobr>16:04:29.472</nobr></td>
+<td align=center valign=top><nobr>43:47.991</nobr></td>
+<td valign=top><nobr>1: 09:57.030<br><div id="div_best_laps_91" style="display:none">2: 10:00.875<br>3: 10:02.455<br>4: 13:47.631</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="plus" id="img_127" onclick="ftoggle('div_laps_127', 'div_best_laps_127', 'img_127')"></nobr></td>
+<td align=center valign=top><nobr>122</nobr></td>
+<td align=center valign=top><nobr>127</nobr></td>
+<td align=center valign=top><nobr>Roth</nobr></td>
+<td align=center valign=top><nobr>Kilian</nobr></td>
+<td align=center valign=top><nobr>Beta X-Trainer 300</nobr></td>
+<td align=center valign=top><nobr>4</nobr></td>
+<td valign=top><nobr>4: 35:47.812<br><div id="div_laps_127" style="display:none">3: 28:03.413<br>2: 33:49.987<br>1: 30:03.534</div></nobr></td>
+<td align=center valign=top><nobr>17:28:26.227</nobr></td>
+<td align=center valign=top><nobr>02:07:44.746</nobr></td>
+<td valign=top><nobr>1: 28:03.413<br><div id="div_best_laps_127" style="display:none">2: 30:03.534<br>3: 33:49.987<br>4: 35:47.812</div></nobr></td>
+</tr>
+<tr class="odd">
+<td align=center valign=top><nobr><div class="plus" id="img_21" onclick="ftoggle('div_laps_21', 'div_best_laps_21', 'img_21')"></nobr></td>
+<td align=center valign=top><nobr>123</nobr></td>
+<td align=center valign=top><nobr>21</nobr></td>
+<td align=center valign=top><nobr>Lenz</nobr></td>
+<td align=center valign=top><nobr>J&uuml;rgen</nobr></td>
+<td align=center valign=top><nobr>KTM EXC 500</nobr></td>
+<td align=center valign=top><nobr>3</nobr></td>
+<td valign=top><nobr>3: 08:09.931<br><div id="div_laps_21" style="display:none">2: 08:14.389<br>1: 08:55.082</div></nobr></td>
+<td align=center valign=top><nobr>15:46:00.883</nobr></td>
+<td align=center valign=top><nobr>25:19.402</nobr></td>
+<td valign=top><nobr>1: 08:09.931<br><div id="div_best_laps_21" style="display:none">2: 08:14.389<br>3: 08:55.082</div></nobr></td>
+</tr>
+<tr class="even">
+<td align=center valign=top><nobr><div class="minus_nopointer"></nobr></td>
+<td align=center valign=top><nobr>124</nobr></td>
+<td align=center valign=top><nobr>105</nobr></td>
+<td align=center valign=top><nobr>Thaler</nobr></td>
+<td align=center valign=top><nobr>Julian</nobr></td>
+<td align=center valign=top><nobr>Husqvarna TE 300</nobr></td>
+<td align=center valign=top><nobr>1</nobr></td>
+<td valign=top><nobr>1: 13:29.484</nobr></td>
+<td align=center valign=top><nobr>15:34:10.965</nobr></td>
+<td align=center valign=top><nobr>13:29.484</nobr></td>
+<td valign=top><nobr>1: 13:29.484</nobr></td>
+</tr>
+<tr class="odd">
+<th><nobr><div class="plus" id="img_0" onclick="ftoggle_all()"></nobr></th>
+<th>Rang</th>
+<th>Startnr</th>
+<th>Name</th>
+<th>Vorname</th>
+<th>Motorrad</th>
+<th>Runden</th>
+<th>Rundenzeiten</th>
+<th>Letzte Runde</th>
+<th>Gesamtzeit</th>
+<th>Besten Runden</th>
+</tr>
+</table>
+<p>
+* Runden/Zeitstrafe beachtet
+<br>
+<a href="http://mxstats.tk"><b>MXStats V4.5 - http://mxstats.tk</b></a>
+</td></tr>
+</table>
 </body>
 </html>
